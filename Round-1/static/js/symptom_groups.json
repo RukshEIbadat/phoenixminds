@@ -1,0 +1,43 @@
+{
+    "Emotions & Anxiety": [
+      "excessive worry","restlessness","panic attacks","separation anxiety",
+      "irritability","low mood","anhedonia","tearful","self-esteem problems",
+      "perfectionism","impostor phenomenon","sleep disturbance","burnout"
+    ],
+    "Attention & Hyperactivity": [
+      "inattention","distractible","loses things","forgetful","hyperactive","impulsive",
+      "fidgets","leaves seat","talks excessively","interrupting","task completion difficulties","poor organization"
+    ],
+    "Autism & Social Communication": [
+      "speech delay","limited eye contact","echolalia","stimming","rigid routines",
+      "sensory seeking","sensory sensitivity","limited pretend play","difficulty with peers",
+      "repetitive behaviors","restricted interests","hand flapping"
+    ],
+    "Speech & Language": [
+      "articulation problems","language delay","limited vocabulary","difficulty following instructions",
+      "stuttering","nonverbal","pragmatic language difficulties","apraxia of speech"
+    ],
+    "Sensory & OT": [
+      "sensory seeking","sensory avoidance","tactile sensitivity","picky eating",
+      "fine motor delay","poor handwriting","poor coordination","toe walking"
+    ],
+    "Learning & Academic": [
+      "reading difficulty","spelling difficulty","math difficulty","slow processing",
+      "working memory problems","writing difficulty","dyslexia traits","dyscalculia traits"
+    ],
+    "Behavior": [
+      "tantrums","aggression","self-injury","oppositional behavior",
+      "rule-breaking","bullying","elopement","pica"
+    ],
+    "Daily Living": [
+      "insomnia","night wakings","snoring","bedwetting",
+      "feeding difficulties","constipation","toileting delays","picky eating"
+    ],
+    "Motor & Neurology": [
+      "tics","motor delay","poor balance","seizures","headaches","hypotonia","dyspraxia","tremor"
+    ],
+    "Red Flags": [
+      "regression of skills","suicidal thoughts","self-harm",
+      "seizures","fever with behavior change","head injury","abuse concerns"
+    ]
+  }

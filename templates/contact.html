@@ -1,0 +1,132 @@
+{% extends "base.html" %}
+{% block title %}Contact — PhoenixMinds{% endblock %}
+{% block extra_head %}
+<style>
+*,*::before,*::after{box-sizing:border-box}
+.contact-page{position:relative;z-index:2;max-width:min(1100px,98vw);margin:0 auto;padding:clamp(24px,4vw,50px) clamp(16px,3vw,22px) clamp(50px,7vw,80px);}
+.contact-grid{display:grid;grid-template-columns:1fr 1.4fr;gap:clamp(20px,4vw,40px);align-items:start;}
+@media(max-width:800px){.contact-grid{grid-template-columns:1fr}}
+.contact-info{display:flex;flex-direction:column;gap:16px;}
+.contact-title{font-size:clamp(22px,4vw,36px);font-weight:800;color:#17323a;letter-spacing:-.5px;margin-bottom:8px;}
+.contact-sub{font-size:clamp(13px,1.8vw,16px);color:var(--muted);line-height:1.7;margin-bottom:16px;}
+.contact-card{background:rgba(255,255,255,.55);backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,.78);border-radius:16px;padding:16px;display:flex;align-items:center;gap:14px;transition:transform .2s;}
+.contact-card:hover{transform:translateX(4px);}
+.c-icon{width:46px;height:46px;border-radius:14px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.c-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--muted);margin-bottom:2px;}
+.c-val{font-size:clamp(12px,1.6vw,14px);font-weight:700;color:#17323a;}
+.offices-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+@media(max-width:500px){.offices-row{grid-template-columns:1fr}}
+.office-card{background:rgba(255,255,255,.5);border:1px solid rgba(255,255,255,.75);border-radius:12px;padding:12px;text-align:center;}
+@keyframes floatBob{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+</style>
+{% endblock %}
+
+{% block content %}
+<main>
+<div class="contact-page">
+  <div class="contact-grid">
+
+    <!-- LEFT: INFO -->
+    <div class="contact-info">
+      <!-- Original Contact Illustration -->
+      <div style="animation:floatBob 5s ease-in-out infinite;text-align:center;margin-bottom:8px">
+        <svg width="200" height="180" viewBox="0 0 200 180" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <!-- Envelope shape -->
+          <rect x="20" y="50" width="160" height="100" rx="10" fill="rgba(26,163,154,.1)" stroke="#1aa39a" stroke-width="2"/>
+          <!-- Envelope fold top -->
+          <path d="M20 60L100 110L180 60" stroke="#1aa39a" stroke-width="2" stroke-linecap="round" fill="none"/>
+          <!-- Envelope fold lines -->
+          <path d="M20 150l55-45M180 150l-55-45" stroke="#1aa39a" stroke-width="1.3" stroke-linecap="round" opacity=".5"/>
+          <!-- Phoenix rising from envelope -->
+          <path d="M85 50C78 35 68 28 72 22c6 4 11 14 13 28z" fill="rgba(244,162,97,.6)"/>
+          <path d="M100 44c0-16-4-24 0-28 4 4 0 14 0 28z" fill="rgba(255,209,70,.7)"/>
+          <path d="M115 50C122 35 132 28 128 22c-6 4-11 14-13 28z" fill="rgba(244,162,97,.5)"/>
+          <ellipse cx="100" cy="52" rx="16" ry="18" fill="rgba(231,111,81,.8)"/>
+          <circle cx="95" cy="46" r="4" fill="white"/>
+          <circle cx="105" cy="46" r="4" fill="white"/>
+          <circle cx="96" cy="45" r="2.5" fill="#1a1a2e"/>
+          <circle cx="106" cy="45" r="2.5" fill="#1a1a2e"/>
+          <!-- Orbit dots -->
+          <circle cx="40" cy="35" r="4" fill="rgba(26,163,154,.35)" opacity=".8"/>
+          <circle cx="165" cy="28" r="3" fill="rgba(244,162,97,.5)" opacity=".8"/>
+          <circle cx="175" cy="55" r="3" fill="rgba(181,123,238,.5)" opacity=".7"/>
+          <!-- Send arc -->
+          <path d="M160 95l20-10-5 15" fill="rgba(26,163,154,.2)" stroke="#1aa39a" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          <text x="100" y="172" text-anchor="middle" fill="rgba(26,163,154,.7)" font-size="10" font-family="Poppins,sans-serif" font-weight="700">PHOENIXMINDS · ALWAYS HERE</text>
+        </svg>
+      </div>
+
+      <div>
+        <div class="contact-title" data-translatable data-original="Get in Touch">Get in Touch</div>
+        <div class="contact-sub" data-translatable data-original="Parents, professionals, schools, researchers, investors — we respond within 24 hours.">
+          Parents, professionals, schools, researchers, investors — we respond within 24 hours.
+        </div>
+      </div>
+
+      <div class="contact-card">
+        <div class="c-icon" style="background:rgba(26,163,154,.12);border:1px solid rgba(26,163,154,.25)">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#1aa39a" stroke-width="2" stroke-linecap="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        </div>
+        <div><div class="c-label">Email</div><div class="c-val">contact@phoenixminds.org</div></div>
+      </div>
+
+      <div class="contact-card">
+        <div class="c-icon" style="background:rgba(244,162,97,.12);border:1px solid rgba(244,162,97,.25)">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#f4a261" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+        </div>
+        <div><div class="c-label">Website</div><div class="c-val">phoenixminds.org</div></div>
+      </div>
+
+      <div class="contact-card">
+        <div class="c-icon" style="background:rgba(108,184,245,.12);border:1px solid rgba(108,184,245,.25)">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#6cb8f5" stroke-width="2" stroke-linecap="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+        </div>
+        <div><div class="c-label">LinkedIn</div><div class="c-val">linkedin.com/in/ruksh-e-ibadat</div></div>
+      </div>
+
+      <div class="offices-row">
+        <div class="office-card">
+          <div style="font-size:22px;margin-bottom:5px">🇵🇰</div>
+          <div style="font-weight:700;font-size:13px;color:#17323a">Karachi</div>
+          <div style="font-size:11px;color:var(--muted)">Pakistan HQ</div>
+        </div>
+        <div class="office-card">
+          <div style="font-size:22px;margin-bottom:5px">🇦🇪</div>
+          <div style="font-weight:700;font-size:13px;color:#17323a">Abu Dhabi</div>
+          <div style="font-size:11px;color:var(--muted)">UAE Office</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- RIGHT: FORM -->
+    <div class="pm-card">
+      <div style="font-weight:800;font-size:clamp(18px,2.5vw,22px);color:#17323a;margin-bottom:4px">Send a Message</div>
+      <div style="font-size:12px;color:var(--muted);margin-bottom:18px">We read every message personally and respond within 24 hours.</div>
+      <form method="POST" action="{{ url_for('contact') }}">
+        <div class="form-row">
+          <div class="form-group"><label class="form-label">Your Name *</label><input class="form-control" name="name" placeholder="Full name" required/></div>
+          <div class="form-group"><label class="form-label">Email *</label><input class="form-control" type="email" name="email" placeholder="you@email.com" required/></div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Subject</label>
+          <select class="form-control" name="subject">
+            <option value="">Select topic…</option>
+            <option>Parent — Question about platform</option>
+            <option>Specialist — Professional registration</option>
+            <option>School — Institutional partnership</option>
+            <option>Research — Collaboration enquiry</option>
+            <option>Investor — Partnership opportunity</option>
+            <option>Media — Press enquiry</option>
+            <option>Technical — Support request</option>
+            <option>Other</option>
+          </select>
+        </div>
+        <div class="form-group"><label class="form-label">Message *</label><textarea class="form-control" name="message" rows="5" placeholder="Tell us how we can help…" required></textarea></div>
+        <button type="submit" class="btn btn-primary btn-block btn-lg mt3">Send Message →</button>
+      </form>
+    </div>
+
+  </div>
+</div>
+</main>
+{% endblock %}

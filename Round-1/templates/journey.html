@@ -1,0 +1,342 @@
+{% extends "base.html" %}
+{% block title %}Start Your Journey{% endblock %}
+
+{% block content %}
+<div class="journey-page">
+  <div class="journey-card">
+    <!-- Hero -->
+    <img class="logo hero-float" src="{{ url_for('static', filename='images/logo.PNG') }}" alt="Phoenix Minds logo">
+    <h1 class="journey-h1">Start Your Journey</h1>
+    <div class="step-subtitle">
+      <h2 id="stepTitle" class="step-title">Caregiver</h2>
+      <div id="stepMeta" class="step-meta"><em>Step 1 of 8</em></div>
+    </div>
+
+    <!-- Optional step chips -->
+    <div id="stepChips" class="pill-row small chips-wrap" aria-label="Steps">
+      <span class="pill" data-goto="1" aria-current="step">Caregiver</span>
+      <span class="pill" data-goto="2">Parents & Family</span>
+      <span class="pill" data-goto="3">Child – Prenatal/Birth</span>
+      <span class="pill" data-goto="4">Postnatal</span>
+      <span class="pill" data-goto="5">Vaccinations</span>
+      <span class="pill" data-goto="6">Illnesses</span>
+      <span class="pill" data-goto="7">Milestones</span>
+      <span class="pill alt" data-goto="8">Review & Save</span>
+    </div>
+
+    <!-- Wizard form -->
+    <form id="journeyForm" onsubmit="return false">
+      <!-- STEP 1: Caregiver -->
+      <section data-step="1" class="wizard-step">
+        <div class="grid-2">
+          <div>
+            <label>Caregiver Name</label>
+            <input class="field" name="caregiver_name" required>
+          </div>
+          <div>
+            <label>Email</label>
+            <input class="field" type="email" name="caregiver_email" placeholder="name@email.com">
+          </div>
+          <div>
+            <label>Phone</label>
+            <input class="field" name="caregiver_phone" placeholder="+92 …">
+          </div>
+          <div>
+            <label>Notes</label>
+            <input class="field" name="caregiver_notes" placeholder="Preferred contact time, lang">
+          </div>
+        </div>
+      </section>
+
+      <!-- STEP 2: Parents & Family -->
+      <section data-step="2" class="wizard-step" hidden>
+        <h3>Father</h3>
+        <div class="grid-2">
+          <input class="field" name="father_name" placeholder="Name">
+          <input class="field" name="father_dob" type="date" placeholder="DOB">
+          <input class="field" name="father_conditions" placeholder="Conditions (comma-separated)">
+          <input class="field" name="father_allergies"  placeholder="Allergies (comma-separated)">
+        </div>
+
+        <h3 style="margin-top:10px">Mother</h3>
+        <div class="grid-2">
+          <input class="field" name="mother_name" placeholder="Name">
+          <input class="field" name="mother_dob" type="date" placeholder="DOB">
+          <input class="field" name="mother_conditions" placeholder="Conditions (comma-separated)">
+          <input class="field" name="mother_allergies"  placeholder="Allergies (comma-separated)">
+        </div>
+
+        <label style="margin-top:10px">Family History (Grandparents / Siblings)</label>
+        <textarea class="field" name="relatives_notes" placeholder="List notable diagnoses (e.g., diabetes, epilepsy, hearing loss, autism)"></textarea>
+      </section>
+
+      <!-- STEP 3: Child (Prenatal/Birth) -->
+      <section data-step="3" class="wizard-step" hidden>
+        <h3>Child</h3>
+        <div class="grid-2">
+          <input class="field" name="child_name" placeholder="Child name" required>
+          <input class="field" type="date" name="child_dob" placeholder="Date of birth">
+          <input class="field" name="child_sex" placeholder="Sex">
+          <input class="field" name="child_bgroup" placeholder="Blood group">
+        </div>
+
+        <h4>Prenatal</h4>
+        <div class="grid-2">
+          <input class="field" name="prenatal_complications" placeholder="Complications (comma-separated)">
+          <input class="field" name="prenatal_infections"   placeholder="Infections (comma-separated)">
+          <input class="field" name="prenatal_meds"         placeholder="Medications (comma-separated)">
+          <input class="field" name="prenatal_scans"        placeholder="Scans/tests (comma-separated)">
+        </div>
+
+        <h4>Birth</h4>
+        <div class="grid-2">
+          <input class="field" name="birth_gestation" placeholder="Gestation (weeks)">
+          <input class="field" name="birth_delivery"  placeholder="Delivery (normal/CS)">
+          <input class="field" name="birth_place"     placeholder="Place / facility">
+          <input class="field" name="birth_apgar"     placeholder="APGAR 1/5 (e.g., 8/9)">
+        </div>
+      </section>
+
+      <!-- STEP 4: Postnatal -->
+      <section data-step="4" class="wizard-step" hidden>
+        <div class="grid-2">
+          <input class="field" name="postnatal_nicu"      placeholder="NICU? (yes/no)">
+          <input class="field" name="postnatal_nicu_days" placeholder="NICU duration (days)">
+          <input class="field" name="postnatal_feeding"   placeholder="Feeding (breast/formula/mixed)">
+          <input class="field" name="postnatal_jaundice"  placeholder="Jaundice? (yes/no)">
+        </div>
+        <textarea class="field" name="postnatal_notes" placeholder="Other postnatal notes (hearing screen, etc.)"></textarea>
+      </section>
+
+      <!-- STEP 5: Vaccinations -->
+      <section data-step="5" class="wizard-step" hidden>
+        <div id="vaccinations"></div>
+        <button type="button" class="nav-pill" onclick="addVax()">+ Add vaccine</button>
+      </section>
+
+      <!-- STEP 6: Illnesses -->
+      <section data-step="6" class="wizard-step" hidden>
+        <div id="illnesses"></div>
+        <button type="button" class="nav-pill" onclick="addIllness()">+ Add illness</button>
+      </section>
+
+      <!-- STEP 7: Milestones -->
+      <section data-step="7" class="wizard-step" hidden>
+        <div id="milestones"></div>
+        <button type="button" class="nav-pill" onclick="addMilestone()">+ Add milestone</button>
+      </section>
+
+      <!-- STEP 8: Review -->
+      <section data-step="8" class="wizard-step" hidden>
+        <h3>Review & Save</h3>
+        <p class="muted">We’ll create a single JSON dossier. You can share it with clinicians later.</p>
+        <textarea class="field" id="reviewBox" rows="12" readonly style="font-family:ui-monospace, SFMono-Regular, Menlo, monospace"></textarea>
+      </section>
+
+      <!-- Controls -->
+      <div class="wizard-controls">
+        <button type="button" class="nav-pill" onclick="prevStep()">Back</button>
+        <div class="spacer"></div>
+        <button type="button" class="nav-pill" onclick="nextStep()">Next</button>
+        <button id="saveBtn" type="button" class="cta" onclick="saveJourney()" style="display:none;">Save Journey</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<script>
+/* ---- step state ---- */
+const stepNames = [
+  "", // 0 unused
+  "Caregiver",
+  "Parents & Family",
+  "Child – Prenatal/Birth",
+  "Postnatal",
+  "Vaccinations",
+  "Illnesses",
+  "Milestones",
+  "Review & Save"
+];
+let step = 1, maxStep = 8;
+const steps = [...document.querySelectorAll('.wizard-step')];
+const chips = [...document.querySelectorAll('#stepChips .pill')];
+
+function updateStepUI(){
+  // show/hide sections
+  steps.forEach(s => s.hidden = (Number(s.dataset.step) !== step));
+
+  // hero subtitle + meta
+  document.getElementById('stepTitle').textContent = stepNames[step];
+  document.getElementById('stepMeta').innerHTML = `<em>Step ${step} of ${maxStep}</em>`;
+
+  // chips highlight
+  chips.forEach((c,i)=>{
+    const n = i+1;
+    if(n === step) c.setAttribute('aria-current','step');
+    else c.removeAttribute('aria-current');
+  });
+
+  // controls
+  document.getElementById('saveBtn').style.display = (step === maxStep) ? 'inline-block' : 'none';
+
+  // refresh review JSON
+  if(step === 8){
+    document.getElementById('reviewBox').value = JSON.stringify(buildPayload(), null, 2);
+  }
+}
+function showStep(n){ step = Math.min(Math.max(1,n), maxStep); updateStepUI(); }
+function nextStep(){ showStep(step+1); }
+function prevStep(){ showStep(step-1); }
+chips.forEach(ch => ch.addEventListener('click', () => showStep(Number(ch.dataset.goto))));
+
+/* ---- dynamic blocks ---- */
+function addVax(){
+  const wrap = document.getElementById('vaccinations');
+  const i = wrap.children.length;
+  wrap.insertAdjacentHTML('beforeend', `
+    <div class="grid-2">
+      <input class="field" id="vax_name_${i}"  placeholder="Vaccine name">
+      <input class="field" id="vax_date_${i}"  type="date" placeholder="Date">
+      <input class="field" id="vax_batch_${i}" placeholder="Batch/lot">
+      <input class="field" id="vax_provider_${i}" placeholder="Provider/clinic">
+    </div>`);
+}
+function addIllness(){
+  const wrap = document.getElementById('illnesses');
+  const i = wrap.children.length;
+  wrap.insertAdjacentHTML('beforeend', `
+    <div class="grid-2">
+      <input class="field" id="ill_age_${i}" placeholder="Age at illness (e.g., 3y 2m)">
+      <input class="field" id="ill_sym_${i}" placeholder="Symptoms (comma-separated)">
+      <input class="field" id="ill_dx_${i}"  placeholder="Diagnosis">
+      <input class="field" id="ill_doc_${i}" placeholder="Doctor (name)">
+      <input class="field" id="ill_spec_${i}" placeholder="Specialty">
+      <input class="field" id="ill_fac_${i}"  placeholder="Facility">
+      <input class="field" id="ill_rx_${i}"   placeholder="Prescriptions (drug dose × days)">
+      <input class="field" id="ill_home_${i}" placeholder="Home care / remedies">
+    </div>`);
+}
+function addMilestone(){
+  const wrap = document.getElementById('milestones');
+  const i = wrap.children.length;
+  wrap.insertAdjacentHTML('beforeend', `
+    <div class="grid-2">
+      <input class="field" id="ms_domain_${i}" placeholder="Domain (gross motor, speech, social)">
+      <input class="field" id="ms_item_${i}"   placeholder="Milestone (e.g., first words)">
+      <input class="field" id="ms_age_${i}"    placeholder="Age (months)">
+    </div>`);
+}
+addVax(); addIllness(); addMilestone();
+
+/* ---- collect + save ---- */
+function idv(id){ const el=document.getElementById(id); return el?el.value.trim():""; }
+function splitCSV(s){return (s||"").split(",").map(x=>x.trim()).filter(Boolean);}
+
+function collectVax(){
+  const box = document.getElementById('vaccinations');
+  return [...box.querySelectorAll('.grid-2')].map((_,i)=>({
+    name:idv(`vax_name_${i}`), date:idv(`vax_date_${i}`),
+    batch:idv(`vax_batch_${i}`), provider:idv(`vax_provider_${i}`)
+  })).filter(v=>v.name||v.date||v.batch||v.provider);
+}
+function collectIll(){
+  const box = document.getElementById('illnesses');
+  return [...box.querySelectorAll('.grid-2')].map((_,i)=>({
+    age:idv(`ill_age_${i}`),
+    symptoms: splitCSV(idv(`ill_sym_${i}`)),
+    diagnosis: idv(`ill_dx_${i}`),
+    doctor: {name:idv(`ill_doc_${i}`), specialty:idv(`ill_spec_${i}`), facility:idv(`ill_fac_${i}`)},
+    prescriptions: idv(`ill_rx_${i}`) ? [{drug:idv(`ill_rx_${i}`)}] : [],
+    home_care: idv(`ill_home_${i}`)
+  })).filter(x=>x.age||x.diagnosis||x.symptoms.length||x.doctor.name);
+}
+function collectMilestones(){
+  const box = document.getElementById('milestones');
+  return [...box.querySelectorAll('.grid-2')].map((_,i)=>({
+    domain:idv(`ms_domain_${i}`),
+    milestone:idv(`ms_item_${i}`),
+    age_months:idv(`ms_age_${i}`)
+  })).filter(m=>m.domain||m.milestone||m.age_months);
+}
+
+function buildPayload(){
+  const f = document.getElementById('journeyForm');
+  return {
+    caregiver: {
+      name: f.caregiver_name.value.trim(),
+      email: f.caregiver_email.value.trim(),
+      phone: f.caregiver_phone.value.trim(),
+      notes: f.caregiver_notes.value.trim()
+    },
+    family_tree: {
+      father: {
+        name: f.father_name.value.trim(),
+        dob: f.father_dob.value,
+        conditions: splitCSV(f.father_conditions.value),
+        allergies:  splitCSV(f.father_allergies.value),
+        medications: []
+      },
+      mother: {
+        name: f.mother_name.value.trim(),
+        dob: f.mother_dob.value,
+        conditions: splitCSV(f.mother_conditions.value),
+        allergies:  splitCSV(f.mother_allergies.value),
+        medications: []
+      },
+      father_relatives: [{relation:"paternal grandfather",conditions:[]},{relation:"paternal grandmother",conditions:[]}],
+      mother_relatives: [{relation:"maternal grandfather",conditions:[]},{relation:"maternal grandmother",conditions:[]}],
+      relatives_notes: f.relatives_notes.value.trim()
+    },
+    child: {
+      name: f.child_name.value.trim(),
+      dob: f.child_dob.value,
+      sex: f.child_sex.value.trim(),
+      blood_group: f.child_bgroup.value.trim(),
+      prenatal: {
+        complications: splitCSV(f.prenatal_complications.value),
+        infections:   splitCSV(f.prenatal_infections.value),
+        medications:  splitCSV(f.prenatal_meds.value),
+        scans:        splitCSV(f.prenatal_scans.value),
+        notes: ""
+      },
+      birth: {
+        gestation_weeks: f.birth_gestation.value.trim(),
+        delivery:        f.birth_delivery.value.trim(),
+        place:           f.birth_place.value.trim(),
+        apgar_1: (f.birth_apgar.value||"").split("/")[0]||"",
+        apgar_5: (f.birth_apgar.value||"").split("/")[1]||"",
+        complications: ""
+      },
+      postnatal: {
+        nicu: f.postnatal_nicu.value.trim(),
+        duration_days: f.postnatal_nicu_days.value.trim(),
+        feeding: f.postnatal_feeding.value.trim(),
+        jaundice: f.postnatal_jaundice.value.trim(),
+        hearing_screen: "",
+        notes: f.postnatal_notes.value.trim()
+      },
+      vaccinations: collectVax(),
+      illnesses: collectIll(),
+      allergies: [],
+      current_medications: [],
+      milestones: collectMilestones(),
+      notes: ""
+    }
+  };
+}
+
+async function saveJourney(){
+  const payload = buildPayload();
+  const res = await fetch("{{ url_for('api_create_journey') }}", {
+    method:"POST",
+    headers: {"Content-Type":"application/json"},
+    body: JSON.stringify(payload)
+  });
+  const j = await res.json();
+  if(j.ok){ alert("Saved: "+j.id); location.href="{{ url_for('services') }}"; }
+  else   { alert("Error: "+(j.error||"Could not save")); }
+}
+
+updateStepUI(); // initial
+</script>
+{% endblock %}

@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+{% block title %}Connect with Specialists — PhoenixMinds{% endblock %}
+{% block content %}
+<main class="page-top">
+  <div class="ph"><div class="ph-icon">🩺</div><h1>Connect with Specialists</h1><p>Verified multidisciplinary professionals across Pakistan, UAE, UK and worldwide.</p></div>
+  <div class="mw-xl" style="width:100%;padding:0 20px 60px">
+    <div class="pm-card mb4">
+      <div class="flex gap2 ia" style="flex-wrap:wrap">
+        <input class="form-control" id="specSearch" placeholder="Search name, specialisation, condition…" style="flex:1;min-width:160px" oninput="filterSpecs()"/>
+        <select class="form-control" id="specFilter" style="width:190px" onchange="filterSpecs()"><option value="">All specialisations</option><option>Paediatric Neurology</option><option>Psychology</option><option>Speech Therapy</option><option>Occupational Therapy</option><option>ABA Therapy</option><option>Remedial Teaching</option><option>Physiotherapy</option><option>Music Therapy</option></select>
+        <select class="form-control" id="specLang" style="width:140px" onchange="filterSpecs()"><option value="">All languages</option><option>Urdu</option><option>Arabic</option><option>English</option><option>Hindi</option><option>French</option></select>
+        <select class="form-control" id="specCountry" style="width:140px" onchange="filterSpecs()"><option value="">All countries</option><option>Pakistan</option><option>UAE</option><option>UK</option><option>India</option><option>Nigeria</option><option>Australia</option></select>
+      </div>
+    </div>
+    <div id="specGrid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:14px"></div>
+  </div>
+</main>
+{% endblock %}
+{% block extra_scripts %}
+<script>
+const SPECIALISTS=[
+  {n:'Dr. Sara Qureshi',r:'Paediatric Neurologist',i:'🧠',m:'Aga Khan Hospital, Karachi · 14y',t:['ASD','ADHD','Epilepsy','Dev Delay'],l:['Urdu','English'],s:'Paediatric Neurology',c:'Pakistan',verified:true},
+  {n:'Ms. Fatima Hassan',r:'Speech-Language Pathologist',i:'🗣️',m:'Dubai Healthcare City · 9y',t:['AAC','Apraxia','Stuttering'],l:['Arabic','English'],s:'Speech Therapy',c:'UAE',verified:true},
+  {n:'Mr. James Okafor',r:'Occupational Therapist',i:'✋',m:'Lagos, Nigeria · 7y',t:['Sensory Integration','Fine Motor','ADL'],l:['English'],s:'Occupational Therapy',c:'Nigeria',verified:true},
+  {n:'Ms. Ayesha Tariq',r:'Remedial Teacher',i:'📚',m:'Lahore, Pakistan · 11y',t:['Dyslexia','Dyscalculia','Cambridge'],l:['Urdu','English'],s:'Remedial Teaching',c:'Pakistan',verified:true},
+  {n:'Dr. Ahmad Malik',r:'Child Psychiatrist',i:'💭',m:'Islamabad · 12y',t:['ADHD','Anxiety','Mood Disorders'],l:['Urdu','English'],s:'Psychology',c:'Pakistan',verified:true},
+  {n:'Ms. Priya Sharma',r:'ABA Therapist / BCBA',i:'🌱',m:'Mumbai, India · 8y',t:['ABA','ASD','Behaviour Analysis'],l:['Hindi','English'],s:'ABA Therapy',c:'India',verified:true},
+  {n:'Dr. Omar Al-Faris',r:'Developmental Paediatrician',i:'👶',m:'Riyadh, KSA · 16y',t:['Global Dev Delay','ASD','ID'],l:['Arabic','English'],s:'Paediatric Neurology',c:'UAE',verified:true},
+  {n:'Ms. Sophie Lambert',r:'Play Therapist',i:'🎮',m:'London, UK · 10y',t:['Trauma','Social Anxiety','ADHD'],l:['English','French'],s:'Psychology',c:'UK',verified:true},
+  {n:'Dr. Nadia Rehman',r:'Educational Psychologist',i:'🧩',m:'Karachi · 9y',t:['Psychoeducational Assessment','Dyslexia','ADHD'],l:['Urdu','English'],s:'Psychology',c:'Pakistan',verified:true},
+  {n:'Ms. Tanveer Bibi',r:'Music Therapist',i:'🎵',m:'Lahore · 6y',t:['ASD','Anxiety','Sensory Processing'],l:['Urdu','Punjabi'],s:'Music Therapy',c:'Pakistan',verified:true},
+  {n:'Mr. David Chen',r:'Physiotherapist',i:'🏃',m:'Sydney, Australia · 13y',t:['DCD','CP','Gross Motor Delays'],l:['English','Mandarin'],s:'Physiotherapy',c:'Australia',verified:true},
+  {n:'Ms. Amina Bashir',r:'Shadow / Support Teacher',i:'👩‍🏫',m:'Karachi · 5y',t:['ASD','ADHD','LD Support'],l:['Urdu','English'],s:'Remedial Teaching',c:'Pakistan',verified:true},
+];
+function filterSpecs(){
+  const search=(document.getElementById('specSearch')?.value||'').toLowerCase();
+  const filt=document.getElementById('specFilter')?.value||'';
+  const lang=document.getElementById('specLang')?.value||'';
+  const country=document.getElementById('specCountry')?.value||'';
+  const f=SPECIALISTS.filter(s=>{
+    if(search&&!s.n.toLowerCase().includes(search)&&!s.r.toLowerCase().includes(search)&&!s.t.some(t=>t.toLowerCase().includes(search)))return false;
+    if(filt&&s.s!==filt)return false;
+    if(lang&&!s.l.includes(lang))return false;
+    if(country&&s.c!==country)return false;
+    return true;
+  });
+  const g=document.getElementById('specGrid');if(!g)return;
+  if(!f.length){g.innerHTML='<p class="ts tm">No specialists match your filters.</p>';return;}
+  g.innerHTML=f.map(s=>`<div style="background:rgba(255,255,255,.62);backdrop-filter:blur(16px);border:1px solid rgba(255,255,255,.78);border-radius:18px;padding:18px;box-shadow:0 10px 30px rgba(0,0,0,.07);display:flex;flex-direction:column;gap:9px;transition:transform .25s" onmouseover="this.style.transform='translateY(-4px)'" onmouseout="this.style.transform=''">
+    <div class="flex ia gap3"><div style="width:48px;height:48px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:22px;background:rgba(255,255,255,.7);border:1px solid rgba(255,255,255,.8)">${s.i}</div><div><div style="font-weight:700;font-size:14px;color:#17323a">${s.n}${s.verified?' <span class="badge badge-teal" style="font-size:9px">Verified</span>':''}</div><div style="font-size:11px;color:var(--brand);font-weight:600">${s.r}</div></div></div>
+    <div class="tx tm">${s.m}</div>
+    <div style="display:flex;flex-wrap:wrap;gap:4px">${s.t.map(t=>`<span class="badge badge-teal">${t}</span>`).join('')}</div>
+    <div style="display:flex;flex-wrap:wrap;gap:4px">${s.l.map(l=>`<span class="badge badge-orange">${l}</span>`).join('')}<span class="badge badge-blue">${s.c}</span></div>
+    <div class="flex gap2 mt2">
+      <button class="btn btn-primary" style="flex:1;justify-content:center;font-size:12px;padding:7px" onclick="toast('Booking ${s.n}…','success')">Book</button>
+      <button class="btn btn-secondary" style="font-size:12px;padding:7px 12px" onclick="toast('Message sent to ${s.n}','info')">Message</button>
+    </div>
+  </div>`).join('');
+}
+document.addEventListener('DOMContentLoaded',filterSpecs);
+</script>
+{% endblock %}

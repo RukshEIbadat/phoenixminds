@@ -1,0 +1,113 @@
+{% extends "base.html" %}
+{% block title %}Sign In — PhoenixMinds{% endblock %}
+{% block extra_head %}
+<style>
+*,*::before,*::after{box-sizing:border-box}
+.auth-page{min-height:calc(100svh - 120px);display:grid;grid-template-columns:1fr 1fr;align-items:center;position:relative;z-index:2;padding:clamp(20px,4vw,40px);gap:clamp(20px,4vw,40px);max-width:min(1000px,98vw);margin:0 auto;}
+@media(max-width:750px){.auth-page{grid-template-columns:1fr;}.auth-illus{display:none;}}
+.auth-illus{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:20px;}
+.auth-svg-wrap{animation:floatBob 5s ease-in-out infinite;}
+.auth-card{width:100%;max-width:420px;}
+.auth-brand{text-align:center;margin-bottom:24px;}
+.auth-brand-icon{width:60px;height:60px;background:linear-gradient(135deg,var(--brand),var(--orange));border-radius:18px;display:flex;align-items:center;justify-content:center;margin:0 auto 12px;box-shadow:0 8px 24px rgba(26,163,154,.28);}
+.auth-title{font-size:clamp(20px,3vw,26px);font-weight:800;color:#17323a;margin-bottom:4px;}
+.auth-sub{font-size:12px;color:var(--muted);}
+.demo-box{background:rgba(26,163,154,.07);border:1px solid rgba(26,163,154,.2);border-radius:12px;padding:11px 14px;margin-bottom:16px;font-size:11.5px;color:var(--muted);line-height:1.8;}
+.demo-box strong{color:#17323a;}
+@keyframes floatBob{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+</style>
+{% endblock %}
+
+{% block content %}
+<main>
+  <div class="auth-page">
+
+    <!-- ILLUSTRATION COLUMN -->
+    <div class="auth-illus">
+      <div class="auth-svg-wrap">
+        <!-- Original PhoenixMinds Login Illustration -->
+        <svg width="320" height="320" viewBox="0 0 320 320" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <!-- Background circle -->
+          <circle cx="160" cy="160" r="140" fill="rgba(26,163,154,.06)" stroke="rgba(26,163,154,.12)" stroke-width="1.5"/>
+          <circle cx="160" cy="160" r="110" fill="rgba(26,163,154,.04)" stroke="rgba(26,163,154,.08)" stroke-width="1" stroke-dasharray="6 4"/>
+          <!-- Shield -->
+          <path d="M160 50L90 80v60c0 44 30 84 70 95 40-11 70-51 70-95V80z" fill="rgba(26,163,154,.15)" stroke="#1aa39a" stroke-width="2"/>
+          <path d="M160 70L108 95v45c0 33 23 63 52 71 29-8 52-38 52-71V95z" fill="rgba(26,163,154,.1)" stroke="#1aa39a" stroke-width="1.5"/>
+          <!-- Checkmark in shield -->
+          <path d="M138 155l15 15 30-30" stroke="#1aa39a" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+          <!-- Phoenix birds around -->
+          <path d="M60 110C45 100 35 108 40 116c6-2 14-4 20-6z" fill="rgba(244,162,97,.5)"/>
+          <path d="M60 110c-4 8 2 18 10 14-2-5-5-10-10-14z" fill="rgba(244,162,97,.4)"/>
+          <path d="M260 110c15-10 25-2 20 6-6-2-14-4-20-6z" fill="rgba(244,162,97,.5)"/>
+          <path d="M260 110c4 8-2 18-10 14 2-5 5-10 10-14z" fill="rgba(244,162,97,.4)"/>
+          <!-- Orbit dots -->
+          <circle cx="160" cy="35" r="5" fill="rgba(26,163,154,.4)"/>
+          <circle cx="265" cy="108" r="4" fill="rgba(244,162,97,.5)"/>
+          <circle cx="265" cy="212" r="4" fill="rgba(181,123,238,.5)"/>
+          <circle cx="160" cy="285" r="5" fill="rgba(26,163,154,.4)"/>
+          <circle cx="55" cy="212" r="4" fill="rgba(244,162,97,.5)"/>
+          <circle cx="55" cy="108" r="4" fill="rgba(181,123,238,.5)"/>
+          <!-- Connecting orbit lines -->
+          <circle cx="160" cy="160" r="125" fill="none" stroke="rgba(26,163,154,.07)" stroke-width="1" stroke-dasharray="3 6"/>
+          <!-- Lock at bottom -->
+          <rect x="140" y="220" width="40" height="32" rx="6" fill="rgba(26,163,154,.15)" stroke="#1aa39a" stroke-width="1.5"/>
+          <path d="M150 220v-8c0-6 4-10 10-10s10 4 10 10v8" stroke="#1aa39a" stroke-width="2" stroke-linecap="round" fill="none"/>
+          <circle cx="160" cy="236" r="4" fill="#1aa39a"/>
+          <path d="M160 236v7" stroke="#1aa39a" stroke-width="2" stroke-linecap="round"/>
+          <!-- Text labels -->
+          <text x="160" y="282" text-anchor="middle" fill="rgba(26,163,154,.7)" font-size="11" font-family="Poppins,sans-serif" font-weight="700">SECURE · ENCRYPTED · HIPAA</text>
+        </svg>
+      </div>
+      <div style="text-align:center">
+        <div style="font-size:clamp(16px,2.5vw,20px);font-weight:800;color:#17323a;margin-bottom:6px">Welcome to PhoenixMinds</div>
+        <div style="font-size:clamp(11px,1.5vw,13px);color:var(--muted);max-width:280px;line-height:1.6">Your child's complete developmental journey — secure, private, and always with you.</div>
+        <div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:12px">
+          <span class="badge badge-green" style="font-size:10px">HIPAA Compliant</span>
+          <span class="badge badge-teal" style="font-size:10px">AES-256 Encrypted</span>
+          <span class="badge badge-blue" style="font-size:10px">GDPR Compliant</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- FORM COLUMN -->
+    <div class="auth-card">
+      <div class="pm-card">
+        <div class="auth-brand">
+          <div class="auth-brand-icon">
+            <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+              <path d="M16 4L4 10v8c0 7 5 13.4 12 15.2C23 35.4 28 29 28 18V10z" fill="rgba(255,255,255,.25)" stroke="white" stroke-width="1.5"/>
+              <path d="M11 16l3.5 3.5L21 13" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <div class="auth-title" data-translatable data-original="Welcome Back">Welcome Back</div>
+          <div class="auth-sub" data-translatable data-original="Sign in to your PhoenixMinds account">Sign in to your PhoenixMinds account</div>
+        </div>
+
+        <div class="demo-box">
+          <strong>Admin:</strong> admin@phoenixminds.org / Admin@2026<br>
+          <strong>Demo:</strong> demo@phoenixminds.org / Demo@2026
+        </div>
+
+        <form method="POST" action="{{ url_for('login') }}" novalidate>
+          <input type="hidden" name="next" value="{{ next }}"/>
+          <div class="form-group">
+            <label class="form-label">Email Address</label>
+            <input class="form-control" type="email" name="email" placeholder="you@email.com" autocomplete="email" required autofocus/>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Password</label>
+            <input class="form-control" type="password" name="password" placeholder="••••••••" autocomplete="current-password" required/>
+          </div>
+          <button type="submit" class="btn btn-primary btn-block btn-lg" style="margin-top:18px">Sign In →</button>
+        </form>
+
+        <div class="divider"></div>
+        <div style="text-align:center;font-size:12px;color:var(--muted)">
+          New to PhoenixMinds? <a href="{{ url_for('register') }}" style="color:var(--brand);font-weight:700;text-decoration:none">Create free account →</a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</main>
+{% endblock %}

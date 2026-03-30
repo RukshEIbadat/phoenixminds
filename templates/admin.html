@@ -1,0 +1,226 @@
+{% extends "base.html" %}
+{% block title %}Admin Panel — PhoenixMinds{% endblock %}
+{% block extra_head %}
+<style>
+.admin-top-bar{background:rgba(124,58,237,.1);border-bottom:2px solid rgba(124,58,237,.25);padding:10px 20px;position:sticky;top:60px;z-index:100;display:flex;align-items:center;gap:12px;flex-wrap:wrap;backdrop-filter:blur(10px);}
+.admin-badge-bar{background:rgba(124,58,237,.15);color:#4c1d95;font-size:11px;font-weight:700;padding:5px 12px;border-radius:999px;border:1px solid rgba(124,58,237,.3);}
+.prog-small{background:rgba(0,0,0,.07);border-radius:999px;height:5px;overflow:hidden;margin-top:5px;}
+.prog-fill-s{height:100%;border-radius:999px;background:linear-gradient(90deg,var(--brand),#23b4aa);}
+.analytics-bar{display:flex;align-items:center;gap:10px;margin-bottom:8px;font-size:12px;}
+.analytics-label{width:200px;color:#17323a;font-weight:600;flex-shrink:0;}
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="admin-top-bar">
+  <span class="admin-badge-bar">ADMIN PANEL</span>
+  <a href="{{ url_for('home') }}" class="nav-pill">← Main Site</a>
+  <a href="{{ url_for('journey') }}" class="nav-pill">+ New Journey</a>
+  <button class="nav-pill" onclick="exportAll()">Export All Data</button>
+  <a href="{{ url_for('logout') }}" class="btn btn-danger" style="margin-left:auto;font-size:12px;padding:6px 14px">Logout</a>
+</div>
+
+<main class="page-top">
+  <!-- STATS -->
+  <div class="stat-row" style="max-width:1200px;width:100%;padding:16px 20px 0">
+    <div class="stat-card"><div class="stat-num">{{ stats.total_users }}</div><div class="stat-label">Total Users</div></div>
+    <div class="stat-card"><div class="stat-num">{{ stats.total_journeys }}</div><div class="stat-label">Child Journeys</div></div>
+    <div class="stat-card"><div class="stat-num">{{ stats.total_evals }}</div><div class="stat-label">Evaluations</div></div>
+    <div class="stat-card"><div class="stat-num">{{ stats.total_messages }}</div><div class="stat-label">Messages</div></div>
+    <div class="stat-card"><div class="stat-num">{{ stats.conditions }}</div><div class="stat-label">Conditions DB</div></div>
+    <div class="stat-card"><div class="stat-num">{{ stats.languages }}</div><div class="stat-label">Languages</div></div>
+  </div>
+
+  <div style="max-width:1200px;width:100%;padding:14px 20px 60px">
+    <div class="pm-card">
+      <div class="tab-bar">
+        <div class="tab active" onclick="switchTab(this,'at-users')">Users ({{ users|length }})</div>
+        <div class="tab" onclick="switchTab(this,'at-journeys')">Journeys ({{ journeys|length }})</div>
+        <div class="tab" onclick="switchTab(this,'at-evals')">Evaluations ({{ evals|length }})</div>
+        <div class="tab" onclick="switchTab(this,'at-messages')">Messages ({{ contacts|length }})</div>
+        <div class="tab" onclick="switchTab(this,'at-conditions')">Conditions DB</div>
+        <div class="tab" onclick="switchTab(this,'at-analytics')">Analytics</div>
+      </div>
+
+      <!-- USERS -->
+      <div class="tab-panel active" id="at-users">
+        <div style="font-weight:800;font-size:15px;color:#17323a;margin-bottom:12px">All Users ({{ users|length }})</div>
+        <div style="overflow-x:auto">
+          <table class="data-table">
+            <thead><tr><th>Name</th><th>Email</th><th>Role</th><th>Country</th><th>Registered</th><th>Type</th></tr></thead>
+            <tbody>
+              {% for u in users %}
+              <tr>
+                <td style="font-weight:700">{{ u.fullname }}</td>
+                <td>{{ u.email }}</td>
+                <td>{{ u.role }}</td>
+                <td>{{ u.country or '—' }}</td>
+                <td>{{ u.created_at[:10] if u.created_at else '—' }}</td>
+                <td>{% if u.is_admin=='1' %}<span class="badge badge-admin">Admin</span>{% else %}<span class="badge badge-teal">User</span>{% endif %}</td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- JOURNEYS -->
+      <div class="tab-panel" id="at-journeys">
+        <div style="font-weight:800;font-size:15px;color:#17323a;margin-bottom:12px">Child Journeys ({{ journeys|length }})</div>
+        <div style="overflow-x:auto">
+          <table class="data-table">
+            <thead><tr><th>Child Name</th><th>DOB</th><th>Sex</th><th>Caregiver</th><th>Vaccinations</th><th>Milestones</th><th>Saved</th></tr></thead>
+            <tbody>
+              {% for j in journeys %}
+              <tr>
+                <td style="font-weight:700">{{ j.child.name if j.child else '—' }}</td>
+                <td>{{ j.child.dob if j.child else '—' }}</td>
+                <td>{{ j.child.sex if j.child else '—' }}</td>
+                <td>{{ j.caregiver.name if j.caregiver else '—' }}</td>
+                <td>{{ (j.child.vaccinations or [])|length if j.child else 0 }}</td>
+                <td>{{ (j.child.milestones or [])|length if j.child else 0 }}</td>
+                <td>{{ j.created_at[:10] if j.created_at else '—' }}</td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- EVALUATIONS -->
+      <div class="tab-panel" id="at-evals">
+        <div style="font-weight:800;font-size:15px;color:#17323a;margin-bottom:12px">Evaluations ({{ evals|length }})</div>
+        <div style="overflow-x:auto">
+          <table class="data-table">
+            <thead><tr><th>Child</th><th>Symptoms</th><th>AI Result</th><th>Date</th></tr></thead>
+            <tbody>
+              {% for e in evals %}
+              <tr>
+                <td style="font-weight:700">{{ e.child or 'Unknown' }}</td>
+                <td>{{ (e.selected or [])|length }} selected</td>
+                <td>{{ e.result.ai_analysis.primary_concern if e.result and e.result.ai_analysis else '—' }}</td>
+                <td>{{ e.saved_at[:10] if e.saved_at else '—' }}</td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- CONTACTS -->
+      <div class="tab-panel" id="at-messages">
+        <div style="font-weight:800;font-size:15px;color:#17323a;margin-bottom:12px">Contact Messages ({{ contacts|length }})</div>
+        <div style="overflow-x:auto">
+          <table class="data-table">
+            <thead><tr><th>Name</th><th>Email</th><th>Subject</th><th>Sent</th></tr></thead>
+            <tbody>
+              {% for c in contacts %}
+              <tr>
+                <td style="font-weight:700">{{ c.name }}</td>
+                <td>{{ c.email }}</td>
+                <td>{{ c.subject or '—' }}</td>
+                <td>{{ c.sent_at[:10] if c.sent_at else '—' }}</td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- CONDITIONS DB -->
+      <div class="tab-panel" id="at-conditions">
+        <div style="font-weight:800;font-size:15px;color:#17323a;margin-bottom:12px">Conditions Database</div>
+        <div style="display:flex;flex-wrap:wrap;gap:7px;margin-bottom:14px">
+          {% set categories = ['Neurodevelopmental','Mood Disorders','Anxiety Disorders','OCD & Related','Trauma & Stressor','Psychotic Disorders','Eating Disorders','Sleep-Wake','Personality Disorders'] %}
+          {% for cat in categories %}
+          <span class="badge badge-teal" style="font-size:11px;padding:4px 10px">{{ cat }}</span>
+          {% endfor %}
+        </div>
+        <div style="overflow-x:auto">
+          <table class="data-table">
+            <thead><tr><th>Category</th><th>Condition</th></tr></thead>
+            <tbody>
+              {% set all_conditions = [
+                ('Neurodevelopmental','Autism Spectrum Disorder (ASD)'),('Neurodevelopmental','ADHD'),('Neurodevelopmental','Intellectual Disability'),
+                ('Neurodevelopmental','Dyslexia'),('Neurodevelopmental','Dysgraphia'),('Neurodevelopmental','Dyscalculia'),('Neurodevelopmental','DCD'),
+                ('Mood Disorders','Major Depressive Disorder'),('Mood Disorders','Bipolar I'),('Mood Disorders','Cyclothymic Disorder'),
+                ('Anxiety Disorders','GAD'),('Anxiety Disorders','Separation Anxiety'),('Anxiety Disorders','Social Anxiety'),('Anxiety Disorders','Selective Mutism'),
+                ('OCD & Related','OCD'),('OCD & Related','BDD'),('OCD & Related','Trichotillomania'),
+                ('Trauma & Stressor','PTSD'),('Trauma & Stressor','RAD'),('Trauma & Stressor','Acute Stress Disorder'),
+                ('Sleep-Wake','Insomnia Disorder'),('Sleep-Wake','Narcolepsy'),('Sleep-Wake','Parasomnias'),
+              ] %}
+              {% for cat, cond in all_conditions %}
+              <tr><td><span class="badge badge-orange" style="font-size:10px">{{ cat }}</span></td><td>{{ cond }}</td></tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- ANALYTICS -->
+      <div class="tab-panel" id="at-analytics">
+        <div style="font-weight:800;font-size:15px;color:#17323a;margin-bottom:16px">Platform Analytics</div>
+        <div class="stat-row" style="margin-bottom:20px">
+          <div class="stat-card"><div class="stat-num">50</div><div class="stat-label">Languages</div></div>
+          <div class="stat-card"><div class="stat-num">96</div><div class="stat-label">Conditions</div></div>
+          <div class="stat-card"><div class="stat-num">24</div><div class="stat-label">Specialist Types</div></div>
+          <div class="stat-card"><div class="stat-num">1,315</div><div class="stat-label">Curricula</div></div>
+        </div>
+
+        <div style="font-weight:700;font-size:13px;color:#17323a;margin-bottom:12px">Top Screened Conditions (Demo)</div>
+        {% set top_conditions = [
+          ('Autism Spectrum Disorder (ASD)', 72),
+          ('ADHD — Combined', 58),
+          ('Specific Learning Disorder (Dyslexia)', 45),
+          ('Developmental Language Disorder', 38),
+          ('Sensory Processing Disorder', 31),
+          ('Anxiety Disorder (Childhood)', 28),
+          ('Developmental Coordination Disorder', 22),
+          ('Intellectual Disability', 18),
+        ] %}
+        {% for name, pct in top_conditions %}
+        <div class="analytics-bar">
+          <div class="analytics-label">{{ name }}</div>
+          <div style="flex:1"><div class="prog-small"><div class="prog-fill-s" style="width:{{ pct }}%"></div></div></div>
+          <div style="font-size:11px;font-weight:700;color:var(--brand);width:40px;text-align:right">{{ pct }}%</div>
+        </div>
+        {% endfor %}
+
+        <div style="margin-top:18px;font-weight:700;font-size:13px;color:#17323a;margin-bottom:12px">AI Provider Usage</div>
+        {% for provider, pct in [('Groq LLaMA-3.3 (fast)',65),('Claude Sonnet 4.6 (accurate)',25),('GPT-4o (fallback)',10)] %}
+        <div class="analytics-bar">
+          <div class="analytics-label">{{ provider }}</div>
+          <div style="flex:1"><div class="prog-small"><div class="prog-fill-s" style="width:{{ pct }}%"></div></div></div>
+          <div style="font-size:11px;font-weight:700;color:var(--brand);width:40px;text-align:right">{{ pct }}%</div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</main>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+function switchTab(tabEl,panelId){
+  const bar=tabEl.closest('.tab-bar');
+  bar.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  tabEl.classList.add('active');
+  const card=tabEl.closest('.pm-card');
+  card.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));
+  const panel=document.getElementById(panelId);
+  if(panel)panel.classList.add('active');
+}
+function exportAll(){
+  const s=document.createElement('script');
+  s.src='https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js';
+  s.onload=()=>{
+    const wb=XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb,XLSX.utils.table_to_sheet(document.querySelector('#at-users table')),'Users');
+    XLSX.writeFile(wb,'PhoenixMinds_AdminExport.xlsx');
+    toast('Admin data exported','success');
+  };
+  if(window.XLSX){s.onload();}else{document.head.appendChild(s);}
+}
+</script>
+{% endblock %}

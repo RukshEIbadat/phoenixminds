@@ -1,0 +1,121 @@
+{% extends "base.html" %}
+{% block title %}My Profile — PhoenixMinds{% endblock %}
+{% block extra_head %}
+<style>
+.avatar-ring{width:96px;height:96px;border-radius:50%;background:linear-gradient(135deg,var(--brand),var(--orange));display:flex;align-items:center;justify-content:center;font-size:42px;font-weight:800;color:#fff;box-shadow:0 10px 30px rgba(26,163,154,.3);margin:0 auto 14px;position:relative;}
+.avatar-ring::after{content:'';position:absolute;inset:-4px;border-radius:50%;border:2px solid rgba(26,163,154,.3);animation:ringPulse 2.5s ease-in-out infinite;}
+@keyframes ringPulse{0%,100%{transform:scale(1);opacity:.6}50%{transform:scale(1.05);opacity:1}}
+.info-row{display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid rgba(0,0,0,.06);font-size:13px;}
+.info-label{width:120px;font-weight:700;color:var(--muted);font-size:11px;text-transform:uppercase;letter-spacing:.4px;flex-shrink:0;}
+.info-val{color:#17323a;font-weight:600;}
+</style>
+{% endblock %}
+
+{% block content %}
+<main class="page-top">
+  <div class="ph"><div class="ph-icon">👤</div><h1>My Profile</h1><p>Manage your account, preferences and notification settings.</p></div>
+  <div class="mw-md" style="width:100%;padding:0 20px 70px;display:flex;flex-direction:column;gap:16px">
+
+    <!-- Profile Card -->
+    <div class="pm-card" style="text-align:center">
+      <div class="avatar-ring">{{ session_user.fullname[0].upper() if session_user else '?' }}</div>
+      <div style="font-size:22px;font-weight:800;color:#17323a">{{ user.fullname if user else session_user.fullname }}</div>
+      <div style="font-size:13px;color:var(--brand);font-weight:700;margin:3px 0">{{ user.role if user else session_user.role }}</div>
+      {% if user and user.specialization %}
+      <div style="font-size:12px;color:var(--muted)">{{ user.specialization }}</div>
+      {% endif %}
+      {% if is_admin %}<span class="badge badge-admin" style="margin-top:8px;display:inline-flex">Admin</span>{% endif %}
+    </div>
+
+    <!-- Account Info -->
+    <div class="pm-card">
+      <div style="font-weight:800;font-size:16px;color:#17323a;margin-bottom:12px">Account Information</div>
+      {% if user %}
+      <div class="info-row"><div class="info-label">Full Name</div><div class="info-val">{{ user.fullname }}</div></div>
+      <div class="info-row"><div class="info-label">Email</div><div class="info-val">{{ user.email }}</div></div>
+      <div class="info-row"><div class="info-label">Role</div><div class="info-val">{{ user.role }}</div></div>
+      <div class="info-row"><div class="info-label">Specialization</div><div class="info-val">{{ user.specialization or 'Not set' }}</div></div>
+      <div class="info-row"><div class="info-label">Country</div><div class="info-val">{{ user.country or 'Not set' }}</div></div>
+      <div class="info-row"><div class="info-label">Phone</div><div class="info-val">{{ user.phone or 'Not set' }}</div></div>
+      <div class="info-row"><div class="info-label">Member Since</div><div class="info-val">{{ user.created_at[:10] if user.created_at else 'N/A' }}</div></div>
+      {% endif %}
+    </div>
+
+    <!-- Edit Profile -->
+    <div class="pm-card">
+      <div style="font-weight:800;font-size:16px;color:#17323a;margin-bottom:14px">Edit Profile</div>
+      <div class="form-row">
+        <div class="form-group"><label class="form-label">Full Name</label><input class="form-control" id="upFullname" value="{{ user.fullname if user else '' }}" placeholder="Full name"/></div>
+        <div class="form-group"><label class="form-label">Phone</label><input class="form-control" id="upPhone" value="{{ user.phone if user else '' }}" placeholder="+92 …" type="tel"/></div>
+      </div>
+      <div class="form-row">
+        <div class="form-group"><label class="form-label">Country</label><input class="form-control" id="upCountry" value="{{ user.country if user else '' }}" placeholder="Pakistan, UAE, UK…"/></div>
+        <div class="form-group"><label class="form-label">Specialization</label><input class="form-control" id="upSpec" value="{{ user.specialization if user else '' }}" placeholder="e.g. ABA, Dyslexia"/></div>
+      </div>
+      <button class="btn btn-primary btn-block" onclick="saveProfile()">Save Changes</button>
+    </div>
+
+    <!-- Child Journeys Quick View -->
+    {% if journeys %}
+    <div class="pm-card">
+      <div style="font-weight:800;font-size:16px;color:#17323a;margin-bottom:12px">My Child Profiles ({{ journeys|length }})</div>
+      {% for j in journeys %}
+      <div style="display:flex;align-items:center;gap:12px;padding:10px;background:rgba(255,255,255,.55);border:1px solid rgba(255,255,255,.75);border-radius:12px;margin-bottom:8px">
+        <div style="width:38px;height:38px;border-radius:50%;background:linear-gradient(135deg,var(--brand),var(--orange));display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:800;color:#fff">{{ j.child.name[0].upper() if j.child and j.child.name else '?' }}</div>
+        <div style="flex:1"><div style="font-weight:700;font-size:13px;color:#17323a">{{ j.child.name if j.child else 'Unknown' }}</div><div style="font-size:11px;color:var(--muted)">{{ j.created_at[:10] if j.created_at else '' }}</div></div>
+        <a href="{{ url_for('child_profile') }}" class="btn btn-secondary" style="font-size:11px;padding:5px 10px">View</a>
+      </div>
+      {% endfor %}
+    </div>
+    {% endif %}
+
+    <!-- Preferences -->
+    <div class="pm-card">
+      <div style="font-weight:800;font-size:16px;color:#17323a;margin-bottom:12px">Platform Preferences</div>
+      <div class="form-group"><label class="form-label">Display Language</label>
+        <select class="form-control" id="prefLang" onchange="applyUILang(this.value)">
+          <option value="en">English</option><option value="ur">اردو (Urdu)</option>
+          <option value="ar">العربية (Arabic)</option><option value="hi">हिन्दी (Hindi)</option>
+          <option value="fr">Français</option><option value="de">Deutsch</option>
+          <option value="zh">中文</option><option value="tr">Türkçe</option>
+        </select>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:8px">
+        <label style="display:flex;align-items:center;gap:10px;cursor:pointer;font-size:13px"><input type="checkbox" id="prefHC" onchange="toggleHC()" style="width:16px;height:16px"/> High Contrast Mode</label>
+        <label style="display:flex;align-items:center;gap:10px;cursor:pointer;font-size:13px"><input type="checkbox" id="prefDY" onchange="toggleDY()" style="width:16px;height:16px"/> Dyslexia-Friendly Font</label>
+        <label style="display:flex;align-items:center;gap:10px;cursor:pointer;font-size:13px"><input type="checkbox" id="prefLT" onchange="toggleLT()" style="width:16px;height:16px"/> Large Text Mode</label>
+      </div>
+      <div class="divider"></div>
+      <button onclick="toast('Preferences saved','success')" class="btn btn-primary btn-block">Save Preferences</button>
+    </div>
+
+    <!-- Danger Zone -->
+    <div class="pm-card" style="border:1px solid rgba(239,68,68,.2)">
+      <div style="font-weight:800;font-size:15px;color:var(--danger);margin-bottom:10px">Account</div>
+      <div style="display:flex;gap:10px;flex-wrap:wrap">
+        <a href="{{ url_for('logout') }}" class="btn btn-danger" style="font-size:12px">Sign Out</a>
+        <button class="btn btn-secondary" style="font-size:12px" onclick="toast('Contact support to delete your account','info')">Request Account Deletion</button>
+      </div>
+    </div>
+  </div>
+</main>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+async function saveProfile(){
+  const data={
+    fullname:document.getElementById('upFullname')?.value.trim(),
+    phone:document.getElementById('upPhone')?.value.trim(),
+    country:document.getElementById('upCountry')?.value.trim(),
+    specialization:document.getElementById('upSpec')?.value.trim()
+  };
+  try{
+    const r=await fetch('/api/profile/update',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(data)});
+    const d=await r.json();
+    if(d.ok) toast('Profile updated successfully!','success');
+    else toast('Could not update profile','error');
+  }catch(e){toast('Error: '+e.message,'error');}
+}
+</script>
+{% endblock %}

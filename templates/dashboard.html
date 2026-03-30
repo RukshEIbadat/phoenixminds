@@ -1,0 +1,182 @@
+{% extends "base.html" %}
+{% block title %}Dashboard — PhoenixMinds{% endblock %}
+{% block extra_head %}
+<style>
+.dash-grid{display:grid;grid-template-columns:260px 1fr;gap:18px;max-width:1200px;width:100%;margin:0 auto;}
+@media(max-width:900px){.dash-grid{grid-template-columns:1fr;}}
+.sidebar{display:flex;flex-direction:column;gap:14px;}
+.profile-card{text-align:center;padding:24px 18px;}
+.p-avatar{width:80px;height:80px;border-radius:50%;background:linear-gradient(135deg,var(--brand),var(--orange));display:flex;align-items:center;justify-content:center;font-size:32px;font-weight:800;color:#fff;margin:0 auto 10px;box-shadow:0 8px 24px rgba(26,163,154,.25);}
+.p-name{font-size:17px;font-weight:800;color:#17323a;}
+.p-role{font-size:12px;color:var(--brand);font-weight:600;margin-top:3px;}
+.quick-actions{display:flex;flex-direction:column;gap:7px;padding:14px;}
+.qa-title{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--muted);margin-bottom:2px;}
+.main-dash{display:flex;flex-direction:column;gap:16px;}
+.dash-section-title{font-size:16px;font-weight:800;color:#17323a;margin-bottom:12px;}
+.child-card{display:flex;align-items:center;gap:12px;padding:12px;background:rgba(255,255,255,.55);border:1px solid rgba(255,255,255,.75);border-radius:14px;margin-bottom:8px;transition:transform .2s;}
+.child-card:hover{transform:translateX(4px);}
+.child-avatar{width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,var(--brand),var(--orange));display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:800;color:#fff;flex-shrink:0;}
+.activity-item{padding:10px 12px;background:rgba(255,255,255,.5);border-radius:10px;margin-bottom:6px;font-size:12px;display:flex;align-items:center;gap:8px;}
+.act-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;}
+</style>
+{% endblock %}
+{% block content %}
+<main class="page-top">
+  <div class="ph">
+    <div class="ph-icon">🏠</div>
+    <h1 data-translatable data-original="My Dashboard">My Dashboard</h1>
+    <p data-translatable data-original="Your PhoenixMinds care hub — all your children, goals and specialists in one place.">Your PhoenixMinds care hub — all your children, goals and specialists in one place.</p>
+  </div>
+
+  <div class="dash-grid" style="width:100%;padding:0 20px 60px">
+    <!-- SIDEBAR -->
+    <div class="sidebar">
+      <div class="pm-card profile-card">
+        <div class="p-avatar">{{ session_user.fullname[0].upper() if session_user else '?' }}</div>
+        <div class="p-name">{{ session_user.fullname if session_user else 'User' }}</div>
+        <div class="p-role">{{ session_user.role if session_user else '' }}</div>
+        {% if is_admin %}
+        <span class="badge badge-admin" style="margin-top:6px;display:inline-flex">Admin</span>
+        {% endif %}
+      </div>
+
+      <div class="pm-card" style="padding:14px">
+        <div class="qa-title">Quick Actions</div>
+        <div class="quick-actions">
+          <a href="{{ url_for('journey') }}" class="btn btn-primary" style="font-size:12px">New Journey</a>
+          <a href="{{ url_for('evaluation') }}" class="btn btn-secondary" style="font-size:12px">Run AI Evaluation</a>
+          <a href="{{ url_for('iep') }}" class="btn btn-secondary" style="font-size:12px">Generate IEP</a>
+          <a href="{{ url_for('connect') }}" class="btn btn-secondary" style="font-size:12px">Find Specialist</a>
+          <a href="{{ url_for('medications') }}" class="btn btn-secondary" style="font-size:12px">Medications</a>
+          <a href="{{ url_for('riasec') }}" class="btn btn-secondary" style="font-size:12px">RIASEC Assessment</a>
+          <a href="{{ url_for('routine') }}" class="btn btn-secondary" style="font-size:12px">Home Routine</a>
+          {% if is_admin %}
+          <a href="{{ url_for('admin_panel') }}" class="btn btn-admin" style="font-size:12px">Admin Panel</a>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+
+    <!-- MAIN -->
+    <div class="main-dash">
+      <!-- STATS -->
+      <div class="stat-row">
+        <div class="stat-card"><div class="stat-num">{{ stats.children }}</div><div class="stat-label">Child Profiles</div></div>
+        <div class="stat-card"><div class="stat-num">{{ stats.evals }}</div><div class="stat-label">Evaluations</div></div>
+        <div class="stat-card"><div class="stat-num">{{ stats.ieps }}</div><div class="stat-label">IEP Plans</div></div>
+        <div class="stat-card"><div class="stat-num">{{ stats.users }}</div><div class="stat-label">Platform Users</div></div>
+      </div>
+
+      <!-- TABS -->
+      <div class="pm-card">
+        <div class="tab-bar">
+          <div class="tab active" onclick="switchTab(this,'dtab-children')">Children</div>
+          <div class="tab" onclick="switchTab(this,'dtab-ieps')">IEP Plans</div>
+          <div class="tab" onclick="switchTab(this,'dtab-activity')">Activity</div>
+          <div class="tab" onclick="switchTab(this,'dtab-tools')">Tools</div>
+        </div>
+
+        <div class="tab-panel active" id="dtab-children">
+          <div class="dash-section-title">Child Profiles</div>
+          {% if journeys %}
+            {% for j in journeys[-5:] %}
+            <div class="child-card">
+              <div class="child-avatar">{{ j.child.name[0].upper() if j.child and j.child.name else '?' }}</div>
+              <div style="flex:1">
+                <div style="font-weight:700;font-size:14px;color:#17323a">{{ j.child.name if j.child else 'Unknown' }}</div>
+                <div style="font-size:11px;color:var(--muted)">DOB: {{ j.child.dob if j.child and j.child.dob else 'N/A' }} · {{ (j.child.milestones or [])|length }} milestones</div>
+              </div>
+              <a href="{{ url_for('child_profile') }}" class="btn btn-secondary" style="font-size:11px;padding:5px 10px">View</a>
+            </div>
+            {% endfor %}
+          {% else %}
+          <div style="text-align:center;padding:24px">
+            <p style="color:var(--muted);font-size:13px;margin-bottom:12px">No child profiles yet.</p>
+            <a href="{{ url_for('journey') }}" class="btn btn-primary">Start a Journey</a>
+          </div>
+          {% endif %}
+        </div>
+
+        <div class="tab-panel" id="dtab-ieps">
+          <div class="dash-section-title">Recent IEP Plans</div>
+          {% if ieps %}
+            {% for iep in ieps[-4:] %}
+            <div style="padding:12px;background:rgba(255,255,255,.55);border:1px solid rgba(255,255,255,.75);border-radius:12px;margin-bottom:8px;display:flex;align-items:center;justify-content:space-between">
+              <div>
+                <div style="font-weight:700;font-size:13px;color:#17323a">{{ iep.child_name }} — {{ iep.diagnosis }}</div>
+                <div style="font-size:11px;color:var(--muted)">{{ iep.curriculum }} · {{ iep.created_at[:10] if iep.created_at else 'N/A' }}</div>
+              </div>
+              <span class="badge badge-green">Active</span>
+            </div>
+            {% endfor %}
+          {% else %}
+          <div style="text-align:center;padding:24px">
+            <p style="color:var(--muted);font-size:13px;margin-bottom:12px">No IEP plans yet.</p>
+            <a href="{{ url_for('iep') }}" class="btn btn-primary">Generate IEP</a>
+          </div>
+          {% endif %}
+        </div>
+
+        <div class="tab-panel" id="dtab-activity">
+          <div class="dash-section-title">Recent Activity</div>
+          {% if journeys %}
+            {% for j in journeys[-5:] %}
+            <div class="activity-item">
+              <div class="act-dot" style="background:var(--brand)"></div>
+              <span>Journey saved for <strong>{{ j.child.name if j.child else 'child' }}</strong> on {{ j.created_at[:10] if j.created_at else 'N/A' }}</span>
+            </div>
+            {% endfor %}
+          {% endif %}
+          {% if ieps %}
+            {% for i in ieps[-3:] %}
+            <div class="activity-item">
+              <div class="act-dot" style="background:var(--orange)"></div>
+              <span>IEP generated for <strong>{{ i.child_name }}</strong> — {{ i.diagnosis }}</span>
+            </div>
+            {% endfor %}
+          {% endif %}
+          {% if not journeys and not ieps %}
+          <p style="color:var(--muted);font-size:13px">No activity yet. Start by creating a journey or running an evaluation.</p>
+          {% endif %}
+        </div>
+
+        <div class="tab-panel" id="dtab-tools">
+          <div class="dash-section-title">All Platform Tools</div>
+          <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:10px">
+            {% set tools = [
+              ('🔍','AI Evaluation','evaluation','Symptom-based screening'),
+              ('🧭','Journey Wizard','journey','8-step child passport'),
+              ('📘','IEP Builder','iep','AI-generated education plans'),
+              ('👧','Child Profile','child_profile','Developmental tracking'),
+              ('💊','Medications','medications','Medication safety & tracking'),
+              ('📅','Home Routine','routine','Daily routine management'),
+              ('🎯','RIASEC','riasec','Interest assessment'),
+              ('🩺','Specialists','connect','Find verified professionals'),
+            ] %}
+            {% for icon,name,endpoint,desc in tools %}
+            <a href="{{ url_for(endpoint) }}" style="padding:12px;background:rgba(255,255,255,.55);border:1px solid rgba(255,255,255,.75);border-radius:12px;text-decoration:none;transition:transform .2s;display:block" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform=''">
+              <div style="font-size:24px;margin-bottom:6px">{{ icon }}</div>
+              <div style="font-weight:700;font-size:12px;color:#17323a">{{ name }}</div>
+              <div style="font-size:11px;color:var(--muted)">{{ desc }}</div>
+            </a>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+{% endblock %}
+{% block extra_scripts %}
+<script>
+function switchTab(tabEl,panelId){
+  const bar=tabEl.closest('.tab-bar');
+  bar.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  tabEl.classList.add('active');
+  const card=tabEl.closest('.pm-card');
+  card.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));
+  const panel=document.getElementById(panelId);
+  if(panel) panel.classList.add('active');
+}
+</script>
+{% endblock %}

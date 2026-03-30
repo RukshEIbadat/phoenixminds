@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% block title %}Our Services - Phoenix Minds{% endblock %}
+
+{% block content %}
+<div class="services-page">
+
+  <!-- Centered hero (owl + title + subtext + button) -->
+  <section class="services-hero">
+    <img class="logo" src="{{ url_for('static', filename='images/logo.PNG') }}" alt="Phoenix Minds Logo">
+    <h1>Our Services</h1>
+    <p>
+      Personalized care & learning—evaluation, profiles, tracking, IEPs, and home plans.
+    </p>
+    <a class="cta" href="{{ url_for('evaluation') }}">Start Evaluation</a>
+  </section>
+
+  <!-- Cards pinned near the bottom -->
+  <section class="cards services-cards">
+    <article class="card">
+      <img src="{{ url_for('static', filename='images/icon-evaluation.PNG') }}" alt="Evaluation">
+      <h3>Evaluation</h3>
+      <p>Gentle, structured screening across psychology, therapy, education and pediatrics with culture-aware items.</p>
+      <a class="link" href="{{ url_for('evaluation') }}">Begin now →</a>
+    </article>
+
+    <article class="card">
+      <img src="{{ url_for('static', filename='images/icon-tracking.PNG') }}" alt="Child Profile & Tracking">
+      <h3>Child Profile & Tracking</h3>
+      <p>Unified profile of strengths, needs, goals and milestones—ready for parents, teachers and clinicians.</p>
+      <span class="small muted">Coming soon</span>
+    </article>
+
+    <article class="card">
+      <img src="{{ url_for('static', filename='images/icon-iep.PNG') }}" alt="IEPs & Home Plans">
+      <h3>IEPs & Home Plans</h3>
+      <p>SMART goals mapped to classroom and home routines with progress notes and accommodations.</p>
+      <span class="small muted">Coming soon</span>
+    </article>
+
+    <article class="card">
+      <img src="{{ url_for('static', filename='images/icon-specialist.PNG') }}" alt="Connect with Specialists">
+      <h3>Connect with Specialists</h3>
+      <p>Find trusted psychologists, therapists and educators—Pakistan, Middle East, Europe & worldwide.</p>
+      <span class="small muted">Coming soon</span>
+    </article>
+  </section>
+
+</div>
+{% endblock %}

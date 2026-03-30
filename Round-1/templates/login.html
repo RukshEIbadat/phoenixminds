@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block title %}Login - Phoenix Minds{% endblock %}
+
+{% block content %}
+<section class="auth-wrap">
+  <div class="auth-card">
+    <img class="owl" src="{{ url_for('static', filename='images/logo.PNG') }}" alt="Phoenix Minds Logo">
+    <h2 class="auth-title">Login</h2>
+
+    <form action="{{ url_for('login', next=next) }}" method="POST" class="auth-form">
+      {% if next %}
+        <input type="hidden" name="next" value="{{ next }}">
+      {% endif %}
+      <input type="email" name="email" placeholder="Email" required class="field" autocomplete="username">
+      <input type="password" name="password" placeholder="Password" required class="field" autocomplete="current-password">
+      <button type="submit" class="cta full">Login</button>
+    </form>
+
+    <p class="auth-meta">
+      Don’t have an account? <a href="{{ url_for('register') }}">Create one</a>
+    </p>
+  </div>
+</section>
+{% endblock %}

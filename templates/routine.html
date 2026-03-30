@@ -1,0 +1,232 @@
+{% extends "base.html" %}
+{% block title %}Home Routine — PhoenixMinds{% endblock %}
+{% block extra_head %}
+<style>
+.routine-timeline{position:relative;padding-left:28px;}
+.routine-timeline::before{content:'';position:absolute;left:11px;top:0;bottom:0;width:2px;background:linear-gradient(to bottom,var(--brand),rgba(26,163,154,.2));}
+.routine-item{position:relative;margin-bottom:10px;padding:12px 14px;background:rgba(255,255,255,.55);border:1px solid rgba(255,255,255,.75);border-radius:14px;transition:transform .2s;}
+.routine-item:hover{transform:translateX(4px);}
+.routine-item::before{content:'';position:absolute;left:-21px;top:16px;width:12px;height:12px;border-radius:50%;background:var(--brand);border:2px solid #fff;box-shadow:0 2px 6px rgba(26,163,154,.3);}
+.routine-item.done::before{background:var(--success);}
+.routine-item.skipped::before{background:var(--warn);}
+.ri-time{font-size:10px;font-weight:700;color:var(--brand);text-transform:uppercase;letter-spacing:.4px;}
+.ri-title{font-size:14px;font-weight:700;color:#17323a;margin:3px 0;}
+.ri-desc{font-size:11px;color:var(--muted);line-height:1.5;}
+.ri-tags{display:flex;flex-wrap:wrap;gap:4px;margin-top:6px;}
+.ri-actions{display:flex;gap:6px;margin-top:8px;}
+.ri-btn{padding:4px 10px;border-radius:6px;font-size:10px;font-weight:700;cursor:pointer;border:1px solid;transition:all .15s;font-family:var(--font);}
+.ri-done{background:rgba(34,197,94,.1);border-color:rgba(34,197,94,.3);color:#15803d;}
+.ri-skip{background:rgba(245,158,11,.1);border-color:rgba(245,158,11,.3);color:#92400e;}
+.ri-done:hover{background:rgba(34,197,94,.2);}
+.ri-skip:hover{background:rgba(245,158,11,.2);}
+.period-header{font-size:12px;font-weight:800;color:#17323a;text-transform:uppercase;letter-spacing:.6px;margin:18px 0 10px;padding:6px 12px;background:rgba(26,163,154,.06);border-radius:8px;display:inline-block;}
+</style>
+{% endblock %}
+
+{% block content %}
+<main class="page-top">
+  <div class="ph">
+    <div class="ph-icon">📅</div>
+    <h1 data-translatable data-original="Home Routine">Home Routine</h1>
+    <p data-translatable data-original="Visual daily schedule for structure, predictability, and smoother transitions. Designed for children who thrive with consistent routines.">Visual daily schedule for structure, predictability, and smoother transitions. Designed for children who thrive with consistent routines.</p>
+  </div>
+
+  <div class="mw-lg" style="width:100%;padding:0 20px 60px">
+
+    <!-- ADD ROUTINE ITEM -->
+    <div class="pm-card" style="margin-bottom:16px">
+      <div style="font-weight:800;font-size:17px;color:#17323a;margin-bottom:4px">Add Routine Activity</div>
+      <div style="font-size:12px;color:var(--muted);margin-bottom:14px">Build a structured daily schedule. Each activity can have visual supports and time targets.</div>
+      <div class="form-row">
+        <div class="form-group"><label class="form-label">Activity Name *</label><input class="form-control" id="rtName" placeholder="e.g. Morning hygiene routine"/></div>
+        <div class="form-group"><label class="form-label">Time</label><input class="form-control" id="rtTime" type="time" value="07:00"/></div>
+      </div>
+      <div class="form-row">
+        <div class="form-group"><label class="form-label">Duration (minutes)</label><input class="form-control" id="rtDuration" type="number" value="15" min="1" max="120"/></div>
+        <div class="form-group"><label class="form-label">Category</label>
+          <select class="form-control" id="rtCat">
+            <option>Self-Care / ADL</option><option>Therapy / Exercise</option><option>Academic / Learning</option>
+            <option>Play / Free Time</option><option>Meal / Snack</option><option>Transition</option>
+            <option>Sleep / Rest</option><option>Social / Community</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group"><label class="form-label">Visual Support Notes</label><textarea class="form-control" id="rtNotes" rows="2" placeholder="e.g. Use visual timer, show picture card sequence, provide 2-minute warning before transition"></textarea></div>
+      <button class="btn btn-primary btn-block" onclick="addRoutineItem()">Add to Schedule</button>
+    </div>
+
+    <!-- AI GENERATE -->
+    <div class="pm-card" style="margin-bottom:16px">
+      <div style="font-weight:800;font-size:16px;color:#17323a;margin-bottom:4px">AI-Generated Routine</div>
+      <div style="font-size:12px;color:var(--muted);margin-bottom:14px">Let Claude AI create an age-appropriate, therapy-aligned daily schedule.</div>
+      <div class="form-row">
+        <div class="form-group"><label class="form-label">Child's Age</label><input class="form-control" id="aiAge" placeholder="e.g. 5 years"/></div>
+        <div class="form-group"><label class="form-label">Diagnosis</label><input class="form-control" id="aiDx" placeholder="e.g. ASD Level 2, ADHD"/></div>
+      </div>
+      <button class="btn btn-secondary btn-block" onclick="generateRoutine()">Generate with AI</button>
+    </div>
+
+    <!-- CURRENT ROUTINE -->
+    <div class="pm-card" style="margin-bottom:16px">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;flex-wrap:wrap;gap:8px">
+        <div style="font-weight:800;font-size:16px;color:#17323a">Today's Schedule (<span id="rtCount">0</span> activities)</div>
+        <div style="display:flex;gap:6px">
+          <button class="btn btn-secondary" style="font-size:11px;padding:5px 12px" onclick="saveRoutine()">Save</button>
+          <button class="btn btn-secondary" style="font-size:11px;padding:5px 12px" onclick="clearRoutine()">Clear All</button>
+        </div>
+      </div>
+      <div id="routineList" class="routine-timeline">
+        <div style="text-align:center;padding:24px;color:var(--muted);font-size:13px">No activities scheduled yet. Add activities above or generate with AI.</div>
+      </div>
+    </div>
+
+    <!-- PROGRESS -->
+    <div class="pm-card">
+      <div style="font-weight:800;font-size:16px;color:#17323a;margin-bottom:12px">Daily Progress</div>
+      <div class="stat-row">
+        <div class="stat-card"><div class="stat-num" id="progTotal">0</div><div class="stat-label">Total Activities</div></div>
+        <div class="stat-card"><div class="stat-num" id="progDone" style="color:var(--success)">0</div><div class="stat-label">Completed</div></div>
+        <div class="stat-card"><div class="stat-num" id="progSkip" style="color:var(--warn)">0</div><div class="stat-label">Skipped</div></div>
+        <div class="stat-card"><div class="stat-num" id="progPct">0%</div><div class="stat-label">Completion</div></div>
+      </div>
+      <div class="prog-wrap" style="margin-top:8px"><div class="prog-fill" id="progBar" style="width:0%"></div></div>
+    </div>
+  </div>
+</main>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+let routineItems = {{ routine_data|tojson if routine_data else '[]' }};
+const CAT_ICONS = {'Self-Care / ADL':'🧼','Therapy / Exercise':'🏃','Academic / Learning':'📖','Play / Free Time':'🎮','Meal / Snack':'🍽️','Transition':'🔄','Sleep / Rest':'😴','Social / Community':'👥'};
+
+function addRoutineItem(){
+  const name = document.getElementById('rtName')?.value.trim();
+  if(!name){toast('Please enter activity name','error');return;}
+  routineItems.push({
+    id:'rt_'+Date.now(),
+    name:name,
+    time:document.getElementById('rtTime')?.value||'07:00',
+    duration:parseInt(document.getElementById('rtDuration')?.value)||15,
+    category:document.getElementById('rtCat')?.value||'Self-Care / ADL',
+    notes:document.getElementById('rtNotes')?.value.trim()||'',
+    status:'pending'
+  });
+  routineItems.sort((a,b)=>a.time.localeCompare(b.time));
+  renderRoutine();
+  document.getElementById('rtName').value='';
+  document.getElementById('rtNotes').value='';
+  toast('Activity added: '+name,'success');
+}
+
+function renderRoutine(){
+  const list=document.getElementById('routineList');
+  document.getElementById('rtCount').textContent=routineItems.length;
+  if(!routineItems.length){list.innerHTML='<div style="text-align:center;padding:24px;color:var(--muted);font-size:13px">No activities scheduled yet.</div>';updateProgress();return;}
+
+  let html='';let lastPeriod='';
+  routineItems.forEach((item,i)=>{
+    const hour=parseInt(item.time.split(':')[0]);
+    const period=hour<12?'Morning':hour<17?'Afternoon':'Evening';
+    if(period!==lastPeriod){html+=`<div class="period-header">${period}</div>`;lastPeriod=period;}
+    const icon=CAT_ICONS[item.category]||'📋';
+    html+=`<div class="routine-item ${item.status||''}" data-id="${item.id}">
+      <div class="ri-time">${item.time} · ${item.duration} min</div>
+      <div class="ri-title">${icon} ${item.name}</div>
+      <div class="ri-desc">${item.notes||item.category}</div>
+      <div class="ri-tags"><span class="badge badge-teal">${item.category}</span></div>
+      <div class="ri-actions">
+        <button class="ri-btn ri-done" onclick="markStatus(${i},'done')">Done</button>
+        <button class="ri-btn ri-skip" onclick="markStatus(${i},'skipped')">Skip</button>
+        <button style="background:none;border:none;font-size:11px;color:var(--danger);cursor:pointer;font-family:var(--font);font-weight:600;margin-left:auto" onclick="removeItem(${i})">Remove</button>
+      </div>
+    </div>`;
+  });
+  list.innerHTML=html;
+  updateProgress();
+}
+
+function markStatus(idx,status){
+  if(routineItems[idx]) routineItems[idx].status=status;
+  renderRoutine();
+  toast(status==='done'?'Activity completed':'Activity skipped',status==='done'?'success':'info');
+}
+
+function removeItem(idx){
+  routineItems.splice(idx,1);
+  renderRoutine();
+  toast('Activity removed','info');
+}
+
+function updateProgress(){
+  const total=routineItems.length;
+  const done=routineItems.filter(r=>r.status==='done').length;
+  const skipped=routineItems.filter(r=>r.status==='skipped').length;
+  const pct=total?Math.round((done/total)*100):0;
+  document.getElementById('progTotal').textContent=total;
+  document.getElementById('progDone').textContent=done;
+  document.getElementById('progSkip').textContent=skipped;
+  document.getElementById('progPct').textContent=pct+'%';
+  document.getElementById('progBar').style.width=pct+'%';
+}
+
+async function saveRoutine(){
+  try{
+    await fetch('/api/routine/save',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({items:routineItems})});
+    toast('Routine saved','success');
+  }catch(e){toast('Error saving routine','error');}
+}
+
+function clearRoutine(){
+  routineItems=[];renderRoutine();toast('Routine cleared','info');
+}
+
+async function generateRoutine(){
+  const age=document.getElementById('aiAge')?.value.trim()||'5 years';
+  const dx=document.getElementById('aiDx')?.value.trim()||'ASD';
+  try{
+    const r=await fetch('/api/chat',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({
+      messages:[{role:'user',content:`Generate a structured daily home routine for a child aged ${age} with ${dx}. Include 10-12 activities from wake-up to bedtime with times, durations, categories (Self-Care/ADL, Therapy/Exercise, Academic/Learning, Play/Free Time, Meal/Snack, Transition, Sleep/Rest), and visual support notes. Return as JSON array with keys: name, time (HH:MM), duration (minutes), category, notes. Return ONLY the JSON array, nothing else.`}],
+      language:'English'
+    })});
+    const d=await r.json();
+    if(d.ok){
+      let parsed;
+      try{
+        const clean=d.reply.replace(/```json|```/g,'').trim();
+        parsed=JSON.parse(clean);
+      }catch(e){
+        toast('AI response could not be parsed. Adding sample routine.','info');
+        parsed=[
+          {name:'Wake Up and Sensory Regulation',time:'06:30',duration:15,category:'Self-Care / ADL',notes:'Use visual wake-up sequence card. Allow 5 min for sensory regulation.'},
+          {name:'Morning Hygiene',time:'06:45',duration:20,category:'Self-Care / ADL',notes:'Picture schedule for toilet, brush teeth, wash face. Use visual timer.'},
+          {name:'Breakfast',time:'07:05',duration:25,category:'Meal / Snack',notes:'Offer 2 choices. Use visual food cards if non-verbal.'},
+          {name:'Getting Dressed',time:'07:30',duration:15,category:'Self-Care / ADL',notes:'Lay out clothes in sequence. Use backward chaining if needed.'},
+          {name:'Therapy / Structured Learning',time:'08:00',duration:45,category:'Therapy / Exercise',notes:'Speech exercises or OT home programme. Use first-then board.'},
+          {name:'Free Play',time:'09:00',duration:30,category:'Play / Free Time',notes:'Choice of 3 activities. Use visual timer for transitions.'},
+          {name:'Snack Time',time:'09:30',duration:15,category:'Meal / Snack',notes:'Healthy snack with social communication practice.'},
+          {name:'Academic Work',time:'10:00',duration:30,category:'Academic / Learning',notes:'Curriculum activities. Break into 10-min blocks with movement breaks.'},
+          {name:'Outdoor / Gross Motor',time:'10:45',duration:30,category:'Therapy / Exercise',notes:'Playground, cycling, or proprioceptive input activities.'},
+          {name:'Lunch',time:'12:00',duration:30,category:'Meal / Snack',notes:'Family meal. Practice requesting, turn-taking.'},
+          {name:'Rest / Quiet Time',time:'12:30',duration:45,category:'Sleep / Rest',notes:'Low stimulation. Books, calming music, or rest.'},
+          {name:'Evening Routine and Bedtime',time:'19:30',duration:30,category:'Sleep / Rest',notes:'Bath, pyjamas, story, calming sensory input. Consistent sequence.'},
+        ];
+      }
+      if(Array.isArray(parsed)){
+        parsed.forEach(item=>{
+          routineItems.push({id:'rt_'+Date.now()+Math.random(),name:item.name,time:item.time,duration:item.duration||15,category:item.category||'Self-Care / ADL',notes:item.notes||'',status:'pending'});
+        });
+        routineItems.sort((a,b)=>a.time.localeCompare(b.time));
+        renderRoutine();
+        toast('AI routine generated with '+parsed.length+' activities','success');
+      }
+    }
+  }catch(e){toast('Error generating routine: '+e.message,'error');}
+}
+
+document.addEventListener('DOMContentLoaded',()=>{
+  if(routineItems.length) renderRoutine();
+  else updateProgress();
+});
+</script>
+{% endblock %}

@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block title %}Create Account - Phoenix Minds{% endblock %}
+
+{% block content %}
+<section class="auth-wrap">
+  <div class="auth-card">
+    <img class="owl" src="{{ url_for('static', filename='images/logo.PNG') }}" alt="Phoenix Minds Logo">
+    <h2 class="auth-title">Create Account</h2>
+
+    <form action="{{ url_for('register') }}" method="POST" class="auth-form">
+      <input type="text" name="fullname" placeholder="Full Name" required class="field">
+      <input type="email" name="email" placeholder="Email" required class="field">
+      <input type="password" name="password" placeholder="Password" required class="field">
+
+      <select name="role" required class="field">
+        <option value="">-- Select Role --</option>
+        <option value="Parent">Parent</option>
+        <option value="Educator">Educator</option>
+        <option value="Therapist">Therapist</option>
+        <option value="Healthcare Professional">Healthcare Professional</option>
+      </select>
+
+      <select name="specialization" class="field">
+        <option value="">-- Select Specialization --</option>
+        <option value="Child Psychology">Child Psychology</option>
+        <option value="Speech Therapy">Speech Therapy</option>
+        <option value="Special Education">Special Education</option>
+        <option value="Pain Management">Pain Management</option>
+        <option value="Intensive Care Unit">Intensive Care Unit</option>
+      </select>
+
+      <button type="submit" class="cta full">Sign Up</button>
+    </form>
+  </div>
+</section>
+{% endblock %}

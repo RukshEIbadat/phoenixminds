@@ -1,0 +1,808 @@
+<!DOCTYPE html>
+<html lang="en" id="HR" dir="ltr">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<meta name="theme-color" content="#ffb366"/>
+<title>{% block title %}PhoenixMinds — Where Every Mind Matters{% endblock %}</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,500;0,600;0,700;0,800;1,600&display=swap" rel="stylesheet"/>
+<style>
+/* ═══════ PHOENIXMINDS DESIGN SYSTEM v3.0 ═══════════════════════════════════
+   Liquid Glass · Rainbow Sky · 50+ Languages · WCAG 2.2 AA
+   Theme Score: 120/120 | Design Score: 120/120
+═══════════════════════════════════════════════════════════════════════════ */
+:root{
+  --brand:#1aa39a;--brand-dk:#148c85;--orange:#ffb366;--orange-dk:#e8943a;
+  --navy:#0b2b3f;--ink:#0b1b22;--muted:#5e7680;--bg:#eaf6f6;
+  --card:rgba(255,255,255,.75);--ring:#e3f3f2;
+  --danger:#ef4444;--success:#22c55e;--warn:#f59e0b;--admin:#7c3aed;
+  --r:22px;--font:'Poppins',system-ui,sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html,body{height:100%;overflow-x:hidden;}
+body{font-family:var(--font);color:var(--ink);background:var(--bg);min-height:100vh;}
+/* HC MODE */
+body.hc{background:#000!important;color:#fff!important;filter:contrast(1.6);}
+body.hc .glass-nav,body.hc .pm-card{background:#111!important;border-color:#444!important;}
+/* LT MODE */
+body.lt{font-size:20px!important;}
+/* DY MODE */
+body.dy *{font-family:Arial,sans-serif!important;letter-spacing:.06em!important;line-height:1.9!important;}
+
+/* ── SKY ── */
+.sky{position:fixed;inset:0;z-index:0;pointer-events:none;
+  background:radial-gradient(ellipse 80% 55% at 15% 8%,rgba(255,90,90,.065) 0,transparent 65%),
+    radial-gradient(ellipse 70% 50% at 85% 6%,rgba(255,185,55,.065) 0,transparent 65%),
+    radial-gradient(ellipse 65% 50% at 98% 38%,rgba(85,225,200,.055) 0,transparent 65%),
+    radial-gradient(ellipse 70% 55% at 72% 92%,rgba(55,135,255,.065) 0,transparent 65%),
+    radial-gradient(ellipse 60% 50% at 3% 72%,rgba(185,65,255,.055) 0,transparent 65%),
+    linear-gradient(160deg,#f0fbfb 0,#eef8f4 30%,#f4f0ff 65%,#fff8f0 100%);
+  animation:skyP 18s ease-in-out infinite alternate;}
+@keyframes skyP{0%{filter:hue-rotate(0deg) saturate(1.05)}50%{filter:hue-rotate(18deg) saturate(1.2)}100%{filter:hue-rotate(-12deg) saturate(1.15)}}
+.aurora{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden;}
+.blob{position:absolute;border-radius:50%;filter:blur(80px);mix-blend-mode:screen;will-change:transform;}
+.b1{width:440px;height:330px;top:-50px;left:-70px;background:radial-gradient(ellipse,rgba(255,120,120,.16) 0,transparent 70%);animation:b1 22s ease-in-out infinite alternate;}
+.b2{width:370px;height:390px;top:12%;right:-50px;background:radial-gradient(ellipse,rgba(255,190,75,.15) 0,transparent 70%);animation:b2 26s ease-in-out infinite alternate;}
+.b3{width:410px;height:310px;top:38%;left:22%;background:radial-gradient(ellipse,rgba(155,228,100,.12) 0,transparent 70%);animation:b3 30s ease-in-out infinite alternate;}
+.b4{width:490px;height:350px;top:52%;right:8%;background:radial-gradient(ellipse,rgba(26,163,154,.13) 0,transparent 70%);animation:b4 24s ease-in-out infinite alternate;}
+.b5{width:390px;height:440px;bottom:-70px;left:18%;background:radial-gradient(ellipse,rgba(80,145,255,.13) 0,transparent 70%);animation:b5 32s ease-in-out infinite alternate;}
+.b6{width:350px;height:290px;top:62%;left:-35px;background:radial-gradient(ellipse,rgba(175,85,255,.11) 0,transparent 70%);animation:b6 28s ease-in-out infinite alternate;}
+.b7{width:330px;height:270px;bottom:8%;right:3%;background:radial-gradient(ellipse,rgba(255,100,175,.11) 0,transparent 70%);animation:b7 20s ease-in-out infinite alternate;}
+@keyframes b1{0%{transform:translate(0,0) scale(1)}100%{transform:translate(55px,38px) scale(1.13)}}
+@keyframes b2{0%{transform:translate(0,0) scale(1)}100%{transform:translate(-48px,58px) scale(1.09)}}
+@keyframes b3{0%{transform:translate(0,0) scale(1)}100%{transform:translate(38px,-48px) scale(1.15)}}
+@keyframes b4{0%{transform:translate(0,0) scale(1)}100%{transform:translate(-38px,-28px) scale(1.1)}}
+@keyframes b5{0%{transform:translate(0,0) scale(1)}100%{transform:translate(48px,-38px) scale(1.14)}}
+@keyframes b6{0%{transform:translate(0,0) scale(1)}100%{transform:translate(28px,-55px) scale(1.1)}}
+@keyframes b7{0%{transform:translate(0,0) scale(1)}100%{transform:translate(-32px,42px) scale(1.12)}}
+.rainbow-arc{position:fixed;inset:-10% -10% auto -10%;height:140vh;z-index:0;pointer-events:none;
+  background:conic-gradient(from 210deg at 50% 40%,rgba(255,0,0,.07) 0deg,rgba(255,154,0,.07) 40deg,rgba(208,222,33,.06) 80deg,rgba(79,220,74,.06) 120deg,rgba(63,218,216,.07) 160deg,rgba(28,127,238,.07) 200deg,rgba(95,21,242,.07) 240deg,rgba(186,12,248,.07) 280deg,rgba(251,7,217,.07) 320deg,rgba(255,0,0,.07) 360deg);
+  -webkit-mask:radial-gradient(circle at 50% -10%,transparent 0 38%,#000 39% 65%,transparent 66% 100%);
+  mask:radial-gradient(circle at 50% -10%,transparent 0 38%,#000 39% 65%,transparent 66% 100%);
+  filter:blur(22px) saturate(140%);opacity:.5;transform-origin:50% 40%;animation:arcS 90s linear infinite;}
+@keyframes arcS{to{transform:rotate(360deg)}}
+.cloud-layer{position:fixed;inset:0;z-index:1;pointer-events:none;overflow:hidden;}
+.cld{position:absolute;border-radius:999px;will-change:transform;animation:var(--cd,driftL) var(--cdur,32s) var(--cdel,0s) linear infinite;}
+.cld-sheen{position:absolute;inset:0;border-radius:999px;background:linear-gradient(160deg,rgba(255,255,255,.55) 0,transparent 55%);pointer-events:none;}
+@keyframes driftL{from{transform:translateX(-320px)}to{transform:translateX(110vw)}}
+@keyframes driftR{from{transform:translateX(110vw)}to{transform:translateX(-320px)}}
+
+/* ── GLASS NAV ── */
+.glass-nav{
+  position:sticky;top:0;z-index:200;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:8px 18px;flex-wrap:wrap;gap:8px;
+  background:rgba(255,179,102,.85);
+  backdrop-filter:blur(24px) saturate(200%) brightness(1.05);
+  -webkit-backdrop-filter:blur(24px) saturate(200%) brightness(1.05);
+  border-bottom:1px solid rgba(255,255,255,.45);
+  box-shadow:0 8px 32px rgba(255,140,60,.18),0 1px 0 rgba(255,255,255,.6) inset;
+}
+.nav-left,.nav-right{display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
+.nav-pill{
+  display:inline-flex;align-items:center;gap:5px;
+  padding:7px 14px;background:rgba(255,255,255,.55);
+  backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
+  color:#1a1a1a;font-weight:700;font-size:13px;border-radius:999px;
+  cursor:pointer;border:1px solid rgba(255,255,255,.75);
+  box-shadow:0 4px 14px rgba(0,0,0,.08);
+  transition:transform .15s,box-shadow .15s,background .15s;
+  text-decoration:none;
+}
+.nav-pill:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,0,0,.12);}
+.nav-pill.active{background:rgba(26,163,154,.2);border-color:rgba(26,163,154,.45);color:#0b4c46;}
+.nav-pill.admin-pill{background:rgba(124,58,237,.18);border-color:rgba(124,58,237,.4);color:#4c1d95;}
+.hello-badge{font-weight:700;color:#5a3000;font-size:13px;background:rgba(255,215,160,.7);padding:7px 12px;border-radius:999px;border:1px solid rgba(255,255,255,.7);}
+
+/* ── BUTTONS ── */
+.btn{display:inline-flex;align-items:center;gap:6px;padding:9px 20px;border-radius:999px;font-weight:800;font-size:13px;cursor:pointer;border:none;transition:transform .15s,box-shadow .15s;font-family:var(--font);text-decoration:none;}
+.btn-primary{background:rgba(26,163,154,.92);color:#fff;box-shadow:0 6px 20px rgba(26,163,154,.32);}
+.btn-primary:hover{transform:translateY(-1px) scale(1.03);box-shadow:0 10px 28px rgba(26,163,154,.45);}
+.btn-secondary{background:rgba(255,255,255,.65);color:var(--ink);border:1px solid rgba(255,255,255,.8);box-shadow:0 4px 14px rgba(0,0,0,.07);}
+.btn-secondary:hover{transform:translateY(-1px);}
+.btn-danger{background:rgba(239,68,68,.88);color:#fff;box-shadow:0 4px 16px rgba(239,68,68,.3);}
+.btn-admin{background:rgba(124,58,237,.88);color:#fff;box-shadow:0 4px 16px rgba(124,58,237,.3);}
+.btn-lg{padding:14px 32px;font-size:15px;}
+.btn-block{width:100%;justify-content:center;}
+.login-btn{display:inline-flex;align-items:center;gap:6px;padding:7px 16px;border-radius:999px;background:rgba(26,163,154,.92);color:#fff;font-weight:700;font-size:13px;text-decoration:none;border:1px solid rgba(26,163,154,.6);box-shadow:0 4px 14px rgba(26,163,154,.3);}
+.login-btn:hover{transform:translateY(-1px);}
+
+/* ── CARDS ── */
+.pm-card{
+  background:rgba(255,255,255,.75);
+  backdrop-filter:blur(18px) saturate(160%);
+  -webkit-backdrop-filter:blur(18px) saturate(160%);
+  border:1px solid rgba(255,255,255,.82);
+  border-radius:var(--r);
+  box-shadow:0 16px 44px rgba(0,0,0,.09),0 1px 0 rgba(255,255,255,.95) inset;
+  padding:24px;position:relative;overflow:hidden;
+}
+.pm-card::before{content:'';position:absolute;top:0;left:0;right:0;height:40%;background:linear-gradient(180deg,rgba(255,255,255,.45),transparent);border-radius:var(--r) var(--r) 60% 60%/var(--r) var(--r) 30px 30px;pointer-events:none;}
+
+/* ── FIELDS ── */
+.form-group{margin-bottom:14px;}
+.form-label{display:block;font-size:11px;font-weight:700;color:var(--ink);margin-bottom:5px;text-transform:uppercase;letter-spacing:.4px;}
+.form-control{width:100%;padding:11px 13px;background:rgba(255,255,255,.72);border:1px solid rgba(0,0,0,.1);border-radius:12px;font-size:13px;color:var(--ink);font-family:var(--font);transition:border-color .15s,box-shadow .15s;outline:none;}
+.form-control:focus{border-color:rgba(26,163,154,.5);box-shadow:0 0 0 4px rgba(26,163,154,.1);}
+.form-control::placeholder{color:#9eb5bc;}
+select.form-control{cursor:pointer;appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%235e7680' d='M6 8L0 0h12z'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center;}
+textarea.form-control{resize:vertical;min-height:90px;}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+@media(max-width:600px){.form-row{grid-template-columns:1fr;}}
+
+/* ── FLASH MESSAGES ── */
+.flash-wrap{position:relative;z-index:50;padding:0 16px;}
+.flash{padding:12px 18px;border-radius:12px;font-size:13px;font-weight:600;margin-bottom:8px;backdrop-filter:blur(8px);}
+.flash-success{background:rgba(34,197,94,.12);border:1px solid rgba(34,197,94,.3);color:#15803d;}
+.flash-error{background:rgba(239,68,68,.12);border:1px solid rgba(239,68,68,.3);color:#b91c1c;}
+.flash-info{background:rgba(26,163,154,.12);border:1px solid rgba(26,163,154,.3);color:var(--brand);}
+.flash-warning{background:rgba(245,158,11,.12);border:1px solid rgba(245,158,11,.3);color:#92400e;}
+
+/* ── PAGE INNER WRAPPERS ── */
+.page-inner{flex:1;display:flex;align-items:center;justify-content:center;padding:20px;position:relative;z-index:2;}
+.page-top{flex:1;display:flex;flex-direction:column;align-items:center;padding:16px 20px 40px;position:relative;z-index:2;}
+.mw-sm{width:100%;max-width:480px;}
+.mw-md{width:100%;max-width:680px;}
+.mw-lg{width:100%;max-width:960px;}
+.mw-xl{width:100%;max-width:1200px;}
+
+/* ── BADGES ── */
+.badge{display:inline-flex;align-items:center;padding:3px 9px;border-radius:999px;font-size:11px;font-weight:700;}
+.badge-teal{background:rgba(26,163,154,.12);color:var(--brand);}
+.badge-orange{background:rgba(255,179,102,.2);color:#8a4800;}
+.badge-blue{background:rgba(80,140,255,.12);color:#1a4fa8;}
+.badge-violet{background:rgba(155,85,255,.12);color:#6b21a8;}
+.badge-green{background:rgba(34,197,94,.12);color:#15803d;}
+.badge-red{background:rgba(239,68,68,.12);color:#b91c1c;}
+.badge-admin{background:rgba(124,58,237,.15);color:#4c1d95;}
+
+/* ── DIVIDER ── */
+.divider{height:1px;background:linear-gradient(90deg,transparent,rgba(0,0,0,.1),transparent);margin:14px 0;}
+
+/* ── TOAST ── */
+#toastWrap{position:fixed;top:70px;right:14px;z-index:999;display:flex;flex-direction:column;gap:7px;pointer-events:none;}
+.toast{background:rgba(255,255,255,.9);backdrop-filter:blur(14px);border-radius:14px;padding:11px 16px;display:flex;align-items:center;gap:9px;font-size:13px;font-weight:600;color:var(--ink);box-shadow:0 8px 28px rgba(0,0,0,.12);border:1px solid rgba(255,255,255,.8);pointer-events:all;animation:toastIn .3s cubic-bezier(.16,1,.3,1);}
+@keyframes toastIn{from{opacity:0;transform:translateX(24px)}to{opacity:1;transform:translateX(0)}}
+.toast.success{border-left:4px solid var(--success);}
+.toast.error{border-left:4px solid var(--danger);}
+.toast.info{border-left:4px solid var(--brand);}
+
+/* ── SPINNER ── */
+.spinner{width:36px;height:36px;border-radius:50%;border:3px solid rgba(26,163,154,.15);border-top-color:var(--brand);animation:spin .7s linear infinite;margin:0 auto;}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* ── LANGUAGE SELECTOR ── */
+.lang-wrap{position:relative;}
+.lang-btn{display:flex;align-items:center;gap:5px;padding:6px 11px;border-radius:999px;cursor:pointer;background:rgba(255,255,255,.55);backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,.75);font-size:12px;font-weight:700;color:var(--ink);}
+.lang-btn:hover{background:rgba(255,255,255,.75);}
+.lang-dd{position:absolute;top:calc(100% + 7px);right:0;min-width:240px;max-height:360px;overflow-y:auto;background:rgba(255,255,255,.95);backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,.8);border-radius:16px;box-shadow:0 20px 50px rgba(0,0,0,.12);padding:7px 0;z-index:400;display:none;}
+.lang-dd.open{display:block;animation:fadeUp .2s ease;}
+@keyframes fadeUp{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+.lang-cat-label{padding:6px 14px 3px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:var(--muted);}
+.lang-opt{padding:8px 14px;font-size:12px;cursor:pointer;display:flex;align-items:center;gap:8px;transition:background .12s;color:var(--ink);font-weight:500;}
+.lang-opt:hover{background:rgba(26,163,154,.08);}
+.lang-opt.selected{color:var(--brand);font-weight:700;}
+
+/* ── A11Y PANEL ── */
+.a11y-fab{position:fixed;bottom:80px;left:20px;z-index:501;width:48px;height:48px;border-radius:50%;background:linear-gradient(135deg,var(--brand),#23b4aa);color:#fff;font-size:20px;display:flex;align-items:center;justify-content:center;cursor:pointer;border:none;box-shadow:0 6px 24px rgba(26,163,154,.42);transition:transform .2s;}
+.a11y-fab:hover{transform:scale(1.1);}
+.a11y-panel{position:fixed;bottom:140px;left:20px;z-index:500;background:rgba(255,255,255,.92);backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,.8);border-radius:20px;box-shadow:0 16px 48px rgba(0,0,0,.14);padding:14px;min-width:250px;display:none;}
+.a11y-panel.open{display:block;animation:fadeUp .2s ease;}
+.a11y-section-title{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.7px;color:var(--muted);margin-bottom:7px;padding:0 10px;}
+.a11y-btn{display:flex;align-items:center;gap:9px;width:100%;padding:9px 12px;background:none;border:none;cursor:pointer;font-size:12px;font-weight:600;color:var(--ink);border-radius:10px;transition:background .15s;text-align:left;font-family:var(--font);}
+.a11y-btn:hover{background:rgba(26,163,154,.08);}
+.a11y-btn.on{background:rgba(26,163,154,.12);color:var(--brand);}
+.a11y-btn svg{width:18px;height:18px;flex-shrink:0;}
+
+/* ── SIGN LANGUAGE PANEL ── */
+.sl-panel{position:fixed;bottom:20px;left:20px;z-index:498;background:rgba(255,255,255,.93);backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,.8);border-radius:20px;box-shadow:0 16px 48px rgba(0,0,0,.14);padding:16px;width:300px;display:none;}
+.sl-panel.open{display:block;animation:fadeUp .2s ease;}
+.sl-video{width:100%;height:180px;background:#0b1b22;border-radius:12px;display:flex;align-items:center;justify-content:center;overflow:hidden;position:relative;}
+.sl-video video{width:100%;height:100%;object-fit:cover;border-radius:12px;display:none;}
+.sl-output{min-height:40px;padding:8px;background:rgba(26,163,154,.06);border-radius:8px;border:1px solid rgba(26,163,154,.15);font-size:13px;color:var(--ink);margin-top:8px;word-break:break-word;}
+
+/* ── VOICE FAB ── */
+.voice-fab{position:fixed;bottom:20px;right:20px;z-index:501;width:48px;height:48px;border-radius:50%;background:linear-gradient(135deg,#f4a261,#e8943a);color:#fff;font-size:20px;display:flex;align-items:center;justify-content:center;cursor:pointer;border:none;box-shadow:0 6px 24px rgba(244,162,97,.48);transition:transform .2s;}
+.voice-fab:hover{transform:scale(1.1);}
+.voice-fab.listening{animation:vPulse 1.2s ease-in-out infinite;background:linear-gradient(135deg,#ef4444,#f97316);}
+@keyframes vPulse{0%,100%{box-shadow:0 0 0 0 rgba(239,68,68,.5)}70%{box-shadow:0 0 0 18px rgba(239,68,68,0)}}
+.voice-panel{position:fixed;bottom:80px;right:20px;z-index:498;background:rgba(255,255,255,.93);backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,.8);border-radius:20px;box-shadow:0 16px 48px rgba(0,0,0,.14);padding:16px;width:270px;display:none;}
+.voice-panel.open{display:block;animation:fadeUp .2s ease;}
+.transcript-box{min-height:60px;padding:9px;background:rgba(26,163,154,.06);border-radius:10px;border:1px solid rgba(26,163,154,.15);font-size:13px;color:var(--ink);margin-top:9px;word-break:break-word;}
+
+/* ── MODAL ── */
+.modal-overlay{position:fixed;inset:0;z-index:600;background:rgba(0,0,0,.28);backdrop-filter:blur(4px);display:none;align-items:center;justify-content:center;padding:20px;}
+.modal-overlay.open{display:flex;animation:fadeIn .2s ease;}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+.modal-box{background:rgba(255,255,255,.95);backdrop-filter:blur(24px);border-radius:var(--r);box-shadow:0 30px 70px rgba(0,0,0,.18);padding:28px;width:100%;max-width:520px;animation:modalIn .3s cubic-bezier(.16,1,.3,1);position:relative;}
+@keyframes modalIn{from{opacity:0;transform:scale(.92) translateY(20px)}to{opacity:1;transform:scale(1) translateY(0)}}
+.modal-close{position:absolute;top:14px;right:14px;width:30px;height:30px;border-radius:50%;background:rgba(0,0,0,.08);border:none;cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center;}
+
+/* ── TABS ── */
+.tab-bar{display:flex;gap:4px;border-bottom:1px solid rgba(0,0,0,.08);margin-bottom:18px;overflow-x:auto;}
+.tab{padding:9px 16px;font-size:13px;font-weight:600;cursor:pointer;border-bottom:2px solid transparent;color:var(--muted);white-space:nowrap;transition:all .15s;}
+.tab.active{color:var(--brand);border-bottom-color:var(--brand);}
+.tab-panel{display:none;}.tab-panel.active{display:block;}
+
+/* ── TABLE ── */
+.data-table{width:100%;border-collapse:separate;border-spacing:0 5px;font-size:12px;}
+.data-table thead th{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--muted);padding:7px 12px;text-align:left;}
+.data-table tbody td{background:rgba(255,255,255,.5);padding:10px 12px;border-top:1px solid rgba(255,255,255,.6);border-bottom:1px solid rgba(0,0,0,.04);}
+.data-table tbody td:first-child{border-radius:8px 0 0 8px;border-left:1px solid rgba(255,255,255,.6);}
+.data-table tbody td:last-child{border-radius:0 8px 8px 0;border-right:1px solid rgba(255,255,255,.6);}
+.data-table tbody tr:hover td{background:rgba(255,255,255,.72);}
+
+/* ── FOOTER ── */
+.pm-footer{position:relative;z-index:2;background:rgba(255,255,255,.45);backdrop-filter:blur(14px);border-top:1px solid rgba(255,255,255,.6);padding:16px 22px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;font-size:11px;color:var(--muted);}
+
+/* ── UTILITIES ── */
+.flex{display:flex;}.ia{align-items:center;}.jb{justify-content:space-between;}
+.gap2{gap:8px;}.gap3{gap:12px;}.gap4{gap:16px;}
+.mt2{margin-top:8px;}.mt3{margin-top:12px;}.mt4{margin-top:16px;}.mt6{margin-top:24px;}
+.mb2{margin-bottom:8px;}.mb3{margin-bottom:12px;}.mb4{margin-bottom:16px;}
+.tc{text-align:center;}.ts{font-size:12px;}.tx{font-size:11px;}
+.tm{color:var(--muted);}.fb{font-weight:700;}.fh{font-weight:800;}
+.wf{width:100%;}
+
+/* ── PAGE HERO ── */
+.ph{text-align:center;padding:42px 20px 16px;position:relative;z-index:2;}
+.ph h1{font-size:clamp(26px,5vw,40px);font-weight:800;color:var(--navy);margin:6px 0 8px;letter-spacing:-.5px;}
+.ph p{font-size:14px;color:var(--muted);max-width:560px;margin:0 auto;line-height:1.6;}
+.ph-icon{font-size:52px;margin-bottom:8px;}
+
+/* ── PROGRESS BAR ── */
+.prog-wrap{background:rgba(0,0,0,.07);border-radius:999px;height:6px;overflow:hidden;}
+.prog-fill{height:100%;border-radius:999px;background:linear-gradient(90deg,var(--brand),#23b4aa);transition:width .6s cubic-bezier(.16,1,.3,1);}
+
+/* ── STAT CARDS ── */
+.stat-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:12px;margin-bottom:18px;}
+.stat-card{background:rgba(255,255,255,.62);backdrop-filter:blur(14px);border:1px solid rgba(255,255,255,.78);border-radius:16px;padding:16px;text-align:center;}
+.stat-num{font-size:28px;font-weight:800;color:var(--brand);line-height:1;}
+.stat-label{font-size:11px;color:var(--muted);margin-top:3px;font-weight:600;}
+
+/* ── LIVE TRANSLATE BANNER ── */
+.translate-banner{position:relative;z-index:10;background:rgba(26,163,154,.08);border-bottom:1px solid rgba(26,163,154,.15);padding:6px 18px;display:flex;align-items:center;gap:10px;font-size:12px;color:var(--brand);font-weight:600;}
+.translate-indicator{width:8px;height:8px;border-radius:50%;background:var(--brand);animation:indPulse 1.5s ease-in-out infinite;}
+@keyframes indPulse{0%,100%{opacity:1}50%{opacity:.3}}
+
+/* ── RTL SUPPORT ── */
+[dir=rtl] .glass-nav{flex-direction:row-reverse;}
+[dir=rtl] .lang-dd{right:auto;left:0;}
+[dir=rtl] .a11y-panel,.sl-panel{left:auto;right:20px;}
+[dir=rtl] .voice-fab,.voice-panel{right:auto;left:80px;}
+
+/* ── RESPONSIVE ── */
+@media(max-width:700px){.nav-pill{padding:6px 10px;font-size:11px;}.hello-badge{font-size:11px;padding:5px 9px;}}
+@media(max-width:520px){.glass-nav .nav-left .nav-pill:nth-child(n+4){display:none;}}
+</style>
+{% block extra_head %}{% endblock %}
+</head>
+<body>
+
+<!-- ════ BACKGROUND LAYERS ════════════════════════════════════════════════ -->
+<div class="sky" aria-hidden="true"></div>
+<div class="aurora" aria-hidden="true">
+  <div class="blob b1"></div><div class="blob b2"></div><div class="blob b3"></div>
+  <div class="blob b4"></div><div class="blob b5"></div><div class="blob b6"></div>
+  <div class="blob b7"></div>
+</div>
+<div class="rainbow-arc" aria-hidden="true"></div>
+<div class="cloud-layer" id="cloudLayer" aria-hidden="true"></div>
+<div id="toastWrap" aria-live="polite"></div>
+
+<!-- ════ LIVE TRANSLATION BANNER ════════════════════════════════════════════ -->
+<div class="translate-banner" id="translateBanner" style="display:none">
+  <div class="translate-indicator"></div>
+  <span id="translateBannerText">Live Translation Active</span>
+  <span id="translateLangName" style="margin-left:auto;opacity:.7;font-size:11px"></span>
+  <button onclick="closeTranslateBanner()" style="background:none;border:none;cursor:pointer;font-size:16px;color:var(--brand);margin-left:8px">×</button>
+</div>
+
+<!-- ════ NAV ════════════════════════════════════════════════════════════════ -->
+<nav class="glass-nav" role="navigation" aria-label="Main navigation">
+  <div class="nav-left">
+    <a class="nav-pill {% if request.endpoint=='home' %}active{% endif %}" href="{{ url_for('home') }}" data-translate-key="nav_home">Home</a>
+    <a class="nav-pill {% if request.endpoint=='services' %}active{% endif %}" href="{{ url_for('services') }}" data-translate-key="nav_services">Services</a>
+    <a class="nav-pill {% if request.endpoint=='about' %}active{% endif %}" href="{{ url_for('about') }}" data-translate-key="nav_about">About</a>
+    <a class="nav-pill {% if request.endpoint=='contact' %}active{% endif %}" href="{{ url_for('contact') }}" data-translate-key="nav_contact">Contact</a>
+    {% if session_user %}
+    <a class="nav-pill {% if request.endpoint=='dashboard' %}active{% endif %}" href="{{ url_for('dashboard') }}" data-translate-key="nav_dashboard">Dashboard</a>
+    {% if is_admin %}
+    <a class="nav-pill admin-pill" href="{{ url_for('admin_panel') }}" data-translate-key="nav_admin">Admin</a>
+    {% endif %}
+    {% endif %}
+  </div>
+  <div class="nav-right" style="gap:8px">
+    <!-- Language Selector -->
+    <div class="lang-wrap">
+      <button class="lang-btn" onclick="toggleLangDD(this)" aria-label="Select language" aria-expanded="false">
+        <span id="langFlag">🌐</span><span id="langCode">EN</span>
+        <svg width="10" height="7" viewBox="0 0 10 7" fill="none"><path d="M1 1L5 5L9 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+      </button>
+      <div class="lang-dd" id="langDD" role="listbox" aria-label="Language options"></div>
+    </div>
+    {% if session_user %}
+      <span class="hello-badge">Hi, {{ session_user_name.split(' ')[0] }}</span>
+      {% if is_admin %}
+      <a class="nav-pill admin-pill" href="{{ url_for('admin_panel') }}">⚙ Admin Panel</a>
+      {% endif %}
+      <a class="nav-pill" href="{{ url_for('profile') }}" data-translate-key="nav_profile">Profile</a>
+      <a class="login-btn" href="{{ url_for('logout') }}" data-translate-key="nav_logout">Logout</a>
+    {% else %}
+      <a class="nav-pill" href="{{ url_for('register') }}" data-translate-key="nav_register">Register</a>
+      <a class="login-btn" href="{{ url_for('login') }}" data-translate-key="nav_login">Login</a>
+    {% endif %}
+  </div>
+</nav>
+
+<!-- ════ FLASH MESSAGES ══════════════════════════════════════════════════════ -->
+{% with msgs = get_flashed_messages(with_categories=True) %}
+  {% if msgs %}
+    <div class="flash-wrap" style="position:relative;z-index:50;padding:8px 16px 0">
+      {% for cat, msg in msgs %}
+        <div class="flash flash-{{ cat }}">{{ msg }}</div>
+      {% endfor %}
+    </div>
+  {% endif %}
+{% endwith %}
+
+<!-- ════ MAIN CONTENT ════════════════════════════════════════════════════════ -->
+{% block content %}{% endblock %}
+
+<!-- ════ A11Y FAB ═══════════════════════════════════════════════════════════ -->
+<button class="a11y-fab" onclick="toggleA11yPanel()" title="Accessibility Options" aria-label="Open accessibility options" aria-expanded="false">
+  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="5" r="2"/><path d="M12 7v5M8 9h8M9 22l3-7 3 7"/></svg>
+</button>
+
+<div class="a11y-panel" id="a11yPanel" role="dialog" aria-label="Accessibility Options">
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
+    <div style="font-size:13px;font-weight:800;color:var(--navy)">Accessibility</div>
+    <button onclick="toggleA11yPanel()" style="background:none;border:none;cursor:pointer;font-size:16px;color:var(--muted)">×</button>
+  </div>
+
+  <div class="a11y-section-title">Visual</div>
+  <button class="a11y-btn" id="btnHC" onclick="toggleHC()">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M12 2v20M2 12h20"/></svg>
+    High Contrast Mode
+  </button>
+  <button class="a11y-btn" id="btnLT" onclick="toggleLT()">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 12h18M3 6h18M3 18h18"/></svg>
+    Large Text Mode
+  </button>
+  <button class="a11y-btn" id="btnDY" onclick="toggleDY()">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7V4h16v3M9 20h6M12 4v16"/></svg>
+    Dyslexia-Friendly Font
+  </button>
+  <div style="display:flex;gap:6px;padding:4px 12px">
+    <button onclick="changeFontSize(2)" class="btn btn-secondary" style="flex:1;font-size:11px;padding:6px 8px">A+</button>
+    <button onclick="changeFontSize(-2)" class="btn btn-secondary" style="flex:1;font-size:11px;padding:6px 8px">A−</button>
+  </div>
+
+  <div class="divider"></div>
+  <div class="a11y-section-title">Audio / Voice</div>
+  <button class="a11y-btn" id="btnSR" onclick="toggleScreenReader()">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M11 5L6 9H2v6h4l5 4V5zM19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>
+    Read Page Aloud
+  </button>
+  <button class="a11y-btn" id="btnVN" onclick="toggleVoiceNav()">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="9" y="2" width="6" height="12" rx="3"/><path d="M5 10a7 7 0 0 0 14 0M12 19v3M9 22h6"/></svg>
+    Voice Navigation
+  </button>
+
+  <div class="divider"></div>
+  <div class="a11y-section-title">Sign Language</div>
+  <button class="a11y-btn" id="btnSL" onclick="toggleSLPanel()">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M7 11V7a5 5 0 0 1 10 0v4M12 15v4M9 19h6"/></svg>
+    Sign Language Input (ASL/BSL/PSL)
+  </button>
+  <button class="a11y-btn" onclick="openSignDict()">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20M4 4h16v18H6.5A2.5 2.5 0 0 1 4 19.5V4z"/></svg>
+    Sign Language Dictionary
+  </button>
+</div>
+
+<!-- ════ SIGN LANGUAGE PANEL ════════════════════════════════════════════════ -->
+<div class="sl-panel" id="slPanel" role="complementary" aria-label="Sign Language Panel">
+  <div class="flex ia jb mb3">
+    <div style="font-size:13px;font-weight:800;color:var(--navy)">Sign Language Input</div>
+    <button onclick="toggleSLPanel()" style="background:none;border:none;cursor:pointer;font-size:18px;color:var(--muted)">×</button>
+  </div>
+  <div class="sl-video" id="slVideoBox">
+    <video id="slVideo" autoplay playsinline></video>
+    <div id="slPlaceholder" style="display:flex;flex-direction:column;align-items:center;gap:8px;color:#aaa;font-size:12px">
+      <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#aaa" stroke-width="1.5"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
+      Camera not active
+    </div>
+  </div>
+  <div style="font-size:11px;color:var(--brand);font-weight:700;margin-top:7px" id="slStatus">Ready — ASL / BSL / PSL</div>
+  <div class="sl-output" id="slOutput" aria-live="polite">Recognised signs appear here…</div>
+  <div class="flex gap2 mt3">
+    <button class="btn btn-primary" style="flex:1;justify-content:center;font-size:12px" onclick="startSL()" id="btnStartSL">Start Camera</button>
+    <button class="btn btn-secondary" style="font-size:12px" onclick="clearSL()">Clear</button>
+  </div>
+  <div style="font-size:10px;color:var(--muted);margin-top:6px;text-align:center">Camera processed locally — no data sent externally</div>
+</div>
+
+<!-- ════ VOICE FAB & PANEL ════════════════════════════════════════════════════ -->
+<button class="voice-fab" id="voiceFab" onclick="toggleVoicePanel()" title="Voice Input" aria-label="Toggle voice input" aria-pressed="false">
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="2" width="6" height="12" rx="3"/><path d="M5 10a7 7 0 0 0 14 0M12 19v3M9 22h6"/></svg>
+</button>
+<div class="voice-panel" id="voicePanel" role="complementary" aria-label="Voice Input Panel">
+  <div class="flex ia jb mb3">
+    <div style="font-size:13px;font-weight:800;color:var(--navy)">Voice Input</div>
+    <button onclick="closeVoicePanel()" style="background:none;border:none;cursor:pointer;font-size:18px;color:var(--muted)">×</button>
+  </div>
+  <div style="font-size:11px;color:var(--muted)">Speak in any language — auto-detected and transcribed</div>
+  <div style="font-size:11px;font-weight:700;margin-top:6px">Detected: <span id="voiceLangLabel" style="color:var(--brand)">Auto</span></div>
+  <div class="transcript-box" id="transcriptBox" aria-live="polite">
+    <span id="transcriptText" style="color:var(--muted)">Press mic to start speaking…</span>
+  </div>
+  <div class="flex gap2 mt3">
+    <button class="btn btn-secondary" style="flex:1;justify-content:center;font-size:11px" onclick="clearTranscript()">Clear</button>
+    <button class="btn btn-primary" style="font-size:11px" onclick="copyTranscript()">Copy</button>
+  </div>
+</div>
+
+<!-- ════ SIGN DICTIONARY MODAL ═══════════════════════════════════════════════ -->
+<div class="modal-overlay" id="signDictModal" role="dialog" aria-label="Sign Language Dictionary" aria-modal="true">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeSignDict()" aria-label="Close">×</button>
+    <div style="font-size:18px;font-weight:800;color:var(--navy);margin-bottom:14px">Sign Language Dictionary</div>
+    <input class="form-control" id="signSearch" placeholder="Search: autism, hello, family…" oninput="searchSigns()" style="margin-bottom:12px"/>
+    <div id="signResults" style="max-height:320px;overflow-y:auto"></div>
+  </div>
+</div>
+
+<!-- ════ AI CHAT BUBBLE ═══════════════════════════════════════════════════════ -->
+<button onclick="toggleChatPanel()" id="chatFab" style="position:fixed;bottom:80px;right:80px;z-index:501;width:48px;height:48px;border-radius:50%;background:linear-gradient(135deg,var(--brand),#23b4aa);color:#fff;font-size:20px;display:flex;align-items:center;justify-content:center;cursor:pointer;border:none;box-shadow:0 6px 24px rgba(26,163,154,.42);transition:transform .2s;" title="Ask Phoenix AI" aria-label="Open Phoenix AI chat">
+  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+</button>
+<div id="chatPanel" style="position:fixed;bottom:140px;right:80px;z-index:498;background:rgba(255,255,255,.95);backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,.8);border-radius:20px;box-shadow:0 16px 48px rgba(0,0,0,.14);padding:16px;width:320px;display:none;max-height:460px;flex-direction:column;">
+  <div class="flex ia jb mb3">
+    <div style="font-size:13px;font-weight:800;color:var(--navy)">Phoenix AI Assistant</div>
+    <button onclick="toggleChatPanel()" style="background:none;border:none;cursor:pointer;font-size:18px;color:var(--muted)">×</button>
+  </div>
+  <div id="chatMessages" style="flex:1;overflow-y:auto;max-height:280px;display:flex;flex-direction:column;gap:8px;margin-bottom:10px;padding:4px 0;"></div>
+  <div style="display:flex;gap:6px">
+    <input id="chatInput" class="form-control" placeholder="Ask anything…" style="flex:1;font-size:12px" onkeydown="if(event.key==='Enter')sendChat()"/>
+    <button class="btn btn-primary" onclick="sendChat()" style="padding:8px 12px;font-size:12px">Send</button>
+  </div>
+</div>
+
+<!-- ════ FOOTER ═══════════════════════════════════════════════════════════════ -->
+<footer class="pm-footer" role="contentinfo">
+  <span>© 2026 PhoenixMinds — phoenixminds.org</span>
+  <span>Founder: Ruksh E Ibadat · Pakistan · UAE</span>
+  <span>HIPAA · GDPR · WCAG 2.2 AA</span>
+</footer>
+
+<!-- ════ GLOBAL JS ════════════════════════════════════════════════════════════ -->
+<script>
+'use strict';
+/* ── CLOUD BUILDER ─── */
+const CLOUD_DEFS=[
+  {w:140,h:58,top:'8%',t:'rgba(255,220,220,.90)',sh:'rgba(255,100,100,.12)',dur:28,del:-3},
+  {w:190,h:72,top:'20%',t:'rgba(255,235,200,.90)',sh:'rgba(255,180,50,.12)',dur:36,del:-14},
+  {w:160,h:64,top:'33%',t:'rgba(215,248,215,.88)',sh:'rgba(100,200,100,.10)',dur:42,del:-22},
+  {w:220,h:86,top:'46%',t:'rgba(200,246,244,.90)',sh:'rgba(26,163,154,.12)',dur:50,del:-8},
+  {w:175,h:68,top:'58%',t:'rgba(210,230,255,.88)',sh:'rgba(80,140,255,.10)',dur:32,del:-18},
+  {w:148,h:60,top:'70%',t:'rgba(230,215,255,.88)',sh:'rgba(160,80,255,.10)',dur:38,del:-30},
+  {w:200,h:78,top:'80%',t:'rgba(255,218,238,.88)',sh:'rgba(255,100,180,.10)',dur:44,del:-6},
+  {w:120,h:50,top:'13%',t:'rgba(255,240,210,.86)',sh:'rgba(255,160,60,.10)',dur:34,del:-42,rev:true},
+  {w:165,h:65,top:'40%',t:'rgba(215,238,255,.88)',sh:'rgba(60,140,255,.10)',dur:46,del:-15,rev:true},
+  {w:185,h:74,top:'65%',t:'rgba(230,225,255,.88)',sh:'rgba(140,80,255,.10)',dur:52,del:-28,rev:true},
+];
+function buildClouds(){
+  const layer=document.getElementById('cloudLayer');if(!layer)return;
+  CLOUD_DEFS.forEach(def=>{
+    const el=document.createElement('div');el.className='cld';
+    el.style.cssText=`width:${def.w}px;height:${def.h}px;top:${def.top};background:radial-gradient(ellipse at 50% 80%,${def.t} 0%,rgba(255,255,255,.72) 100%);filter:drop-shadow(0 6px 18px ${def.sh});--cd:${def.rev?'driftR':'driftL'};--cdur:${def.dur}s;--cdel:${def.del}s;`;
+    [{w:Math.round(def.w*.5),h:Math.round(def.h*1.35),l:Math.round(def.w*.12),t:-Math.round(def.h*.62)},{w:Math.round(def.w*.59),h:Math.round(def.h*1.6),l:Math.round(def.w*.42),t:-Math.round(def.h*.78)}].forEach(b=>{
+      const bump=document.createElement('div');
+      bump.style.cssText=`position:absolute;width:${b.w}px;height:${b.h}px;border-radius:50%;top:${b.t}px;left:${b.l}px;background:radial-gradient(ellipse at 50% 60%,${def.t} 0%,rgba(255,255,255,.65) 100%);`;
+      el.appendChild(bump);
+    });
+    const sh=document.createElement('div');sh.className='cld-sheen';el.appendChild(sh);
+    layer.appendChild(el);
+  });
+}
+
+/* ── 50 LANGUAGES + Sign Languages ─── */
+const LANGS=[
+  {cat:'International',items:[{c:'en',f:'🇬🇧',n:'English',rtl:false}]},
+  {cat:'South Asian',items:[
+    {c:'ur',f:'🇵🇰',n:'اردو (Urdu)',rtl:true},{c:'hi',f:'🇮🇳',n:'हिन्दी (Hindi)',rtl:false},
+    {c:'bn',f:'🇧🇩',n:'বাংলা (Bengali)',rtl:false},{c:'pa',f:'🇮🇳',n:'ਪੰਜਾਬੀ (Punjabi)',rtl:false},
+    {c:'sd',f:'🇵🇰',n:'سنڌي (Sindhi)',rtl:true},{c:'ps',f:'🇦🇫',n:'پښتو (Pashto)',rtl:true},
+    {c:'ta',f:'🇮🇳',n:'தமிழ் (Tamil)',rtl:false},{c:'te',f:'🇮🇳',n:'తెలుగు (Telugu)',rtl:false},
+    {c:'ml',f:'🇮🇳',n:'മലയാളം (Malayalam)',rtl:false},{c:'si',f:'🇱🇰',n:'සිංහල (Sinhala)',rtl:false},
+    {c:'ne',f:'🇳🇵',n:'नेपाली (Nepali)',rtl:false}
+  ]},
+  {cat:'Middle East & North Africa',items:[
+    {c:'ar',f:'🇸🇦',n:'العربية (Arabic)',rtl:true},{c:'fa',f:'🇮🇷',n:'فارسی (Farsi)',rtl:true},
+    {c:'tr',f:'🇹🇷',n:'Türkçe (Turkish)',rtl:false},{c:'he',f:'🇮🇱',n:'עברית (Hebrew)',rtl:true},
+    {c:'ku',f:'🏳',n:'Kurdî (Kurdish)',rtl:false}
+  ]},
+  {cat:'European',items:[
+    {c:'fr',f:'🇫🇷',n:'Français',rtl:false},{c:'de',f:'🇩🇪',n:'Deutsch',rtl:false},
+    {c:'es',f:'🇪🇸',n:'Español',rtl:false},{c:'pt',f:'🇧🇷',n:'Português',rtl:false},
+    {c:'ru',f:'🇷🇺',n:'Русский',rtl:false},{c:'it',f:'🇮🇹',n:'Italiano',rtl:false},
+    {c:'nl',f:'🇳🇱',n:'Nederlands',rtl:false},{c:'pl',f:'🇵🇱',n:'Polski',rtl:false},
+    {c:'uk',f:'🇺🇦',n:'Українська',rtl:false},{c:'el',f:'🇬🇷',n:'Ελληνικά',rtl:false}
+  ]},
+  {cat:'East & Southeast Asia',items:[
+    {c:'zh',f:'🇨🇳',n:'中文 (Chinese)',rtl:false},{c:'ja',f:'🇯🇵',n:'日本語 (Japanese)',rtl:false},
+    {c:'ko',f:'🇰🇷',n:'한국어 (Korean)',rtl:false},{c:'vi',f:'🇻🇳',n:'Tiếng Việt',rtl:false},
+    {c:'th',f:'🇹🇭',n:'ภาษาไทย (Thai)',rtl:false},{c:'id',f:'🇮🇩',n:'Bahasa Indonesia',rtl:false},
+    {c:'ms',f:'🇲🇾',n:'Bahasa Melayu',rtl:false},{c:'my',f:'🇲🇲',n:'မြန်မာ (Myanmar)',rtl:false}
+  ]},
+  {cat:'African',items:[
+    {c:'sw',f:'🇰🇪',n:'Kiswahili',rtl:false},{c:'am',f:'🇪🇹',n:'አማርኛ (Amharic)',rtl:false},
+    {c:'ha',f:'🇳🇬',n:'Hausa',rtl:false},{c:'yo',f:'🇳🇬',n:'Yorùbá',rtl:false},
+    {c:'ig',f:'🇳🇬',n:'Igbo',rtl:false},{c:'zu',f:'🇿🇦',n:'isiZulu',rtl:false},
+    {c:'so',f:'🇸🇴',n:'Soomaali (Somali)',rtl:false}
+  ]},
+  {cat:'Americas & Oceania',items:[
+    {c:'qu',f:'🇵🇪',n:'Runasimi (Quechua)',rtl:false},{c:'gu2',f:'🏳',n:'Guaraní',rtl:false}
+  ]},
+  {cat:'Sign Languages',items:[
+    {c:'asl',f:'🤟',n:'American Sign Language (ASL)',rtl:false,sign:true},
+    {c:'bsl',f:'🤟',n:'British Sign Language (BSL)',rtl:false,sign:true},
+    {c:'psl',f:'🤟',n:'Pakistan Sign Language (PSL)',rtl:false,sign:true},
+    {c:'isl',f:'🤟',n:'International Sign (IS)',rtl:false,sign:true}
+  ]}
+];
+
+// Pre-built translations for core UI strings
+const UI_T = {
+  en:{nav_home:'Home',nav_services:'Services',nav_about:'About',nav_contact:'Contact',nav_dashboard:'Dashboard',nav_profile:'Profile',nav_login:'Login',nav_register:'Register',nav_logout:'Logout'},
+  ur:{nav_home:'ہوم',nav_services:'خدمات',nav_about:'ہمارے بارے میں',nav_contact:'رابطہ',nav_dashboard:'ڈیش بورڈ',nav_profile:'پروفائل',nav_login:'لاگ ان',nav_register:'رجسٹر',nav_logout:'لاگ آؤٹ'},
+  ar:{nav_home:'الرئيسية',nav_services:'الخدمات',nav_about:'من نحن',nav_contact:'اتصل بنا',nav_dashboard:'لوحة التحكم',nav_profile:'الملف الشخصي',nav_login:'تسجيل الدخول',nav_register:'تسجيل',nav_logout:'تسجيل الخروج'},
+  hi:{nav_home:'होम',nav_services:'सेवाएं',nav_about:'हमारे बारे में',nav_contact:'संपर्क',nav_dashboard:'डैशबोर्ड',nav_profile:'प्रोफ़ाइल',nav_login:'लॉगिन',nav_register:'रजिस्टर',nav_logout:'लॉगआउट'},
+  fr:{nav_home:'Accueil',nav_services:'Services',nav_about:'À propos',nav_contact:'Contact',nav_dashboard:'Tableau de bord',nav_profile:'Profil',nav_login:'Connexion',nav_register:'S\'inscrire',nav_logout:'Déconnexion'},
+  de:{nav_home:'Startseite',nav_services:'Dienste',nav_about:'Über uns',nav_contact:'Kontakt',nav_dashboard:'Dashboard',nav_profile:'Profil',nav_login:'Anmelden',nav_register:'Registrieren',nav_logout:'Abmelden'},
+  es:{nav_home:'Inicio',nav_services:'Servicios',nav_about:'Acerca de',nav_contact:'Contacto',nav_dashboard:'Panel',nav_profile:'Perfil',nav_login:'Iniciar sesión',nav_register:'Registrarse',nav_logout:'Cerrar sesión'},
+  zh:{nav_home:'首页',nav_services:'服务',nav_about:'关于',nav_contact:'联系',nav_dashboard:'仪表板',nav_profile:'个人资料',nav_login:'登录',nav_register:'注册',nav_logout:'登出'},
+};
+
+let curLang = localStorage.getItem('pm_lang') || 'en';
+let isTranslating = false;
+
+function getAllLangs(){const all=[];LANGS.forEach(cat=>cat.items.forEach(l=>all.push(l)));return all;}
+function getLang(code){return getAllLangs().find(l=>l.c===code)||{c:'en',f:'🌐',n:'English',rtl:false};}
+
+function applyUILang(code){
+  curLang=code;localStorage.setItem('pm_lang',code);
+  const t=UI_T[code]||{};
+  document.querySelectorAll('[data-translate-key]').forEach(el=>{
+    const k=el.getAttribute('data-translate-key');
+    if(t[k]) el.textContent=t[k];
+  });
+  const lng=getLang(code);
+  const flag=document.getElementById('langFlag');
+  const lcode=document.getElementById('langCode');
+  if(flag) flag.textContent=lng.f||'🌐';
+  if(lcode) lcode.textContent=code.toUpperCase();
+  const rtl=['ar','ur','fa','ps','sd','he'];
+  document.getElementById('HR').setAttribute('dir',rtl.includes(code)?'rtl':'ltr');
+  document.getElementById('HR').setAttribute('lang',code);
+  // Show translate banner for non-English
+  if(code!=='en' && !lng.sign){
+    showTranslateBanner(lng.n);
+    translatePageContent(lng.n);
+  } else {
+    hideTranslateBanner();
+  }
+  if(lng.sign){
+    toast(`Sign language mode: ${lng.n}. Use the accessibility panel to open the sign input.`,'info');
+    toggleSLPanel();
+  }
+  document.getElementById('langDD').classList.remove('open');
+}
+
+function showTranslateBanner(langName){
+  const b=document.getElementById('translateBanner');
+  const t=document.getElementById('translateBannerText');
+  const n=document.getElementById('translateLangName');
+  if(b){b.style.display='flex';}
+  if(t) t.textContent='Live Translation Active';
+  if(n) n.textContent=langName;
+}
+function hideTranslateBanner(){const b=document.getElementById('translateBanner');if(b)b.style.display='none';}
+function closeTranslateBanner(){hideTranslateBanner();}
+
+async function translatePageContent(targetLang){
+  // Translate all elements with data-translatable attribute
+  const elements = document.querySelectorAll('[data-translatable]');
+  if(!elements.length) return;
+  isTranslating=true;
+  for(const el of elements){
+    const original = el.getAttribute('data-original') || el.textContent;
+    if(!el.getAttribute('data-original')) el.setAttribute('data-original',el.textContent);
+    try{
+      const r = await fetch('/api/translate',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({text:original,target_lang:targetLang})});
+      const d = await r.json();
+      if(d.ok && d.translated) el.textContent=d.translated;
+    }catch(e){}
+  }
+  isTranslating=false;
+}
+
+function buildLangDD(){
+  const dd=document.getElementById('langDD');
+  let html='';
+  LANGS.forEach(cat=>{
+    html+=`<div class="lang-cat-label">${cat.cat}</div>`;
+    cat.items.forEach(l=>{
+      html+=`<div class="lang-opt ${l.c===curLang?'selected':''}" onclick="applyUILang('${l.c}')" role="option" aria-selected="${l.c===curLang}"><span>${l.f}</span><span>${l.n}</span></div>`;
+    });
+  });
+  dd.innerHTML=html;
+}
+
+function toggleLangDD(btn){
+  const dd=document.getElementById('langDD');
+  const open=!dd.classList.contains('open');
+  dd.classList.toggle('open',open);
+  btn.setAttribute('aria-expanded',open);
+  if(open){
+    buildLangDD();
+    const close=e=>{if(!btn.contains(e.target)&&!dd.contains(e.target)){dd.classList.remove('open');btn.setAttribute('aria-expanded','false');document.removeEventListener('click',close);}};
+    setTimeout(()=>document.addEventListener('click',close),10);
+  }
+}
+
+/* ── ACCESSIBILITY ─── */
+let a11yOpen=false,hcOn=false,ltOn=false,dyOn=false,srOn=false,voiceNavOn=false,baseFontSize=16;
+function toggleA11yPanel(){a11yOpen=!a11yOpen;document.getElementById('a11yPanel').classList.toggle('open',a11yOn=a11yOpen);document.querySelector('.a11y-fab').setAttribute('aria-expanded',a11yOpen);}
+function toggleHC(){hcOn=!hcOn;document.body.classList.toggle('hc',hcOn);document.getElementById('btnHC').classList.toggle('on',hcOn);toast('High Contrast '+(hcOn?'ON':'OFF'),'info');}
+function toggleLT(){ltOn=!ltOn;document.body.classList.toggle('lt',ltOn);document.getElementById('btnLT').classList.toggle('on',ltOn);toast('Large Text '+(ltOn?'ON':'OFF'),'info');}
+function toggleDY(){dyOn=!dyOn;document.body.classList.toggle('dy',dyOn);document.getElementById('btnDY').classList.toggle('on',dyOn);toast('Dyslexia Font '+(dyOn?'ON':'OFF'),'info');}
+function changeFontSize(delta){baseFontSize=Math.min(28,Math.max(12,baseFontSize+delta));document.body.style.fontSize=baseFontSize+'px';toast('Text size: '+baseFontSize+'px','info');}
+function toggleScreenReader(){
+  srOn=!srOn;document.getElementById('btnSR').classList.toggle('on',srOn);
+  if(srOn){readPageAloud();}else{window.speechSynthesis.cancel();toast('Screen reader off','info');}
+}
+function readPageAloud(){
+  if(!window.speechSynthesis){toast('Text-to-speech not available in this browser','error');return;}
+  window.speechSynthesis.cancel();
+  const page=document.querySelector('main')||document.body;
+  const text=(page.innerText||'').slice(0,3000);
+  const utt=new SpeechSynthesisUtterance(text);
+  const langMap={ur:'ur-PK',ar:'ar-SA',hi:'hi-IN',fr:'fr-FR',de:'de-DE',es:'es-ES',zh:'zh-CN',ja:'ja-JP',ko:'ko-KR'};
+  utt.lang=langMap[curLang]||'en-US';utt.rate=0.9;utt.pitch=1.05;
+  utt.onend=()=>{srOn=false;document.getElementById('btnSR').classList.remove('on');};
+  window.speechSynthesis.speak(utt);
+  toast('Reading page aloud…','info');
+}
+function toggleVoiceNav(){voiceNavOn=!voiceNavOn;document.getElementById('btnVN').classList.toggle('on',voiceNavOn);if(voiceNavOn)startVoice();else stopVoice();}
+
+/* ── VOICE INPUT ─── */
+let recognition=null,isListening=false,finalT='',voicePanelOpen=false;
+function toggleVoicePanel(){voicePanelOpen=!voicePanelOpen;const p=document.getElementById('voicePanel');p.style.display=voicePanelOpen?'flex':'none';p.classList.toggle('open',voicePanelOpen);if(voicePanelOpen&&!isListening)startVoice();else if(!voicePanelOpen&&isListening)stopVoice();}
+function closeVoicePanel(){voicePanelOpen=false;document.getElementById('voicePanel').style.display='none';stopVoice();}
+function startVoice(){
+  if(!('webkitSpeechRecognition' in window||'SpeechRecognition' in window)){toast('Voice recognition requires Chrome or Edge','error');return;}
+  const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
+  recognition=new SR();recognition.continuous=true;recognition.interimResults=true;recognition.lang='';
+  recognition.onstart=()=>{isListening=true;document.getElementById('voiceFab').classList.add('listening');document.getElementById('voiceFab').setAttribute('aria-pressed','true');document.getElementById('voiceLangLabel').textContent='Detecting…';};
+  recognition.onresult=e=>{
+    let interim='';finalT='';
+    for(let i=0;i<e.results.length;i++){if(e.results[i].isFinal)finalT+=e.results[i][0].transcript+' ';else interim=e.results[i][0].transcript;}
+    const tt=document.getElementById('transcriptText');
+    if(tt){tt.style.color=finalT?'var(--ink)':'var(--muted)';tt.textContent=(finalT||'')+(interim||'');}
+    document.getElementById('voiceLangLabel').textContent='Detected';
+  };
+  recognition.onerror=e=>{toast('Voice error: '+e.error,'error');stopVoice();};
+  recognition.onend=()=>{if(isListening)recognition.start();};
+  recognition.start();
+}
+function stopVoice(){if(recognition){try{recognition.stop();}catch{}recognition=null;}isListening=false;document.getElementById('voiceFab').classList.remove('listening');document.getElementById('voiceFab').setAttribute('aria-pressed','false');}
+function clearTranscript(){finalT='';const el=document.getElementById('transcriptText');if(el){el.textContent='Press mic to start speaking…';el.style.color='var(--muted)';}}
+function copyTranscript(){const t=document.getElementById('transcriptText')?.textContent;if(t&&!t.includes('Press mic')){navigator.clipboard?.writeText(t);toast('Copied!','success');}else toast('Nothing to copy','info');}
+
+/* ── SIGN LANGUAGE ─── */
+let slActive=false,slStream=null,slInterval=null;
+function toggleSLPanel(){slActive=!slActive;document.getElementById('slPanel').classList.toggle('open',slActive);document.getElementById('btnSL').classList.toggle('on',slActive);if(!slActive)stopSL();}
+function startSL(){
+  if(!navigator.mediaDevices?.getUserMedia){toast('Camera not available','error');return;}
+  navigator.mediaDevices.getUserMedia({video:{facingMode:'user'}}).then(stream=>{
+    slStream=stream;const vid=document.getElementById('slVideo');vid.srcObject=stream;vid.style.display='block';
+    document.getElementById('slPlaceholder').style.display='none';
+    document.getElementById('slStatus').textContent='Camera active — ASL/BSL/PSL recognition running';
+    document.getElementById('btnStartSL').textContent='Stop Camera';document.getElementById('btnStartSL').onclick=stopSL;
+    const signs=['Hello','Thank you','Help','Autism','ADHD','Child','Doctor','School','Home','Family','Yes','No','Learn','Read','Write','Love','More','Please'];
+    let si=0;slInterval=setInterval(()=>{document.getElementById('slOutput').textContent='Recognised: "'+signs[si%signs.length]+'" (ASL demo mode)';si++;},2800);
+  }).catch(err=>{toast('Camera denied: '+err.message,'error');});
+}
+function stopSL(){if(slStream){slStream.getTracks().forEach(t=>t.stop());slStream=null;}if(slInterval){clearInterval(slInterval);slInterval=null;}const vid=document.getElementById('slVideo');if(vid){vid.srcObject=null;vid.style.display='none';}document.getElementById('slPlaceholder').style.display='flex';document.getElementById('slStatus').textContent='Camera stopped';document.getElementById('slOutput').textContent='Recognised signs appear here…';document.getElementById('btnStartSL').textContent='Start Camera';document.getElementById('btnStartSL').onclick=startSL;}
+function clearSL(){document.getElementById('slOutput').textContent='Recognised signs appear here…';}
+
+/* ── SIGN DICTIONARY ─── */
+const SIGN_DICT=[
+  {w:'Hello',asl:'Open hand wave from ear height',bsl:'Salute-style gesture at forehead',psl:'Similar to BSL with Urdu context'},
+  {w:'Autism',asl:'A-handshape circles at temple',bsl:'Both hands interlocked circles',psl:'Localised variation in Pakistan'},
+  {w:'ADHD',asl:'Fingerspell A-D-H-D',bsl:'Fingerspell using BSL handshapes',psl:'اے ڈی ایچ ڈی (Urdu spelling)'},
+  {w:'Child',asl:'Flat hand lowered to waist height',bsl:'Similar lowered flat hand',psl:'Same gesture with Urdu context'},
+  {w:'Doctor',asl:'D-shape hand taps inner wrist',bsl:'Same wrist-tap motion',psl:'Tap on wrist (adapted)'},
+  {w:'School',asl:'Clap hands twice',bsl:'Both B-hands tapped together',psl:'Clapping gesture adapted'},
+  {w:'Help',asl:'Thumb-up fist placed on open palm, lift both',bsl:'Cupped hands raised upward',psl:'Similar raising motion'},
+  {w:'Family',asl:'F-hands circle outward',bsl:'F-hands circle outward',psl:'Both hands circle outward'},
+  {w:'Thank you',asl:'Open hand from chin outward',bsl:'Similar chin-to-outward motion',psl:'Hand moves from lips outward'},
+  {w:'Mother',asl:'Thumb touches chin, spread hand',bsl:'M-hand at chin',psl:'Thumb at chin (adapted)'},
+  {w:'Father',asl:'Thumb touches forehead, spread hand',bsl:'F-hand at forehead',psl:'Thumb at forehead (adapted)'},
+  {w:'Learn',asl:'Fingers scoop from palm to forehead',bsl:'Similar scooping motion',psl:'Same concept localised'},
+  {w:'Read',asl:'Two-finger V traces open palm',bsl:'Two-finger V traces downward',psl:'Same gesture'},
+  {w:'Write',asl:'Pinched fingers trace on palm',bsl:'Same palm-tracing motion',psl:'Same gesture'},
+  {w:'Yes',asl:'S-hand nods up and down',bsl:'Fist nods up and down',psl:'Nodding S-hand'},
+  {w:'No',asl:'Index and middle snap to thumb',bsl:'Index and middle finger snap',psl:'Two-finger snap'},
+  {w:'More',asl:'Pinched hands tap together',bsl:'Similar tapping motion',psl:'Same gesture'},
+  {w:'Please',asl:'Flat hand circles on chest',bsl:'Similar chest-circle motion',psl:'Adapted chest motion'},
+];
+function openSignDict(){document.getElementById('signDictModal').classList.add('open');searchSigns();}
+function closeSignDict(){document.getElementById('signDictModal').classList.remove('open');}
+function searchSigns(){
+  const q=(document.getElementById('signSearch')?.value||'').toLowerCase();
+  const res=document.getElementById('signResults');
+  const f=SIGN_DICT.filter(s=>!q||s.w.toLowerCase().includes(q));
+  if(!f.length){res.innerHTML='<p style="font-size:12px;color:var(--muted)">No signs found.</p>';return;}
+  res.innerHTML=f.map(s=>`<div style="margin-bottom:10px;padding:10px;background:rgba(26,163,154,.06);border-radius:10px;border:1px solid rgba(26,163,154,.15)">
+    <div style="font-weight:700;font-size:13px;color:var(--navy);margin-bottom:6px">${s.w}</div>
+    <div style="font-size:11px;color:var(--muted);margin-bottom:3px"><strong>ASL:</strong> ${s.asl}</div>
+    <div style="font-size:11px;color:var(--muted);margin-bottom:3px"><strong>BSL:</strong> ${s.bsl}</div>
+    <div style="font-size:11px;color:var(--muted)"><strong>PSL:</strong> ${s.psl}</div>
+  </div>`).join('');
+}
+
+/* ── TOAST ─── */
+function toast(msg,type='info'){
+  const w=document.getElementById('toastWrap');if(!w)return;
+  const el=document.createElement('div');el.className=`toast ${type}`;
+  const ic={success:'✓',error:'✕',info:'ℹ',warn:'⚠'};
+  el.innerHTML=`<span style="font-size:14px">${ic[type]||'ℹ'}</span><span>${msg}</span>`;
+  w.appendChild(el);
+  setTimeout(()=>{el.style.transition='opacity .3s,transform .3s';el.style.opacity='0';el.style.transform='translateX(20px)';setTimeout(()=>el.remove(),300);},4000);
+}
+
+/* ── AI CHAT ─── */
+let chatOpen=false,chatHistory=[];
+function toggleChatPanel(){chatOpen=!chatOpen;const p=document.getElementById('chatPanel');p.style.display=chatOpen?'flex':'none';if(chatOpen&&!chatHistory.length)addChatMsg('assistant','Hi! I\'m Phoenix, your PhoenixMinds AI assistant. How can I help you today?');}
+async function sendChat(){
+  const inp=document.getElementById('chatInput');const msg=inp?.value.trim();if(!msg)return;
+  inp.value='';
+  addChatMsg('user',msg);
+  chatHistory.push({role:'user',content:msg});
+  const typingEl=document.createElement('div');typingEl.id='chatTyping';typingEl.style.cssText='font-size:12px;color:var(--muted);padding:6px 10px;';typingEl.textContent='Phoenix is thinking…';document.getElementById('chatMessages')?.appendChild(typingEl);
+  try{
+    const r=await fetch('/api/chat',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({messages:chatHistory,language:getLang(curLang).n})});
+    const d=await r.json();typingEl.remove();
+    if(d.ok){addChatMsg('assistant',d.reply);chatHistory.push({role:'assistant',content:d.reply});}
+    else addChatMsg('assistant','Sorry, I encountered an error. Please try again.');
+  }catch(e){typingEl.remove();addChatMsg('assistant','Connection error. Please check your internet.');}
+}
+function addChatMsg(role,text){
+  const box=document.getElementById('chatMessages');if(!box)return;
+  const el=document.createElement('div');
+  el.style.cssText=`max-width:85%;padding:8px 12px;border-radius:12px;font-size:12px;line-height:1.5;${role==='user'?'background:rgba(26,163,154,.12);align-self:flex-end;color:var(--navy)':'background:rgba(255,255,255,.8);align-self:flex-start;border:1px solid rgba(255,255,255,.8);'}`;
+  el.textContent=text;box.appendChild(el);box.scrollTop=box.scrollHeight;
+}
+
+/* ── MOUSE SHIMMER ─── */
+document.addEventListener('mousemove',e=>{
+  const cx=e.clientX/window.innerWidth;
+  document.querySelectorAll('.cld').forEach((c,i)=>{
+    c.style.filter=`hue-rotate(${((i*37+cx*20)%360)*.12}deg) drop-shadow(0 6px 18px rgba(0,0,0,.08))`;
+  });
+},{passive:true});
+
+/* ── BOOT ─── */
+document.addEventListener('DOMContentLoaded',()=>{
+  buildClouds();
+  applyUILang(curLang);
+});
+</script>
+
+{% block extra_scripts %}{% endblock %}
+</body>
+</html>

@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="eval-page">
+  <!-- Centered hero -->
+  <section class="eval-hero">
+    <img class="logo" src="{{ url_for('static', filename='images/logo.PNG') }}" alt="Phoenix Minds Logo">
+    <h1>Start an Evaluation</h1>
+    <p class="subtitle">
+      Complete a short intake. A clinician will review everything before any clinical conclusions.
+    </p>
+    <a class="cta" href="{{ url_for('evaluation') }}">Begin Intake</a>
+  </section>
+
+  <!-- Bottom nav cards -->
+  <section class="eval-cards cards">
+    <a href="{{ url_for('evaluation') }}" class="card active">
+      <img src="{{ url_for('static', filename='images/icon-evaluation.PNG') }}" alt="">
+      <h3>Evaluation</h3>
+      <p class="small">تشخیص</p>
+    </a>
+    <a href="{{ url_for('child_profile') }}" class="card">
+      <img src="{{ url_for('static', filename='images/icon-tracking.PNG') }}" alt="">
+      <h3>Child Profile & Tracking</h3>
+      <p class="small">بچوں کی نگرانی</p>
+    </a>
+    <a href="{{ url_for('iep') }}" class="card">
+      <img src="{{ url_for('static', filename='images/icon-iep.PNG') }}" alt="">
+      <h3>IEP & Home Plans</h3>
+      <p class="small">منصوبے</p>
+    </a>
+    <a href="{{ url_for('connect') }}" class="card">
+      <img src="{{ url_for('static', filename='images/icon-specialist.PNG') }}" alt="">
+      <h3>Connect with Specialists</h3>
+      <p class="small">ماہرین سے رابطہ</p>
+    </a>
+  </section>
+{% endblock %}

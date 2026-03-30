@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+{% block title %}About Phoenix Minds{% endblock %}
+
+{% block content %}
+<div class="about-page">
+
+  <!-- Hero: logo on top, title, sub-text -->
+  <section class="about-hero">
+    <img class="hero-owl floaty" src="{{ url_for('static', filename='images/logo.PNG') }}" alt="Phoenix Minds Logo">
+    <h1>About Phoenix Minds</h1>
+    <p class="lead tagline"><strong><em>Your partner in education, psychology, and therapy. Empowering children and families worldwide.</em></strong></p>
+  </section>
+
+  <!-- Roadmap starts right after the hero -->
+  <section class="roadmap">
+    <div class="timeline">
+
+      <!-- Step 1 -->
+      <div class="timeline-item">
+        <div class="timeline-content">
+          <span class="step-num">1</span>
+          <h3>Our Mission</h3>
+          <p>Empowering families with accurate, kind, and culturally aware support through personalized evaluations, early interventions, and collaborative care.</p>
+        </div>
+      </div>
+
+      <!-- Step 2 -->
+      <div class="timeline-item">
+        <div class="timeline-content">
+          <span class="step-num">2</span>
+          <h3>Our Vision</h3>
+          <p>A world where every child is understood holistically, academically, emotionally, socially—and supported with inclusive, evidence-based care across Pakistan, the Middle East, Europe & beyond.</p>
+        </div>
+      </div>
+
+      <!-- Step 3 -->
+      <div class="timeline-item">
+        <div class="timeline-content">
+          <span class="step-num">3</span>
+          <h3>How We Work</h3>
+          <ul class="checklist">
+            <li>Evaluation – Gentle, comprehensive screening across learning & development</li>
+            <li>Tracking – Child profiles with clear goals & progress logs</li>
+            <li>Personalized Plans – Actionable IEPs & home routines</li>
+            <li>Connect – Families linked with trusted specialists</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Step 4 -->
+      <div class="timeline-item">
+        <div class="timeline-content">
+          <span class="step-num">4</span>
+          <h3>Our Core Values</h3>
+          <p>Child-Centered • Holistic & Inclusive • Collaboration • Global Standards (IB, Cambridge, Pearson)</p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="about-cta center">
+    <h2>Ready to Begin the Journey?</h2>
+    <a href="{{ url_for('evaluation') }}" class="cta">Start Evaluation</a>
+  </section>
+
+</div>
+{% endblock %}

@@ -1,0 +1,221 @@
+{% extends "base.html" %}
+{% block title %}IEP Builder — PhoenixMinds{% endblock %}
+{% block extra_head %}
+<style>
+.iep-goal{background:rgba(255,255,255,.55);border:1px solid rgba(255,255,255,.75);border-radius:14px;padding:14px;display:flex;align-items:flex-start;gap:12px;margin-bottom:9px;transition:transform .2s;}
+.iep-goal:hover{transform:translateX(4px);}
+.goal-domain{min-width:90px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--brand);flex-shrink:0;padding-top:2px;}
+.goal-text{flex:1;font-size:12px;color:var(--muted);line-height:1.6;}
+.goal-pct{font-size:11px;font-weight:700;color:var(--muted);white-space:nowrap;}
+.mini-bar{width:80px;height:4px;background:rgba(0,0,0,.08);border-radius:3px;margin-top:3px;}
+.mini-fill{height:100%;border-radius:3px;background:linear-gradient(90deg,var(--brand),#23b4aa);}
+.iep-section-title{font-size:14px;font-weight:700;color:#17323a;border-bottom:1px solid rgba(0,0,0,.07);padding-bottom:6px;margin-bottom:10px;}
+.acc-tag{display:inline-block;background:rgba(108,184,245,.12);border:1px solid rgba(108,184,245,.3);border-radius:6px;padding:3px 9px;font-size:11px;font-weight:600;color:#1a4fa8;margin:2px;}
+.service-row{display:flex;align-items:center;gap:8px;padding:8px 10px;background:rgba(255,255,255,.5);border-radius:8px;margin-bottom:5px;font-size:12px;}
+</style>
+{% endblock %}
+
+{% block content %}
+<main class="page-top">
+  <div class="ph">
+    <div class="ph-icon">📘</div>
+    <h1>IEP &amp; Home Plans</h1>
+    <p>AI-generated Individualised Education Programs aligned to 1,315 global curricula.</p>
+  </div>
+
+  <div class="mw-xl" style="width:100%;padding:0 20px 60px">
+
+    <!-- SAMPLE IEP (always visible) -->
+    <div class="pm-card" style="margin-bottom:18px">
+      <div class="flex ia jb mb4" style="flex-wrap:wrap;gap:8px">
+        <div>
+          <div style="font-weight:800;font-size:16px;color:#17323a">Sample IEP — Ahmed Al-Rashidi</div>
+          <div style="font-size:12px;color:var(--muted)">Age: 6y 4m · Cambridge Primary · ASD Level 1 + Expressive Language Delay</div>
+        </div>
+        <span class="badge badge-green" style="padding:5px 12px;font-size:12px">Active — Term 2, 2026</span>
+      </div>
+
+      <div class="iep-section-title">Annual Goals</div>
+      {% set demo_goals = [
+        ('Speech','Use 2–3 word phrases spontaneously in 4 of 5 structured daily opportunities.','68'),
+        ('Social','Initiate peer interaction using functional play scripts in 3 of 5 recess periods per week.','45'),
+        ('Literacy','Decode CVC words with 80% accuracy using Cambridge phonics programme.','82'),
+        ('Fine Motor','Pencil grip exercises 15 min daily to achieve Stage 1 handwriting benchmark.','55'),
+        ('Sensory','Self-regulate transitions using 3-step calming protocol 4 of 5 days per week.','38'),
+      ] %}
+      {% for domain, text, pct in demo_goals %}
+      <div class="iep-goal">
+        <div class="goal-domain">{{ domain }}</div>
+        <div class="goal-text">{{ text }}</div>
+        <div>
+          <div class="goal-pct">{{ pct }}%</div>
+          <div class="mini-bar"><div class="mini-fill" style="width:{{ pct }}%"></div></div>
+        </div>
+      </div>
+      {% endfor %}
+
+      <div class="iep-section-title" style="margin-top:16px">Accommodations</div>
+      <div>
+        {% for acc in ['Extended time on all assessments','Preferential seating near teacher','Visual schedules and timers','Modified assignments','Sensory breaks every 30 min','AAC device access','Noise-reducing headphones'] %}
+        <span class="acc-tag">{{ acc }}</span>
+        {% endfor %}
+      </div>
+
+      <div class="iep-section-title" style="margin-top:16px">Related Services</div>
+      {% for svc in ['Speech-Language Therapy: 2×/week, 30 min','Occupational Therapy: 1×/week, 45 min','ABA Support: 10 hrs/week','Specialist Teacher: daily'] %}
+      <div class="service-row">
+        <div style="width:8px;height:8px;border-radius:50%;background:var(--brand);flex-shrink:0"></div>
+        {{ svc }}
+      </div>
+      {% endfor %}
+
+      <div class="flex gap2 mt4" style="flex-wrap:wrap">
+        <button class="btn btn-primary" onclick="toast('IEP exported as PDF','success')">Export PDF</button>
+        <button class="btn btn-secondary" onclick="toast('IEP shared with care team','info')">Share</button>
+        <button class="btn btn-secondary" onclick="exportIEPExcel()">Export Excel</button>
+        <button class="btn btn-secondary" onclick="toast('IEP translated to current language','success')">Translate</button>
+      </div>
+    </div>
+
+    <!-- AI GENERATE -->
+    <div class="pm-card" style="margin-bottom:18px">
+      <div style="font-weight:800;font-size:17px;color:#17323a;margin-bottom:4px">Generate New IEP with AI</div>
+      <div style="font-size:12px;color:var(--muted);margin-bottom:16px">Claude AI generates a personalised SMART plan from your child's profile and RIASEC interests</div>
+
+      <div class="form-row">
+        <div class="form-group"><label class="form-label">Child Name *</label><input class="form-control" id="iepChild" placeholder="Child's name"/></div>
+        <div class="form-group"><label class="form-label">Age</label><input class="form-control" id="iepAge" placeholder="e.g. 5y 2m"/></div>
+        <div class="form-group"><label class="form-label">Diagnosis *</label><input class="form-control" id="iepDx" placeholder="e.g. ASD, ADHD, Dyslexia"/></div>
+        <div class="form-group">
+          <label class="form-label">Curriculum</label>
+          <select class="form-control" id="iepCurr">
+            <option>Cambridge</option><option>IB</option><option>Montessori</option>
+            <option>Pakistan National</option><option>UAE MOE</option><option>UK National</option>
+            <option>US Common Core</option><option>Australian ACARA</option><option>Home-school</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">RIASEC Profile</label>
+          <select class="form-control" id="iepRiasec">
+            <option value="">Not assessed</option>
+            <option>R (Realistic)</option><option>I (Investigative)</option><option>A (Artistic)</option>
+            <option>S (Social)</option><option>E (Enterprising)</option><option>C (Conventional)</option>
+            <option>RI</option><option>IA</option><option>AS</option><option>SA</option><option>EC</option><option>CR</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Support Level</label>
+          <select class="form-control" id="iepLevel">
+            <option>Level 1 — Minimal support</option>
+            <option>Level 2 — Moderate support</option>
+            <option>Level 3 — Substantial support</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Current Concerns & Goals</label>
+        <textarea class="form-control" id="iepConcerns" rows="3" placeholder="Describe main challenges, current academic level, and specific goals…"></textarea>
+      </div>
+      <button class="btn btn-primary btn-block btn-lg" onclick="generateIEP()" id="iepBtn">
+        Generate IEP with Claude AI
+      </button>
+      <div id="iepResult" style="margin-top:14px"></div>
+    </div>
+
+    <!-- SAVED IEPs -->
+    {% if ieps %}
+    <div class="pm-card">
+      <div style="font-weight:800;font-size:16px;color:#17323a;margin-bottom:14px">Saved IEP Plans ({{ ieps|length }})</div>
+      {% for iep in ieps %}
+      <div style="padding:12px;background:rgba(255,255,255,.55);border:1px solid rgba(255,255,255,.75);border-radius:12px;margin-bottom:8px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px">
+        <div>
+          <div style="font-weight:700;font-size:13px;color:#17323a">{{ iep.child_name }} — {{ iep.diagnosis }}</div>
+          <div style="font-size:11px;color:var(--muted)">{{ iep.curriculum }} · {{ iep.created_at[:10] if iep.created_at else '' }}</div>
+        </div>
+        <div style="display:flex;gap:6px">
+          <span class="badge badge-green">Active</span>
+          <button onclick="toast('IEP exported','success')" class="btn btn-secondary" style="font-size:11px;padding:4px 10px">Export</button>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+    {% endif %}
+  </div>
+</main>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+async function generateIEP(){
+  const child=document.getElementById('iepChild').value.trim();
+  const dx=document.getElementById('iepDx').value.trim();
+  if(!child||!dx){toast('Please enter child name and diagnosis','error');return;}
+  const btn=document.getElementById('iepBtn');
+  btn.innerHTML='<div class="spinner" style="width:20px;height:20px;margin:0 8px 0 0"></div>Generating with Claude AI…';
+  btn.disabled=true;
+  const result=document.getElementById('iepResult');
+  result.innerHTML='<div style="text-align:center;padding:20px"><div class="spinner"></div><div style="margin-top:10px;font-size:13px;color:var(--muted)">Claude is writing your personalised IEP…</div></div>';
+  try{
+    const r=await fetch('/api/generate-iep',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({
+      child_name:child,age:document.getElementById('iepAge').value,
+      diagnosis:dx,curriculum:document.getElementById('iepCurr').value,
+      concerns:document.getElementById('iepConcerns').value,
+      riasec:document.getElementById('iepRiasec').value
+    })});
+    const d=await r.json();
+    if(d.ok && d.iep){
+      renderIEP(d.iep,child,dx);
+      toast('IEP generated and saved!','success');
+    }else{result.innerHTML=`<div class="pm-card"><p style="color:var(--danger)">${d.error||'Generation failed'}</p></div>`;}
+  }catch(e){result.innerHTML=`<div class="pm-card"><p style="color:var(--danger)">Error: ${e.message}</p></div>`;}
+  btn.innerHTML='Generate IEP with Claude AI';btn.disabled=false;
+}
+
+function renderIEP(iep,childName,dx){
+  const res=document.getElementById('iepResult');
+  let html=`<div class="pm-card" style="border-left:4px solid var(--brand)">
+    <div style="font-weight:800;font-size:16px;color:#17323a;margin-bottom:4px">${childName} — ${dx}</div>
+    <div style="font-size:12px;color:var(--muted);margin-bottom:14px">Generated ${new Date().toLocaleDateString()}</div>`;
+
+  if(iep.plop){
+    html+='<div class="iep-section-title">Present Levels of Performance</div>';
+    iep.plop.forEach(p=>{html+=`<div style="padding:9px;background:rgba(255,255,255,.5);border-radius:8px;margin-bottom:6px;font-size:12px"><strong>${p.domain}:</strong> <span style="color:var(--muted)">${p.needs}</span></div>`;});
+  }
+  if(iep.goals && iep.goals.length){
+    html+='<div class="iep-section-title" style="margin-top:14px">Annual Goals</div>';
+    iep.goals.forEach(g=>{
+      html+=`<div class="iep-goal"><div class="goal-domain">${g.domain}</div><div class="goal-text"><strong>${g.goal_text}</strong><br><span style="color:#92400e;font-size:11px">${g.criteria}</span>${g.objectives?'<ul style="margin:4px 0 0 12px;padding:0">'+g.objectives.slice(0,3).map(o=>`<li style="font-size:11px;color:var(--muted);margin-bottom:2px">${o}</li>`).join('')+'</ul>':''}</div><div><div class="goal-pct">0%</div><div class="mini-bar"><div class="mini-fill" style="width:0%"></div></div></div></div>`;
+    });
+  }
+  if(iep.accommodations && iep.accommodations.length){
+    html+='<div class="iep-section-title" style="margin-top:14px">Accommodations</div><div>';
+    iep.accommodations.forEach(a=>{html+=`<span class="acc-tag">${a}</span>`;});
+    html+='</div>';
+  }
+  if(iep.services && iep.services.length){
+    html+='<div class="iep-section-title" style="margin-top:14px">Related Services</div>';
+    iep.services.forEach(s=>{html+=`<div class="service-row"><div style="width:8px;height:8px;border-radius:50%;background:var(--brand);flex-shrink:0"></div>${s}</div>`;});
+  }
+  html+=`<div class="flex gap2 mt4" style="flex-wrap:wrap"><button class="btn btn-primary" onclick="toast('IEP saved to profile','success')">Save IEP</button><button class="btn btn-secondary" onclick="exportIEPExcel()">Export Excel</button></div></div>`;
+  res.innerHTML=html;
+}
+
+function exportIEPExcel(){
+  const s=document.createElement('script');
+  s.src='https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js';
+  s.onload=()=>{
+    const goals=[['Domain','Goal','Criteria','Timeline'],
+      ['Communication','Use 3-4 word phrases','4 of 5 opportunities','1 term'],
+      ['Social','Turn-taking play','3 of 5 recesses','1 term'],
+      ['Literacy','Decode CVC words','80% accuracy','1 term']];
+    const wb=XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb,XLSX.utils.aoa_to_sheet(goals),'IEP Goals');
+    XLSX.writeFile(wb,'PhoenixMinds_IEP.xlsx');
+    toast('IEP exported to Excel','success');
+  };
+  if(window.XLSX){s.onload();}else{document.head.appendChild(s);}
+}
+</script>
+{% endblock %}

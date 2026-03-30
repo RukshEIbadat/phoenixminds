@@ -1,0 +1,129 @@
+{% extends "base.html" %}
+{% block title %}AI Evaluation — PhoenixMinds{% endblock %}
+{% block extra_head %}
+<style>
+.sym-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(185px,1fr));gap:7px;max-height:340px;overflow-y:auto;padding:4px 2px;}
+.sym-item{display:flex;align-items:center;gap:8px;padding:9px 12px;border-radius:10px;background:rgba(255,255,255,.55);border:1px solid rgba(255,255,255,.75);cursor:pointer;font-size:12px;font-weight:500;transition:all .15s;user-select:none;}
+.sym-item:hover{background:rgba(255,255,255,.82);}
+.sym-item.on{background:rgba(26,163,154,.12);border-color:rgba(26,163,154,.4);color:var(--brand);}
+.sym-check{width:17px;height:17px;border-radius:4px;border:2px solid rgba(0,0,0,.15);flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:all .15s;}
+.sym-item.on .sym-check{background:var(--brand);border-color:var(--brand);}
+.sym-tick{width:9px;height:6px;border-left:2px solid #fff;border-bottom:2px solid #fff;transform:rotate(-45deg) translateY(-1px);display:none;}
+.sym-item.on .sym-tick{display:block;}
+.cat-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--muted);padding:8px 0 3px;}
+.selected-count{background:rgba(26,163,154,.12);border:1px solid rgba(26,163,154,.2);border-radius:999px;padding:5px 14px;font-size:12px;font-weight:700;color:var(--brand);}
+</style>
+{% endblock %}
+
+{% block content %}
+<main class="page-top">
+  <div class="ph">
+    <div class="ph-icon">🔍</div>
+    <h1 data-translatable data-original="AI Symptom Evaluation">AI Symptom Evaluation</h1>
+    <p data-translatable data-original="Select all observed behaviours. Claude AI analyses across 96 conditions aligned to DSM-5 and ICD-11.">Select all observed behaviours. Claude AI analyses across 96 conditions aligned to DSM-5 and ICD-11.</p>
+  </div>
+
+  <div class="mw-lg" style="width:100%;padding:0 20px 60px">
+    <form method="POST" action="{{ url_for('evaluation') }}" id="evalForm">
+      <div class="pm-card" style="margin-bottom:16px">
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Child's First Name</label>
+            <input class="form-control" name="child_name" id="childName" placeholder="First name (optional)"/>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Age</label>
+            <input class="form-control" name="age" placeholder="e.g. 4 years 2 months"/>
+          </div>
+        </div>
+
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;flex-wrap:wrap;gap:8px">
+          <div class="form-label" style="margin-bottom:0">Select All Observed Behaviours</div>
+          <div class="selected-count" id="selCount">0 selected</div>
+        </div>
+
+        <!-- Symptom categories -->
+        {% set categories = {
+          'Social Communication': ['Limited eye contact','Social withdrawal','Echolalia','Language regression','Social pragmatics difficulties','Difficulty with peer interaction','Flat affect','Reduced facial expressions'],
+          'Motor & Sensory': ['Sensory sensitivities','Hand flapping','Stimming','Poor coordination','Low muscle tone','Balance issues','Fine motor delays','Gross motor delays','Hyperlexia'],
+          'Attention & Behaviour': ['Poor attention span','Hyperactivity','Impulsivity','Difficulty following instructions','Executive function issues','Aggression','Self-injurious behaviour','Difficulty with transitions'],
+          'Language & Learning': ['Delayed speech','Reading difficulties','Writing difficulties','Math difficulties','Toileting difficulties','Feeding difficulties'],
+          'Emotional & Mental Health': ['Emotional dysregulation','Anxiety','Sleep difficulties','Repetitive behaviours']
+        } %}
+
+        <div class="sym-grid" id="symptomGrid" role="group" aria-label="Symptom selection">
+          {% for cat, syms in categories.items() %}
+          <div style="grid-column:1/-1" class="cat-label">{{ cat }}</div>
+          {% for sym in syms %}
+          <label class="sym-item" for="sym_{{ loop.index }}_{{ cat|replace(' ','_') }}">
+            <input type="checkbox" name="symptoms" value="{{ sym }}" id="sym_{{ loop.index }}_{{ cat|replace(' ','_') }}" style="display:none" onchange="updateSymCount()"/>
+            <div class="sym-check"><div class="sym-tick"></div></div>
+            <span>{{ sym }}</span>
+          </label>
+          {% endfor %}
+          {% endfor %}
+        </div>
+
+        {% if symptom_bank %}
+        <!-- Additional symptoms from conditions.csv -->
+        <details style="margin-top:10px">
+          <summary style="cursor:pointer;font-size:12px;color:var(--brand);font-weight:700">+ Additional symptoms from database</summary>
+          <div class="sym-grid" style="margin-top:8px">
+            {% for sym in symptom_bank %}
+            <label class="sym-item">
+              <input type="checkbox" name="symptoms" value="{{ sym }}" style="display:none" onchange="updateSymCount()"/>
+              <div class="sym-check"><div class="sym-tick"></div></div>
+              <span>{{ sym }}</span>
+            </label>
+            {% endfor %}
+          </div>
+        </details>
+        {% endif %}
+
+        <div class="form-group" style="margin-top:16px">
+          <label class="form-label">Additional Observations (any language)</label>
+          <textarea class="form-control" name="free_text" rows="3" placeholder="Describe what you have observed in your own words — any language accepted…"></textarea>
+        </div>
+
+        <div style="background:rgba(245,158,11,.08);border:1px solid rgba(245,158,11,.25);border-radius:10px;padding:10px 13px;font-size:11px;color:#92400e;margin-bottom:14px">
+          This is a clinical decision support screening tool only. Results are not a diagnosis. Always consult a qualified clinician for formal assessment.
+        </div>
+
+        <button type="submit" class="btn btn-primary btn-block btn-lg" id="evalBtn">
+          Run AI Analysis with Claude
+        </button>
+      </div>
+    </form>
+
+    <!-- Quick nav to other tools -->
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:6px">
+      <a href="{{ url_for('iep') }}" class="pm-card" style="text-align:center;padding:14px;text-decoration:none;font-size:12px;font-weight:700;color:#17323a">📘 IEP Plans</a>
+      <a href="{{ url_for('child_profile') }}" class="pm-card" style="text-align:center;padding:14px;text-decoration:none;font-size:12px;font-weight:700;color:#17323a">👧 Child Profile</a>
+      <a href="{{ url_for('connect') }}" class="pm-card" style="text-align:center;padding:14px;text-decoration:none;font-size:12px;font-weight:700;color:#17323a">🩺 Specialists</a>
+      <a href="{{ url_for('riasec') }}" class="pm-card" style="text-align:center;padding:14px;text-decoration:none;font-size:12px;font-weight:700;color:#17323a">🎯 RIASEC</a>
+    </div>
+  </div>
+</main>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+function updateSymCount(){
+  const n=document.querySelectorAll('input[name="symptoms"]:checked').length;
+  document.getElementById('selCount').textContent=n+' selected';
+}
+// Style checkboxes visually
+document.querySelectorAll('.sym-item input').forEach(inp=>{
+  inp.addEventListener('change',function(){
+    const item=this.closest('.sym-item');
+    item.classList.toggle('on',this.checked);
+  });
+});
+// Show loading on submit
+document.getElementById('evalForm').addEventListener('submit',function(){
+  const btn=document.getElementById('evalBtn');
+  btn.innerHTML='<div class="spinner" style="width:20px;height:20px;margin:0 8px 0 0"></div> Analysing with AI…';
+  btn.disabled=true;
+});
+</script>
+{% endblock %}
