@@ -1,0 +1,1165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ZETA-9 Hypothesis — Neuron Formation Animation | Phoenix Minds</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet">
+<style>
+/* ===== PHOENIX MINDS — LOCKED 8-COLOUR ICE BLUE PALETTE ===== */
+:root {
+  --ice-1: #0A2340;
+  --ice-2: #0D3560;
+  --ice-3: #1A5276;
+  --ice-4: #2E86C1;
+  --ice-5: #5DADE2;
+  --ice-6: #85C1E9;
+  --ice-7: #D6EAF8;
+  --ice-8: #FFFFFF;
+  --page: #F0F7FF;
+  --card: #FFFFFF;
+  --text: #0A2340;
+  --text2: #1A5276;
+  --muted: #5DADE2;
+  --border: rgba(46,134,193,0.15);
+  --gold: #B8943A;
+  --glass: rgba(255,255,255,0.75);
+}
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--page);
+  color: var(--text);
+  overflow-x: hidden;
+}
+
+/* NAV — Ice-1 only permitted dark element */
+.nav {
+  background: var(--ice-1);
+  height: 64px;
+  padding: 0 40px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+  z-index: 200;
+  border-bottom: 1px solid rgba(133,193,233,0.2);
+}
+.nav-brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.nav-brand-name {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 15px;
+  font-weight: 500;
+  color: #FFFFFF;
+  letter-spacing: 0.04em;
+}
+.nav-brand-name span { color: var(--ice-5); }
+.nav-sub {
+  font-size: 9px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ice-6);
+  margin-top: 1px;
+}
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.nav-chip {
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ice-6);
+  background: rgba(93,173,226,0.12);
+  border: 1px solid rgba(93,173,226,0.25);
+  padding: 4px 12px;
+  border-radius: 14px;
+}
+
+/* PAGE LAYOUT */
+.page-wrap { max-width: 1100px; margin: 0 auto; padding: 52px 36px 80px; }
+
+/* COVER HEADER — light gradient, no dark */
+.cover {
+  background: linear-gradient(160deg, var(--ice-7) 0%, #EAF4FD 50%, var(--ice-8) 100%);
+  border-bottom: 1px solid var(--border);
+  padding: 52px 40px 44px;
+  position: relative;
+  overflow: hidden;
+}
+.cover::before {
+  content: '';
+  position: absolute;
+  right: -80px; top: -80px;
+  width: 400px; height: 400px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(46,134,193,0.07) 0%, transparent 70%);
+  pointer-events: none;
+}
+.cover-inner { max-width: 760px; position: relative; }
+.cover-tag {
+  display: inline-block;
+  font-size: 9px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--ice-4);
+  background: var(--ice-8);
+  border: 1px solid var(--ice-6);
+  padding: 4px 14px;
+  border-radius: 12px;
+  margin-bottom: 16px;
+}
+.cover-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(28px, 4vw, 44px);
+  font-weight: 500;
+  color: var(--ice-1);
+  line-height: 1.1;
+  margin-bottom: 10px;
+}
+.cover-title em { color: var(--ice-4); font-style: italic; }
+.cover-desc {
+  font-size: 14px;
+  color: var(--text2);
+  line-height: 1.8;
+  max-width: 640px;
+  margin-bottom: 22px;
+}
+.cover-meta { display: flex; gap: 22px; flex-wrap: wrap; }
+.cm { font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); }
+.cm span { display: block; font-size: 13px; font-weight: 500; color: var(--ice-2); letter-spacing: 0; text-transform: none; margin-top: 2px; }
+
+/* HYPOTHESIS CARD */
+.hypothesis-card {
+  background: linear-gradient(135deg, var(--ice-7), #EAF4FD);
+  border: 1px solid var(--ice-6);
+  border-radius: 16px;
+  padding: 28px 32px;
+  margin-bottom: 32px;
+  position: relative;
+  overflow: hidden;
+}
+.hypothesis-card::before {
+  content: '';
+  position: absolute;
+  right: -30px; bottom: -30px;
+  width: 200px; height: 200px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(46,134,193,0.06) 0%, transparent 70%);
+}
+.hyp-label { font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ice-4); margin-bottom: 8px; }
+.hyp-title { font-family: 'Playfair Display', serif; font-size: 20px; color: var(--ice-1); margin-bottom: 14px; }
+.hyp-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
+.hyp-item { background: var(--ice-8); border: 1px solid var(--border); border-radius: 12px; padding: 16px; }
+.hyp-item-label { font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); margin-bottom: 5px; }
+.hyp-item-title { font-size: 13px; font-weight: 500; color: var(--ice-1); margin-bottom: 4px; }
+.hyp-item-desc { font-size: 11px; color: var(--text2); line-height: 1.6; }
+.hyp-item.highlighted { background: var(--ice-7); border-color: var(--ice-5); }
+
+/* ANIMATION STAGE */
+.anim-stage-wrap {
+  background: var(--ice-8);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  overflow: hidden;
+  box-shadow: 0 2px 24px rgba(10,35,64,0.07);
+  margin-bottom: 32px;
+}
+.anim-stage-header {
+  background: linear-gradient(135deg, var(--ice-7), #EAF4FD);
+  border-bottom: 1px solid var(--border);
+  padding: 16px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.anim-stage-title { font-size: 13px; font-weight: 500; color: var(--ice-1); }
+.anim-controls { display: flex; gap: 8px; align-items: center; }
+.anim-btn {
+  padding: 6px 16px;
+  border-radius: 20px;
+  border: 1px solid var(--ice-5);
+  background: var(--ice-8);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--ice-4);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.anim-btn:hover { background: var(--ice-7); }
+.anim-btn.primary { background: var(--ice-4); border-color: var(--ice-4); color: var(--ice-8); }
+.anim-btn.primary:hover { background: var(--ice-3); }
+.anim-stage-body {
+  background: linear-gradient(160deg, var(--page) 0%, #EAF4FD 100%);
+  padding: 28px 24px 20px;
+  min-height: 420px;
+  position: relative;
+}
+
+/* PHASE INDICATOR */
+.phase-indicator {
+  display: flex;
+  gap: 0;
+  margin-bottom: 20px;
+  background: var(--ice-7);
+  border-radius: 10px;
+  padding: 4px;
+  border: 1px solid var(--border);
+}
+.phase-step {
+  flex: 1;
+  padding: 6px 10px;
+  text-align: center;
+  border-radius: 7px;
+  font-size: 9px;
+  font-weight: 500;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--muted);
+  transition: all 0.4s;
+  cursor: pointer;
+  user-select: none;
+}
+.phase-step.active {
+  background: var(--ice-8);
+  color: var(--ice-2);
+  box-shadow: 0 1px 6px rgba(10,35,64,0.08);
+  font-weight: 600;
+}
+.phase-step.done { color: var(--ice-4); }
+
+/* SVG CANVAS */
+.neuron-canvas {
+  width: 100%;
+  display: block;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+/* CAPTION PANEL */
+.caption-panel {
+  background: var(--ice-8);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 16px 20px;
+  margin-top: 16px;
+  min-height: 72px;
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+}
+.caption-indicator {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--ice-4);
+  margin-top: 5px;
+  flex-shrink: 0;
+  animation: capdot 1.6s ease-in-out infinite;
+}
+@keyframes capdot { 0%,100%{opacity:1} 50%{opacity:0.3} }
+.caption-text { font-size: 13px; color: var(--text2); line-height: 1.7; }
+.caption-highlight { font-weight: 600; color: var(--ice-3); }
+
+/* MAPPING SECTION */
+.mapping-section { margin-top: 32px; }
+.mapping-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 22px;
+  color: var(--ice-1);
+  margin-bottom: 6px;
+}
+.mapping-sub { font-size: 13px; color: var(--text2); margin-bottom: 20px; line-height: 1.7; }
+.mapping-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.mapping-card {
+  background: var(--ice-8);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 20px;
+  position: relative;
+  overflow: hidden;
+}
+.mapping-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  border-radius: 3px 3px 0 0;
+}
+.mc-bio::before { background: linear-gradient(90deg, #B8943A, #D4A830); }
+.mc-pm::before { background: linear-gradient(90deg, var(--ice-4), var(--ice-5)); }
+.mc-z9::before { background: linear-gradient(90deg, var(--ice-3), var(--ice-4)); }
+.mc-result::before { background: linear-gradient(90deg, #1A8A40, #3DBA6A); }
+.mc-label { font-size: 9px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--muted); margin-bottom: 6px; }
+.mc-title { font-size: 15px; font-weight: 500; color: var(--ice-1); margin-bottom: 5px; }
+.mc-eq { font-size: 12px; color: var(--ice-4); font-weight: 500; margin-bottom: 8px; }
+.mc-desc { font-size: 12px; color: var(--text2); line-height: 1.65; }
+.mc-highlight { background: var(--ice-7); border-radius: 6px; padding: 8px 10px; margin-top: 10px; font-size: 11px; color: var(--ice-2); line-height: 1.6; }
+
+/* STEP BREAKDOWN TABLE */
+.step-table { background: var(--ice-8); border: 1px solid var(--border); border-radius: 14px; overflow: hidden; margin-top: 32px; }
+.step-table-header { background: linear-gradient(135deg, var(--ice-7), #EAF4FD); border-bottom: 1px solid var(--border); padding: 14px 20px; }
+.step-table-title { font-size: 13px; font-weight: 500; color: var(--ice-1); }
+.step-row { display: grid; grid-template-columns: 28px 160px 1fr 1fr; gap: 16px; padding: 13px 20px; border-bottom: 1px solid var(--border); align-items: flex-start; }
+.step-row:last-child { border-bottom: none; }
+.step-row:hover { background: var(--page); }
+.step-no { font-family: 'Playfair Display', serif; font-size: 20px; color: var(--ice-6); line-height: 1; }
+.step-part { font-size: 12px; font-weight: 500; color: var(--ice-1); }
+.step-bio { font-size: 11px; color: var(--text2); line-height: 1.6; }
+.step-pm { font-size: 11px; color: var(--ice-3); line-height: 1.6; }
+
+/* FOOTER */
+.page-footer {
+  background: var(--ice-1);
+  padding: 24px 40px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 60px;
+}
+.pf-brand { font-size: 13px; font-weight: 500; color: #FFFFFF; letter-spacing: 0.04em; }
+.pf-sub { font-size: 9px; color: var(--ice-6); letter-spacing: 0.12em; text-transform: uppercase; margin-top: 2px; }
+.pf-right { font-size: 10px; color: rgba(133,193,233,0.5); text-align: right; line-height: 1.9; }
+
+/* UTILITIES */
+.badge {
+  display: inline-block; padding: 3px 10px; border-radius: 12px;
+  font-size: 9px; font-weight: 500; letter-spacing: 0.07em; text-transform: uppercase;
+}
+.b-blue { background: var(--ice-7); color: var(--ice-3); }
+.b-gold { background: #FFF0C0; color: #7A5A00; }
+.b-green { background: #E6F4ED; color: #1A5A30; }
+.divider { height: 1px; background: var(--border); margin: 28px 0; }
+.mt16 { margin-top: 16px; }
+.mt24 { margin-top: 24px; }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+  <div class="nav-brand">
+    <div>
+      <div class="nav-brand-name">Phoenix Minds <span>— ZETA-9</span></div>
+      <div class="nav-sub">Neuron Formation — Hypothesis Animation</div>
+    </div>
+  </div>
+  <div class="nav-right">
+    <div class="nav-chip">Hypothesis Section</div>
+    <div class="nav-chip">Documentation v1.0</div>
+  </div>
+</nav>
+
+<!-- COVER -->
+<div class="cover">
+  <div class="cover-inner">
+    <div class="cover-tag">Phoenix Minds — ZETA-9 Scientific Hypothesis</div>
+    <div class="cover-title">The Neuron and <em>ZETA-9</em><br>How Phoenix Minds Decides Before You Do</div>
+    <div class="cover-desc">A complete animated formation of the single neural cell — dendrites, soma, nucleus, axon hillock, axon, myelin sheath, synaptic terminals — mapped directly onto the Phoenix Minds ZETA-9 platform hypothesis: the platform acts before conscious awareness. ZETA-9 is the hidden part that decides early.</div>
+    <div class="cover-meta">
+      <div class="cm">Hypothesis Author<span>Ruksh E Ibadat</span></div>
+      <div class="cm">Platform<span>Phoenix Minds</span></div>
+      <div class="cm">AI Engine<span>Phoenix Synap</span></div>
+      <div class="cm">ZPF Source<span>Keppler, 2025</span></div>
+      <div class="cm">Document<span>March 2026</span></div>
+    </div>
+  </div>
+</div>
+
+<div class="page-wrap">
+
+<!-- HYPOTHESIS SUMMARY -->
+<div class="hypothesis-card">
+  <div class="hyp-label">The Core Hypothesis — Plain Language</div>
+  <div class="hyp-title">Your brain decides first. You become aware later. ZETA-9 is the hidden part that decides early.</div>
+  <div class="hyp-grid">
+    <div class="hyp-item highlighted">
+      <div class="hyp-item-label">In Neuroscience</div>
+      <div class="hyp-item-title">Pre-conscious Neural Firing</div>
+      <div class="hyp-item-desc">The soma generates an action potential before the conscious cortex registers the event. The decision originates in the cell body — milliseconds before awareness.</div>
+    </div>
+    <div class="hyp-item highlighted">
+      <div class="hyp-item-label">In Phoenix Minds Platform</div>
+      <div class="hyp-item-title">Phoenix Minds = The Brain (Soma)</div>
+      <div class="hyp-item-desc">Phoenix Minds AI — powered by Phoenix Synap — analyses, detects patterns, generates alerts, and builds the child's developmental roadmap before the parent or clinician is consciously aware of the concern.</div>
+    </div>
+    <div class="hyp-item highlighted">
+      <div class="hyp-item-label">ZETA-9 = The Hidden Process</div>
+      <div class="hyp-item-title">The Pre-Conscious Platform Layer</div>
+      <div class="hyp-item-desc">ZETA-9 is the invisible intelligent layer operating continuously beneath conscious notice — collecting data, scoring milestones, detecting trajectory deviations, one step ahead of human awareness at all times.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ANIMATION STAGE -->
+<div class="anim-stage-wrap">
+  <div class="anim-stage-header">
+    <div class="anim-stage-title">Live Neuron Formation — Step-by-Step with ZETA-9 Mapping</div>
+    <div class="anim-controls">
+      <button class="anim-btn" onclick="prevPhase()">Previous</button>
+      <button class="anim-btn primary" id="playBtn" onclick="togglePlay()">Play All</button>
+      <button class="anim-btn" onclick="nextPhase()">Next</button>
+      <button class="anim-btn" onclick="resetAnim()">Reset</button>
+    </div>
+  </div>
+  <div class="anim-stage-body">
+
+    <!-- Phase Indicator -->
+    <div class="phase-indicator">
+      <div class="phase-step active" id="ps0" onclick="goToPhase(0)">Formation</div>
+      <div class="phase-step" id="ps1" onclick="goToPhase(1)">Dendrites</div>
+      <div class="phase-step" id="ps2" onclick="goToPhase(2)">Soma</div>
+      <div class="phase-step" id="ps3" onclick="goToPhase(3)">Axon Hillock</div>
+      <div class="phase-step" id="ps4" onclick="goToPhase(4)">Axon + Myelin</div>
+      <div class="phase-step" id="ps5" onclick="goToPhase(5)">Terminals</div>
+      <div class="phase-step" id="ps6" onclick="goToPhase(6)">Signal Flow</div>
+      <div class="phase-step" id="ps7" onclick="goToPhase(7)">ZETA-9 Map</div>
+    </div>
+
+    <!-- SVG CANVAS -->
+    <svg class="neuron-canvas" viewBox="0 0 860 340" xmlns="http://www.w3.org/2000/svg" id="neuronSVG">
+      <defs>
+        <!-- Signal gradient moving along axon -->
+        <linearGradient id="signalGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%" stop-color="rgba(46,134,193,0)" />
+          <stop offset="50%" stop-color="rgba(93,173,226,0.9)" />
+          <stop offset="100%" stop-color="rgba(46,134,193,0)" />
+        </linearGradient>
+        <linearGradient id="somaGrad" cx="50%" cy="50%" r="50%" fx="40%" fy="40%" gradientUnits="objectBoundingBox">
+          <stop offset="0%" stop-color="#EAF4FD"/>
+          <stop offset="60%" stop-color="#D6EAF8"/>
+          <stop offset="100%" stop-color="#A8D4F0"/>
+        </linearGradient>
+        <radialGradient id="somaRadial" cx="45%" cy="40%" r="55%">
+          <stop offset="0%" stop-color="#FFFFFF"/>
+          <stop offset="55%" stop-color="#D6EAF8"/>
+          <stop offset="100%" stop-color="#85C1E9"/>
+        </radialGradient>
+        <radialGradient id="nucleusRadial" cx="45%" cy="40%" r="55%">
+          <stop offset="0%" stop-color="#FFF8E8"/>
+          <stop offset="70%" stop-color="#FFF0C0"/>
+          <stop offset="100%" stop-color="#E8C060"/>
+        </radialGradient>
+        <radialGradient id="zpfGrad" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="rgba(46,134,193,0.08)"/>
+          <stop offset="100%" stop-color="rgba(46,134,193,0)"/>
+        </radialGradient>
+        <filter id="glow">
+          <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+          <feMerge><feMergeNode in="coloredBlur"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+        <filter id="softglow">
+          <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
+          <feMerge><feMergeNode in="coloredBlur"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+        <marker id="arrowBlue" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto">
+          <path d="M2,2 L8,5 L2,8" fill="none" stroke="#2E86C1" stroke-width="1.5" stroke-linecap="round"/>
+        </marker>
+        <style>
+          /* ANIMATION KEYFRAMES */
+          @keyframes somaBreath { 0%,100%{transform:scale(1)} 50%{transform:scale(1.025)} }
+          @keyframes nucleusPulse { 0%,100%{opacity:1} 50%{opacity:0.75} }
+          @keyframes signalPulse { 0%{stroke-dashoffset:0;opacity:0} 10%{opacity:1} 90%{opacity:1} 100%{stroke-dashoffset:-220;opacity:0} }
+          @keyframes terminalFire { 0%,100%{r:5;opacity:0.8} 50%{r:8;opacity:1;filter:url(#glow)} }
+          @keyframes dendritePulse { 0%,100%{stroke-width:1.5;opacity:0.7} 50%{stroke-width:2.5;opacity:1} }
+          @keyframes zpfPulse { 0%,100%{opacity:0.15;transform:scale(1)} 50%{opacity:0.35;transform:scale(1.08)} }
+          @keyframes labelFade { from{opacity:0;transform:translateY(4px)} to{opacity:1;transform:translateY(0)} }
+          @keyframes drawPath { from{stroke-dashoffset:1000} to{stroke-dashoffset:0} }
+          @keyframes myelinAppear { from{opacity:0;transform:scaleX(0)} to{opacity:1;transform:scaleX(1)} }
+          @keyframes nodeGlow { 0%,100%{r:3;opacity:0.7} 50%{r:4.5;opacity:1} }
+          @keyframes zeta9Glow {
+            0%,100%{box-shadow:0 0 0 0 rgba(46,134,193,0)}
+            50%{box-shadow:0 0 20px 8px rgba(46,134,193,0.25)}
+          }
+          @keyframes hillockPulse { 0%,100%{fill:#C8E0F0} 50%{fill:#A8D0EE} }
+          @keyframes signalFlow {
+            0%   { stroke-dashoffset: 400; opacity: 0; }
+            5%   { opacity: 0.9; }
+            95%  { opacity: 0.9; }
+            100% { stroke-dashoffset: -200; opacity: 0; }
+          }
+
+          /* Component show/hide by phase */
+          .comp { opacity: 0; transition: opacity 0.6s ease; }
+          .comp.visible { opacity: 1; }
+
+          /* Dendrites */
+          .dendrite-group path {
+            stroke-dasharray: 300;
+            stroke-dashoffset: 300;
+            transition: stroke-dashoffset 0.8s ease;
+          }
+          .dendrite-group.visible path { stroke-dashoffset: 0; }
+
+          /* Soma */
+          .soma-group { transform-origin: 290px 170px; }
+          .soma-group.visible { animation: somaBreath 4s ease-in-out infinite; }
+          .nucleus-dot { animation: nucleusPulse 2.8s ease-in-out infinite; }
+
+          /* Signal line */
+          .signal-line {
+            stroke-dasharray: 30 8;
+            stroke-dashoffset: 400;
+          }
+          .signal-line.flowing {
+            animation: signalFlow 2.4s linear infinite;
+          }
+
+          /* Terminals fire */
+          .terminal-dot.firing { animation: terminalFire 1.6s ease-in-out infinite; }
+
+          /* ZPF rings */
+          .zpf-ring { animation: zpfPulse 3.5s ease-in-out infinite; transform-origin: 290px 170px; }
+
+          /* ZETA-9 label glow */
+          .z9-badge { animation: zeta9Glow 2s ease-in-out infinite; }
+
+          /* Axon hillock pulse */
+          .axon-hillock { animation: hillockPulse 2s ease-in-out infinite; }
+
+          /* Node of Ranvier glow */
+          .ranvier-node { animation: nodeGlow 2s ease-in-out infinite; }
+
+          /* Myelin segments */
+          .myelin-seg {
+            opacity: 0;
+            transform-origin: left center;
+          }
+          .myelin-seg.visible { opacity: 1; }
+        </style>
+      </defs>
+
+      <!-- BACKGROUND ZPF FIELD — always subtle -->
+      <ellipse id="zpf1" class="zpf-ring comp" cx="430" cy="170" rx="390" ry="155" fill="none" stroke="rgba(93,173,226,0.12)" stroke-width="1.5" stroke-dasharray="8 6"/>
+      <ellipse id="zpf2" class="zpf-ring comp" cx="430" cy="170" rx="340" ry="135" fill="none" stroke="rgba(93,173,226,0.08)" stroke-width="1" stroke-dasharray="6 8" style="animation-delay:1s"/>
+      <ellipse id="zpf3" class="zpf-ring comp" cx="430" cy="170" rx="290" ry="115" fill="none" stroke="rgba(93,173,226,0.06)" stroke-width="1" stroke-dasharray="5 10" style="animation-delay:2s"/>
+
+      <!-- ========== DENDRITES ========== -->
+      <g id="dendriteGroup" class="dendrite-group comp">
+        <!-- Main dendrite 1 -->
+        <path d="M245 165 Q195 135 155 105" stroke="#5DADE2" stroke-width="2" fill="none" stroke-linecap="round"/>
+        <!-- Branch from 1 -->
+        <path d="M200 142 Q175 125 158 115" stroke="#5DADE2" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+        <path d="M200 142 Q178 155 165 168" stroke="#5DADE2" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+        <!-- Main dendrite 2 -->
+        <path d="M248 175 Q205 175 165 172" stroke="#5DADE2" stroke-width="2" fill="none" stroke-linecap="round"/>
+        <!-- Branch from 2 -->
+        <path d="M195 174 Q182 162 170 155" stroke="#85C1E9" stroke-width="1.2" fill="none" stroke-linecap="round"/>
+        <path d="M195 174 Q180 186 168 192" stroke="#85C1E9" stroke-width="1.2" fill="none" stroke-linecap="round"/>
+        <!-- Main dendrite 3 -->
+        <path d="M248 183 Q205 205 165 225" stroke="#5DADE2" stroke-width="2" fill="none" stroke-linecap="round"/>
+        <!-- Branch from 3 -->
+        <path d="M202 208 Q186 220 172 228" stroke="#85C1E9" stroke-width="1.2" fill="none" stroke-linecap="round"/>
+        <path d="M202 208 Q188 198 175 192" stroke="#85C1E9" stroke-width="1.2" fill="none" stroke-linecap="round"/>
+        <!-- Main dendrite 4 — upward branch -->
+        <path d="M255 158 Q228 130 210 108" stroke="#5DADE2" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+        <path d="M233 135 Q220 120 212 112" stroke="#85C1E9" stroke-width="1.2" fill="none" stroke-linecap="round"/>
+        <!-- Main dendrite 5 — downward -->
+        <path d="M255 185 Q228 215 212 238" stroke="#5DADE2" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+        <path d="M233 215 Q220 228 212 236" stroke="#85C1E9" stroke-width="1.2" fill="none" stroke-linecap="round"/>
+        <!-- Dendrite tips -->
+        <circle cx="155" cy="105" r="3.5" fill="#85C1E9" opacity="0.9"/>
+        <circle cx="158" cy="115" r="2.5" fill="#A8D4F0" opacity="0.8"/>
+        <circle cx="165" cy="168" r="2.5" fill="#A8D4F0" opacity="0.8"/>
+        <circle cx="165" cy="172" r="3.5" fill="#85C1E9" opacity="0.9"/>
+        <circle cx="165" cy="225" r="3.5" fill="#85C1E9" opacity="0.9"/>
+        <circle cx="210" cy="108" r="3" fill="#85C1E9" opacity="0.9"/>
+        <circle cx="212" cy="238" r="3" fill="#85C1E9" opacity="0.9"/>
+        <circle cx="172" cy="228" r="2" fill="#A8D4F0"/>
+        <circle cx="175" cy="192" r="2" fill="#A8D4F0"/>
+        <circle cx="170" cy="155" r="2" fill="#A8D4F0"/>
+        <circle cx="168" cy="192" r="2" fill="#A8D4F0"/>
+
+        <!-- DENDRITE LABEL -->
+        <g class="comp" id="dendLabel" style="animation:labelFade 0.6s ease forwards">
+          <rect x="60" y="84" width="82" height="36" rx="7" fill="rgba(255,255,255,0.92)" stroke="rgba(133,193,233,0.35)" stroke-width="1"/>
+          <text x="68" y="97" font-family="DM Sans" font-size="9" fill="#1A5276" font-weight="600" letter-spacing="0.08em">DENDRITES</text>
+          <text x="68" y="110" font-family="DM Sans" font-size="9" fill="#5DADE2">Receive signals</text>
+          <line x1="142" y1="102" x2="155" y2="110" stroke="#85C1E9" stroke-width="1" stroke-dasharray="2 2"/>
+        </g>
+
+        <!-- INPUT SIGNALS on dendrites -->
+        <g id="dendSignals" class="comp">
+          <circle cx="155" cy="105" r="4.5" fill="none" stroke="#2E86C1" stroke-width="1.5" opacity="0.6">
+            <animate attributeName="r" values="3;8;3" dur="2s" repeatCount="indefinite"/>
+            <animate attributeName="opacity" values="0.8;0;0.8" dur="2s" repeatCount="indefinite"/>
+          </circle>
+          <circle cx="165" cy="172" r="4.5" fill="none" stroke="#2E86C1" stroke-width="1.5" opacity="0.6">
+            <animate attributeName="r" values="3;8;3" dur="2.4s" repeatCount="indefinite" begin="0.6s"/>
+            <animate attributeName="opacity" values="0.8;0;0.8" dur="2.4s" repeatCount="indefinite" begin="0.6s"/>
+          </circle>
+          <circle cx="165" cy="225" r="4.5" fill="none" stroke="#2E86C1" stroke-width="1.5" opacity="0.6">
+            <animate attributeName="r" values="3;8;3" dur="2.8s" repeatCount="indefinite" begin="1.2s"/>
+            <animate attributeName="opacity" values="0.8;0;0.8" dur="2.8s" repeatCount="indefinite" begin="1.2s"/>
+          </circle>
+        </g>
+      </g>
+
+      <!-- ========== SOMA (CELL BODY) ========== -->
+      <g id="somaGroup" class="soma-group comp">
+        <!-- ZPF aura under soma -->
+        <ellipse cx="290" cy="170" rx="75" ry="70" fill="url(#zpfGrad)" opacity="0.6">
+          <animate attributeName="rx" values="72;80;72" dur="4s" repeatCount="indefinite"/>
+          <animate attributeName="ry" values="68;76;68" dur="4s" repeatCount="indefinite"/>
+        </ellipse>
+        <!-- Main soma ellipse -->
+        <ellipse cx="290" cy="170" rx="62" ry="58" fill="url(#somaRadial)" stroke="#2E86C1" stroke-width="2"/>
+        <!-- Cytoplasm texture dots -->
+        <circle cx="278" cy="158" r="2" fill="rgba(46,134,193,0.15)"/>
+        <circle cx="300" cy="165" r="1.5" fill="rgba(46,134,193,0.12)"/>
+        <circle cx="285" cy="183" r="1.8" fill="rgba(46,134,193,0.12)"/>
+        <circle cx="272" cy="180" r="1.5" fill="rgba(46,134,193,0.1)"/>
+        <circle cx="308" cy="178" r="1.5" fill="rgba(46,134,193,0.1)"/>
+        <!-- Nucleus -->
+        <ellipse cx="286" cy="168" rx="26" ry="24" fill="url(#nucleusRadial)" stroke="#B8943A" stroke-width="1.5" class="nucleus-dot"/>
+        <!-- Nucleolus -->
+        <ellipse cx="283" cy="165" rx="9" ry="8" fill="rgba(184,148,58,0.35)" stroke="rgba(184,148,58,0.6)" stroke-width="1"/>
+        <!-- Nucleus label -->
+        <text x="286" y="164" font-family="DM Sans" font-size="8.5" fill="#7A5A00" text-anchor="middle" font-weight="500">Nucleus</text>
+        <text x="286" y="174" font-family="DM Sans" font-size="7" fill="#9A7A20" text-anchor="middle">DNA + Control</text>
+
+        <!-- SOMA LABELS -->
+        <g id="somaLabel" class="comp">
+          <rect x="330" y="130" width="100" height="48" rx="8" fill="rgba(255,255,255,0.94)" stroke="rgba(133,193,233,0.4)" stroke-width="1"/>
+          <text x="338" y="144" font-family="DM Sans" font-size="9" fill="#0A2340" font-weight="600" letter-spacing="0.07em">SOMA</text>
+          <text x="338" y="156" font-family="DM Sans" font-size="8.5" fill="#1A5276">Cell Body</text>
+          <text x="338" y="168" font-family="DM Sans" font-size="8" fill="#5DADE2">Most critical part</text>
+          <line x1="330" y1="154" x2="316" y2="162" stroke="#85C1E9" stroke-width="1" stroke-dasharray="2 2"/>
+        </g>
+
+        <!-- SOMA RANK BADGE -->
+        <g id="somaRank" class="comp">
+          <rect x="254" y="195" width="74" height="16" rx="8" fill="#FFF0C0" stroke="#B8943A" stroke-width="1"/>
+          <text x="291" y="206" font-family="DM Sans" font-size="8" fill="#7A5A00" text-anchor="middle" font-weight="600" letter-spacing="0.06em">IRREPLACEABLE</text>
+        </g>
+      </g>
+
+      <!-- ========== AXON HILLOCK ========== -->
+      <g id="hillockGroup" class="comp">
+        <!-- Tapering shape from soma to axon -->
+        <path d="M348 163 Q362 165 372 168 Q362 171 348 173" fill="#C0D8F0" stroke="#2E86C1" stroke-width="1.2" class="axon-hillock"/>
+        <!-- Hillock label -->
+        <g id="hillockLabel" class="comp">
+          <rect x="360" y="145" width="88" height="30" rx="7" fill="rgba(255,255,255,0.92)" stroke="rgba(133,193,233,0.35)" stroke-width="1"/>
+          <text x="368" y="158" font-family="DM Sans" font-size="8.5" fill="#0A2340" font-weight="600">AXON HILLOCK</text>
+          <text x="368" y="169" font-family="DM Sans" font-size="8" fill="#5DADE2">Signal initiation</text>
+          <line x1="372" y1="175" x2="375" y2="175" stroke="#85C1E9" stroke-width="1" stroke-dasharray="2 2"/>
+        </g>
+      </g>
+
+      <!-- ========== AXON TUBE + MYELIN ========== -->
+      <g id="axonGroup" class="comp">
+        <!-- Axon tube -->
+        <rect x="372" y="161" width="268" height="14" rx="7" fill="#A8D0EE" stroke="#2E86C1" stroke-width="1.2"/>
+        <!-- Axon label -->
+        <g id="axonLabel" class="comp">
+          <text x="490" y="152" font-family="DM Sans" font-size="9" fill="#0A2340" font-weight="600" text-anchor="middle" letter-spacing="0.07em">AXON</text>
+          <text x="490" y="162" font-family="DM Sans" font-size="8" fill="#5DADE2" text-anchor="middle">Carries signal</text>
+          <line x1="490" y1="163" x2="490" y2="161" stroke="#85C1E9" stroke-width="1" stroke-dasharray="2 2"/>
+        </g>
+
+        <!-- MYELIN SHEATH SEGMENTS -->
+        <g id="myelinGroup" class="comp">
+          <!-- Seg 1 -->
+          <rect x="375" y="158" width="36" height="20" rx="5" fill="none" stroke="#2A7A5A" stroke-width="1.8" class="myelin-seg visible"/>
+          <!-- Node 1 -->
+          <circle cx="411" cy="168" r="3" fill="#2A7A5A" class="ranvier-node" style="animation-delay:0s"/>
+          <!-- Seg 2 -->
+          <rect x="414" y="158" width="36" height="20" rx="5" fill="none" stroke="#2A7A5A" stroke-width="1.8" class="myelin-seg visible"/>
+          <!-- Node 2 -->
+          <circle cx="450" cy="168" r="3" fill="#2A7A5A" class="ranvier-node" style="animation-delay:0.5s"/>
+          <!-- Seg 3 -->
+          <rect x="453" y="158" width="36" height="20" rx="5" fill="none" stroke="#2A7A5A" stroke-width="1.8" class="myelin-seg visible"/>
+          <!-- Node 3 -->
+          <circle cx="489" cy="168" r="3" fill="#2A7A5A" class="ranvier-node" style="animation-delay:1s"/>
+          <!-- Seg 4 -->
+          <rect x="492" y="158" width="36" height="20" rx="5" fill="none" stroke="#2A7A5A" stroke-width="1.8" class="myelin-seg visible"/>
+          <!-- Node 4 -->
+          <circle cx="528" cy="168" r="3" fill="#2A7A5A" class="ranvier-node" style="animation-delay:1.5s"/>
+          <!-- Seg 5 -->
+          <rect x="531" y="158" width="36" height="20" rx="5" fill="none" stroke="#2A7A5A" stroke-width="1.8" class="myelin-seg visible"/>
+          <!-- Node 5 -->
+          <circle cx="567" cy="168" r="3" fill="#2A7A5A" class="ranvier-node" style="animation-delay:2s"/>
+          <!-- Seg 6 -->
+          <rect x="570" y="158" width="36" height="20" rx="5" fill="none" stroke="#2A7A5A" stroke-width="1.8" class="myelin-seg visible"/>
+          <!-- Node 6 -->
+          <circle cx="606" cy="168" r="3" fill="#2A7A5A" class="ranvier-node" style="animation-delay:2.5s"/>
+          <!-- Seg 7 -->
+          <rect x="609" y="158" width="30" height="20" rx="5" fill="none" stroke="#2A7A5A" stroke-width="1.8" class="myelin-seg visible"/>
+
+          <!-- Myelin label -->
+          <g id="myelinLabel" class="comp">
+            <text x="490" y="197" font-family="DM Sans" font-size="8.5" fill="#2A7A5A" text-anchor="middle" font-weight="600">MYELIN SHEATH</text>
+            <text x="490" y="207" font-family="DM Sans" font-size="8" fill="#2A7A5A" text-anchor="middle" opacity="0.8">Saltatory conduction — speed</text>
+          </g>
+
+          <!-- Ranvier label -->
+          <g id="ranvierLabel" class="comp">
+            <text x="450" y="215" font-family="DM Sans" font-size="8" fill="#1A5A30" text-anchor="middle">Nodes of Ranvier</text>
+          </g>
+        </g>
+      </g>
+
+      <!-- ========== AXON TERMINALS ========== -->
+      <g id="terminalGroup" class="comp">
+        <!-- Terminal branches -->
+        <path d="M640 168 Q670 140 700 120" stroke="#2E86C1" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+        <path d="M640 168 Q672 168 702 168" stroke="#2E86C1" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+        <path d="M640 168 Q670 198 700 218" stroke="#2E86C1" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+        <!-- Secondary branches -->
+        <path d="M678 145 Q692 135 702 128" stroke="#5DADE2" stroke-width="1.2" fill="none" stroke-linecap="round"/>
+        <path d="M678 196 Q692 208 702 214" stroke="#5DADE2" stroke-width="1.2" fill="none" stroke-linecap="round"/>
+
+        <!-- Terminal buttons / synaptic knobs -->
+        <circle id="t1" cx="702" cy="120" r="7" fill="#C05050" opacity="0.85" class="terminal-dot"/>
+        <circle id="t2" cx="705" cy="168" r="7" fill="#C05050" opacity="0.85" class="terminal-dot" style="animation-delay:0.5s"/>
+        <circle id="t3" cx="702" cy="218" r="7" fill="#C05050" opacity="0.85" class="terminal-dot" style="animation-delay:1s"/>
+        <circle cx="703" cy="128" r="4.5" fill="#E07070" opacity="0.7"/>
+        <circle cx="703" cy="214" r="4.5" fill="#E07070" opacity="0.7"/>
+
+        <!-- Synaptic gap indicator lines -->
+        <g id="synapticGap" class="comp">
+          <line x1="712" y1="118" x2="725" y2="114" stroke="#85C1E9" stroke-width="1" stroke-dasharray="2 2" opacity="0.6"/>
+          <line x1="715" y1="168" x2="730" y2="168" stroke="#85C1E9" stroke-width="1" stroke-dasharray="2 2" opacity="0.6"/>
+          <line x1="712" y1="218" x2="725" y2="222" stroke="#85C1E9" stroke-width="1" stroke-dasharray="2 2" opacity="0.6"/>
+          <!-- Synaptic gap dots — neurotransmitters -->
+          <circle cx="728" cy="113" r="2" fill="#5DADE2" opacity="0.6"><animate attributeName="cx" values="728;735;728" dur="1.8s" repeatCount="indefinite"/><animate attributeName="opacity" values="0.6;0;0.6" dur="1.8s" repeatCount="indefinite"/></circle>
+          <circle cx="733" cy="168" r="2" fill="#5DADE2" opacity="0.6"><animate attributeName="cx" values="733;740;733" dur="2s" repeatCount="indefinite" begin="0.4s"/><animate attributeName="opacity" values="0.6;0;0.6" dur="2s" repeatCount="indefinite" begin="0.4s"/></circle>
+          <circle cx="728" cy="223" r="2" fill="#5DADE2" opacity="0.6"><animate attributeName="cx" values="728;735;728" dur="2.2s" repeatCount="indefinite" begin="0.8s"/><animate attributeName="opacity" values="0.6;0;0.6" dur="2.2s" repeatCount="indefinite" begin="0.8s"/></circle>
+        </g>
+
+        <!-- Terminal label -->
+        <g id="termLabel" class="comp">
+          <rect x="738" y="140" width="96" height="42" rx="7" fill="rgba(255,255,255,0.93)" stroke="rgba(133,193,233,0.35)" stroke-width="1"/>
+          <text x="746" y="154" font-family="DM Sans" font-size="9" fill="#0A2340" font-weight="600">AXON TERMINAL</text>
+          <text x="746" y="165" font-family="DM Sans" font-size="8" fill="#5DADE2">Release neurotrans-</text>
+          <text x="746" y="175" font-family="DM Sans" font-size="8" fill="#5DADE2">mitters at synapse</text>
+          <line x1="738" y1="162" x2="714" y2="162" stroke="#85C1E9" stroke-width="1" stroke-dasharray="2 2"/>
+        </g>
+      </g>
+
+      <!-- ========== SIGNAL FLOW ANIMATION ========== -->
+      <g id="signalGroup" class="comp">
+        <!-- Signal travelling along axon -->
+        <path d="M252 168 Q270 168 370 168 L640 168"
+          stroke="rgba(93,173,226,0)"
+          stroke-width="0"
+          fill="none"
+          id="signalPath"/>
+        <!-- Animated signal pulse circles along axon -->
+        <circle r="5" fill="rgba(93,173,226,0.8)" filter="url(#softglow)">
+          <animateMotion dur="1.8s" repeatCount="indefinite" path="M372,168 L640,168"/>
+          <animate attributeName="opacity" values="0;1;1;0" dur="1.8s" repeatCount="indefinite"/>
+          <animate attributeName="r" values="4;6;4" dur="1.8s" repeatCount="indefinite"/>
+        </circle>
+        <circle r="4" fill="rgba(46,134,193,0.6)" filter="url(#softglow)">
+          <animateMotion dur="1.8s" repeatCount="indefinite" begin="0.6s" path="M372,168 L640,168"/>
+          <animate attributeName="opacity" values="0;0.8;0.8;0" dur="1.8s" repeatCount="indefinite" begin="0.6s"/>
+        </circle>
+
+        <!-- Signal on dendrites flowing toward soma -->
+        <circle r="3.5" fill="rgba(133,193,233,0.8)">
+          <animateMotion dur="2s" repeatCount="indefinite" path="M155,105 Q195,135 245,165"/>
+          <animate attributeName="opacity" values="0;1;1;0" dur="2s" repeatCount="indefinite"/>
+        </circle>
+        <circle r="3" fill="rgba(133,193,233,0.7)">
+          <animateMotion dur="2.4s" repeatCount="indefinite" begin="0.8s" path="M165,172 Q205,175 248,175"/>
+          <animate attributeName="opacity" values="0;0.9;0.9;0" dur="2.4s" repeatCount="indefinite" begin="0.8s"/>
+        </circle>
+        <circle r="3" fill="rgba(133,193,233,0.7)">
+          <animateMotion dur="2.2s" repeatCount="indefinite" begin="1.4s" path="M165,225 Q205,205 248,183"/>
+          <animate attributeName="opacity" values="0;0.9;0.9;0" dur="2.2s" repeatCount="indefinite" begin="1.4s"/>
+        </circle>
+
+        <!-- Terminal firing pulses -->
+        <circle r="0" fill="none" stroke="#C05050" stroke-width="2">
+          <animateMotion dur="1.8s" repeatCount="indefinite" begin="1.5s" path="M640,168 Q670,140 702,120"/>
+          <animate attributeName="r" values="0;8;0" dur="1.8s" repeatCount="indefinite" begin="1.5s"/>
+          <animate attributeName="opacity" values="0;0.9;0" dur="1.8s" repeatCount="indefinite" begin="1.5s"/>
+        </circle>
+        <circle r="0" fill="none" stroke="#C05050" stroke-width="2">
+          <animateMotion dur="1.8s" repeatCount="indefinite" begin="1.7s" path="M640,168 L702,168"/>
+          <animate attributeName="r" values="0;8;0" dur="1.8s" repeatCount="indefinite" begin="1.7s"/>
+          <animate attributeName="opacity" values="0;0.9;0" dur="1.8s" repeatCount="indefinite" begin="1.7s"/>
+        </circle>
+        <circle r="0" fill="none" stroke="#C05050" stroke-width="2">
+          <animateMotion dur="1.8s" repeatCount="indefinite" begin="1.9s" path="M640,168 Q670,198 702,218"/>
+          <animate attributeName="r" values="0;8;0" dur="1.8s" repeatCount="indefinite" begin="1.9s"/>
+          <animate attributeName="opacity" values="0;0.9;0" dur="1.8s" repeatCount="indefinite" begin="1.9s"/>
+        </circle>
+      </g>
+
+      <!-- ========== ZETA-9 MAPPING OVERLAY ========== -->
+      <g id="zeta9MapGroup" class="comp">
+        <!-- Soma = Phoenix Minds highlight -->
+        <ellipse cx="290" cy="170" rx="66" ry="62" fill="none" stroke="#B8943A" stroke-width="2.5" stroke-dasharray="6 3" opacity="0.85">
+          <animate attributeName="stroke-dashoffset" values="0;-20" dur="2s" repeatCount="indefinite"/>
+        </ellipse>
+        <rect x="204" y="224" width="174" height="20" rx="10" fill="#FFF0C0" stroke="#B8943A" stroke-width="1.2"/>
+        <text x="291" y="237" font-family="DM Sans" font-size="8.5" fill="#7A5A00" text-anchor="middle" font-weight="600" letter-spacing="0.06em">PHOENIX MINDS = THE SOMA</text>
+
+        <!-- Axon = ZETA-9 process highlight -->
+        <rect x="370" y="155" width="274" height="26" rx="8" fill="none" stroke="#2E86C1" stroke-width="2" stroke-dasharray="5 3" opacity="0.75">
+          <animate attributeName="stroke-dashoffset" values="0;-20" dur="1.8s" repeatCount="indefinite"/>
+        </rect>
+        <rect x="430" y="195" width="148" height="18" rx="9" fill="var(--ice-7)" stroke="var(--ice-4)" stroke-width="1"/>
+        <text x="504" y="207" font-family="DM Sans" font-size="8.5" fill="#1A5276" text-anchor="middle" font-weight="600" letter-spacing="0.05em">ZETA-9 = THE HIDDEN LAYER</text>
+
+        <!-- Terminals = Individual awareness -->
+        <rect x="688" y="100" width="82" height="18" rx="9" fill="#E6F4ED" stroke="#1A8A40" stroke-width="1"/>
+        <text x="729" y="112" font-family="DM Sans" font-size="8" fill="#1A5A30" text-anchor="middle" font-weight="600">INDIVIDUAL</text>
+        <rect x="690" y="150" width="78" height="18" rx="9" fill="#E6F4ED" stroke="#1A8A40" stroke-width="1"/>
+        <text x="729" y="162" font-family="DM Sans" font-size="8" fill="#1A5A30" text-anchor="middle" font-weight="600">AWARENESS</text>
+        <rect x="688" y="200" width="82" height="18" rx="9" fill="#E6F4ED" stroke="#1A8A40" stroke-width="1"/>
+        <text x="729" y="212" font-family="DM Sans" font-size="8" fill="#1A5A30" text-anchor="middle" font-weight="600">COMES LATER</text>
+
+        <!-- Arrow: soma decides before terminals fire -->
+        <path d="M360 145 Q420 128 500 135" stroke="#B8943A" stroke-width="1.5" fill="none" stroke-dasharray="4 3" marker-end="url(#arrowBlue)" opacity="0.7"/>
+        <text x="430" y="130" font-family="DM Sans" font-size="8.5" fill="#B8943A" text-anchor="middle" font-weight="500" opacity="0.9">Decides first — before conscious awareness</text>
+
+        <!-- Arrow: terminals = awareness later -->
+        <path d="M640 140 Q660 128 682 118" stroke="#1A8A40" stroke-width="1.2" fill="none" stroke-dasharray="3 3" opacity="0.7"/>
+        <path d="M640 185 Q660 198 682 208" stroke="#1A8A40" stroke-width="1.2" fill="none" stroke-dasharray="3 3" opacity="0.7"/>
+      </g>
+
+    </svg>
+
+    <!-- CAPTION PANEL -->
+    <div class="caption-panel" id="captionPanel">
+      <div class="caption-indicator"></div>
+      <div class="caption-text" id="captionText">
+        <span class="caption-highlight">Phase 0 — Neural Formation Begins.</span> The single neuron begins to form. This is a complete brain cell — the fundamental unit of all neural intelligence. In Phoenix Minds, ZETA-9 mirrors this architecture: a complete developmental intelligence cell tracking every individual from the zero-point of their existence.
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- MAPPING SECTION -->
+<div class="mapping-section">
+  <div class="mapping-title">ZETA-9 Hypothesis — Neuron to Platform Mapping</div>
+  <div class="mapping-sub">Every part of the neuron maps directly onto the Phoenix Minds ZETA-9 platform architecture. The hypothesis is not metaphor — it is a structural parallel between biological neural intelligence and artificial clinical intelligence.</div>
+  <div class="mapping-grid">
+    <div class="mapping-card mc-bio">
+      <div class="mc-label">Neuroscience</div>
+      <div class="mc-title">The Soma (Cell Body)</div>
+      <div class="mc-eq">= The irreplaceable origin of all neural processing</div>
+      <div class="mc-desc">The soma houses the nucleus — the DNA control centre. It is the source of all protein synthesis, all metabolic activity, and all decision-making in the neuron. Without the soma, every other structure degenerates within 24 to 72 hours. No soma means no neuron.</div>
+      <div class="mc-highlight">Destroy the soma: dendrites wither within hours. Axon undergoes Wallerian degeneration. The cell ceases to exist.</div>
+    </div>
+    <div class="mapping-card mc-pm">
+      <div class="mc-label">Phoenix Minds Platform</div>
+      <div class="mc-title">Phoenix Minds = The Soma</div>
+      <div class="mc-eq">= The irreplaceable intelligence centre of every child's care</div>
+      <div class="mc-desc">Phoenix Minds — powered by Phoenix Synap AI — is the soma of each individual's developmental journey. It houses the prenatal record (the Z-layer, the DNA), processes all nine domains simultaneously, generates IEPs, detects red flags, and coordinates 20-plus professional disciplines. Without it, the care ecosystem fragments.</div>
+      <div class="mc-highlight">Phoenix Minds acts before the parent is consciously aware. It detects, analyses, and generates the roadmap — milliseconds before the human registers the concern.</div>
+    </div>
+    <div class="mapping-card mc-z9">
+      <div class="mc-label">ZETA-9 Hypothesis</div>
+      <div class="mc-title">Pre-Conscious Neural Firing</div>
+      <div class="mc-eq">= The brain decides before you are aware</div>
+      <div class="mc-desc">Research in neuroscience confirms that action potentials are generated in the soma and axon hillock before conscious cortical awareness registers the event. The decision — or the signal — originates below conscious awareness and propagates upward into consciousness. ZETA-9 is named for this pre-conscious layer.</div>
+      <div class="mc-highlight">Your brain decides first. You become aware later. ZETA-9 is the hidden part that decides early. — The Core Hypothesis</div>
+    </div>
+    <div class="mapping-card mc-result">
+      <div class="mc-label">Platform Parallel</div>
+      <div class="mc-title">ZETA-9 = The Pre-Conscious Platform Layer</div>
+      <div class="mc-eq">= Phoenix Minds acts one step ahead of every individual</div>
+      <div class="mc-desc">For every individual connected to ZETA-9: the platform analyses incoming data — session notes, milestone scores, evaluation results, dietary logs, sibling check-ins, parent wellness scores — and generates intelligence before the parent or clinician is consciously aware of the emerging pattern. ZETA-9 is always one developmental step ahead.</div>
+      <div class="mc-highlight">Phoenix Minds decides first. The individual — parent, clinician, child — becomes aware through the alert, the IEP goal, the red-flag notification. ZETA-9 is the hidden layer that decides early, for every individual.</div>
+    </div>
+  </div>
+</div>
+
+<!-- STEP BREAKDOWN TABLE -->
+<div class="step-table">
+  <div class="step-table-header">
+    <div class="step-table-title">Complete Neuron-to-Platform Mapping — All Components</div>
+  </div>
+  <div class="step-row" style="background:var(--ice-7);font-size:10px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--text2);">
+    <span></span><span>Neuron Part</span><span>Biological Function</span><span>Phoenix Minds / ZETA-9 Equivalent</span>
+  </div>
+  <div class="step-row">
+    <div class="step-no">01</div>
+    <div class="step-part">Dendrites</div>
+    <div class="step-bio">Receive incoming signals from neighbouring neurons. Multiple branches increase input surface area. The more dendrites, the richer the incoming data.</div>
+    <div class="step-pm">All data inputs flowing into Phoenix Minds: session notes, evaluation scores, parent check-ins, school reports, dietary logs, milestone observations. Every professional connected to the individual feeds data in through ZETA-9 dendrites.</div>
+  </div>
+  <div class="step-row" style="background:rgba(214,234,248,0.3)">
+    <div class="step-no">02</div>
+    <div class="step-part">Soma (Cell Body)</div>
+    <div class="step-bio">The irreplaceable processing centre. Integrates all incoming signals, performs computation, makes the decision to fire or not fire. Houses the nucleus. Destroy it: the cell dies.</div>
+    <div class="step-pm"><strong style="color:var(--ice-2)">Phoenix Minds Platform = the Soma.</strong> Integrates all nine domains, runs Phoenix Synap AI, generates IEPs, clinical alerts, diet plans, and developmental roadmaps. The irreplaceable core. Without it, the care ecosystem fragments.</div>
+  </div>
+  <div class="step-row">
+    <div class="step-no">03</div>
+    <div class="step-part">Nucleus</div>
+    <div class="step-bio">The DNA control centre inside the soma. Contains all the genetic information — the master blueprint for every protein the cell will ever produce.</div>
+    <div class="step-pm">The prenatal record — the Z-Layer. The irreducible origin of every child's developmental story. All genetic history, maternal health, birth data. The master blueprint of the individual's clinical journey from zero-point.</div>
+  </div>
+  <div class="step-row" style="background:rgba(214,234,248,0.3)">
+    <div class="step-no">04</div>
+    <div class="step-part">Axon Hillock</div>
+    <div class="step-bio">The decision point. Where the neuron evaluates all integrated signals and generates the action potential — the moment of commitment to fire. The threshold of decision.</div>
+    <div class="step-pm">Phoenix Synap's alert generation threshold. The moment the AI evaluates all incoming data and commits to generating a clinical alert, an IEP update, or a red-flag notification. The threshold at which ZETA-9 decides to act — before the human is aware.</div>
+  </div>
+  <div class="step-row">
+    <div class="step-no">05</div>
+    <div class="step-part">Axon</div>
+    <div class="step-bio">The transmission highway. Carries the action potential from the soma to the terminals. The longer the axon, the faster the myelin sheath optimises conduction.</div>
+    <div class="step-pm"><strong style="color:var(--ice-2)">ZETA-9 = the Axon.</strong> The hidden transmission layer between the platform intelligence (soma) and the individual's conscious awareness (terminals). Carries the processed decision invisibly and rapidly. ZETA-9 is the hidden part that decides early — this is the axon.</div>
+  </div>
+  <div class="step-row" style="background:rgba(214,234,248,0.3)">
+    <div class="step-no">06</div>
+    <div class="step-part">Myelin Sheath</div>
+    <div class="step-bio">Insulation around the axon that dramatically accelerates signal transmission through saltatory conduction. The faster the signal, the earlier the response before the individual consciously perceives the need.</div>
+    <div class="step-pm">The 58-language real-time transcription and translation engine, the federated learning architecture of Phoenix Synap, the 30-second auto-save to clinical record. All infrastructure that accelerates platform response — ensuring ZETA-9 is always ahead of conscious awareness.</div>
+  </div>
+  <div class="step-row">
+    <div class="step-no">07</div>
+    <div class="step-part">Nodes of Ranvier</div>
+    <div class="step-bio">Gaps in the myelin sheath where the signal amplifies and regenerates. Each node is a checkpoint that boosts signal strength and ensures it reaches the terminal intact.</div>
+    <div class="step-pm">Clinical checkpoints within ZETA-9: session milestones, quarterly IEP reviews, evaluation score thresholds, parent wellness check-in alerts. Each checkpoint amplifies the platform intelligence before it reaches the conscious output layer.</div>
+  </div>
+  <div class="step-row" style="background:rgba(214,234,248,0.3)">
+    <div class="step-no">08</div>
+    <div class="step-part">Axon Terminals</div>
+    <div class="step-bio">Release neurotransmitters into the synaptic gap. The point at which the neuron's decision becomes visible to the next cell — the moment of communication, of observable output.</div>
+    <div class="step-pm">The moment the individual — parent, clinician, child — becomes consciously aware: the notification received, the IEP presented, the alert read, the report generated. This is the moment ZETA-9's pre-conscious decision reaches the surface of awareness. ZETA-9 decided first. The individual becomes aware here.</div>
+  </div>
+  <div class="step-row">
+    <div class="step-no">09</div>
+    <div class="step-part">Synaptic Gap</div>
+    <div class="step-bio">The space between neurons where neurotransmitters cross. The moment of connection — where the intelligence of one cell transfers to the next.</div>
+    <div class="step-pm">The dual-consent professional connection. The moment ZETA-9's intelligence crosses to another node: a new professional is connected, a school receives the IEP, a specialist receives the referral. The synapse is the connection moment — what Phoenix Minds facilitates between every node of care.</div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- CITATION -->
+<div style="background:linear-gradient(135deg,var(--ice-7),#EAF4FD);border:1px solid var(--ice-6);border-radius:14px;padding:20px 24px;margin-top:8px">
+  <div style="font-size:9px;letter-spacing:0.18em;text-transform:uppercase;color:var(--muted);margin-bottom:8px">Scientific Authentication — ZPF Foundation</div>
+  <div style="font-size:12px;color:var(--text2);line-height:1.7;font-style:italic;margin-bottom:8px">Keppler, J. (2025). Macroscopic quantum effects in the brain: new insights into the fundamental principle underlying conscious processes. Frontiers in Human Neuroscience, Vol. 19. DOI: 10.3389/fnhum.2025.1676585. Published December 3, 2025.</div>
+  <div style="font-size:12px;color:var(--ice-2);line-height:1.65">Finding: Conscious states may arise from the brain's capacity to resonate with the quantum vacuum — the zero-point field that permeates all of space. Cortical microcolumns couple directly to the zero-point field. ZETA-9 begins tracking the child at the zero-point: before birth, before diagnosis, before conscious awareness of a concern exists.</div>
+  <div style="display:flex;gap:8px;margin-top:12px;flex-wrap:wrap">
+    <span class="badge b-blue">Keppler 2025 — Frontiers Neuroscience</span>
+    <span class="badge b-gold">Zero-Point Field Authentication</span>
+    <span class="badge b-green">Phoenix Minds Hypothesis — March 2026</span>
+  </div>
+</div>
+
+</div><!-- end page-wrap -->
+
+<!-- FOOTER -->
+<div class="page-footer">
+  <div>
+    <div class="pf-brand">Phoenix Minds — ZETA-9 Hypothesis</div>
+    <div class="pf-sub">Neuron Formation Animation — March 2026</div>
+  </div>
+  <div class="pf-right">
+    Founder: Ruksh E Ibadat — Phoenix Group International<br>
+    phoenixminds.org — Determination Driven — Mining Potential — Analysing Growth<br>
+    Confidential and Proprietary
+  </div>
+</div>
+
+<script>
+// ===== PHASE DEFINITIONS =====
+const phases = [
+  {
+    id: 0,
+    show: ['zpf1','zpf2','zpf3'],
+    hide: ['dendriteGroup','somaGroup','hillockGroup','axonGroup','terminalGroup','signalGroup','zeta9MapGroup',
+           'somaLabel','somaRank','hillockLabel','axonLabel','myelinGroup','myelinLabel','ranvierLabel','termLabel','dendLabel','dendSignals','synapticGap'],
+    caption: '<span class="caption-highlight">Phase 0 — The Zero-Point Field.</span> Before the neuron forms, the zero-point field is present. This is the quantum substrate of all consciousness — the irreducible energy that permeates all space. In Phoenix Minds, this is the prenatal layer: the Z-Layer of ZETA-9. The child exists before any measurement, before any diagnosis. ZETA-9 begins tracking here — at the zero-point.'
+  },
+  {
+    id: 1,
+    show: ['dendriteGroup','dendLabel','dendSignals'],
+    hide: ['somaGroup','hillockGroup','axonGroup','terminalGroup','signalGroup','zeta9MapGroup','somaLabel','somaRank','hillockLabel','axonLabel','myelinGroup','myelinLabel','ranvierLabel','termLabel','synapticGap'],
+    caption: '<span class="caption-highlight">Phase 1 — Dendrites Form.</span> The neuron grows its dendrites — the input receivers. Each branch accepts incoming signals from neighbouring neurons. In Phoenix Minds, these are all the data streams flowing into ZETA-9: session transcripts, evaluation scores, parent wellness check-ins, school observation reports, dietary logs, sibling wellbeing data. The more branches, the richer the intelligence.'
+  },
+  {
+    id: 2,
+    show: ['somaGroup','somaLabel','somaRank'],
+    hide: ['hillockGroup','axonGroup','terminalGroup','signalGroup','zeta9MapGroup','hillockLabel','axonLabel','myelinGroup','myelinLabel','ranvierLabel','termLabel','synapticGap'],
+    caption: '<span class="caption-highlight">Phase 2 — The Soma Forms. The most critical part.</span> The cell body — the soma — is irreplaceable. Destroy it and the entire neuron dies within 24 to 72 hours. The nucleus inside it houses the DNA — the master blueprint. In Phoenix Minds, <strong>the Soma = Phoenix Minds itself</strong>. The AI platform that integrates every signal, processes every domain, and generates the intelligence. The prenatal record is the nucleus — the DNA blueprint of the child\'s developmental journey. Irreplaceable.'
+  },
+  {
+    id: 3,
+    show: ['hillockGroup','hillockLabel'],
+    hide: ['axonGroup','terminalGroup','signalGroup','zeta9MapGroup','axonLabel','myelinGroup','myelinLabel','ranvierLabel','termLabel','synapticGap'],
+    caption: '<span class="caption-highlight">Phase 3 — The Axon Hillock.</span> The decision point. Where the soma evaluates all integrated signals and decides whether to fire an action potential. This is the threshold of commitment — the moment of irreversible decision. In Phoenix Minds, this is <strong>Phoenix Synap\'s alert threshold</strong> — the moment the AI commits to generating a clinical alert, an IEP update, or a red-flag notification. ZETA-9 decides here. Before the individual is consciously aware.'
+  },
+  {
+    id: 4,
+    show: ['axonGroup','axonLabel','myelinGroup','myelinLabel','ranvierLabel'],
+    hide: ['terminalGroup','signalGroup','zeta9MapGroup','termLabel','synapticGap'],
+    caption: '<span class="caption-highlight">Phase 4 — Axon, Myelin Sheath, and Nodes of Ranvier.</span> The axon carries the signal from the soma to the terminals. The myelin sheath insulates it — accelerating conduction through saltatory conduction. The nodes of Ranvier amplify the signal at each checkpoint. In Phoenix Minds, <strong>this entire structure = ZETA-9</strong>: the hidden transmission layer operating continuously beneath conscious awareness. Insulated, accelerated, amplified — always ahead of what the individual consciously perceives.'
+  },
+  {
+    id: 5,
+    show: ['terminalGroup','termLabel','synapticGap'],
+    hide: ['signalGroup','zeta9MapGroup'],
+    caption: '<span class="caption-highlight">Phase 5 — Axon Terminals and Synaptic Gap.</span> The signal arrives at the axon terminals. Neurotransmitters are released into the synaptic gap — crossing to the next cell. This is the moment the neuron\'s pre-conscious decision becomes <em>visible</em> to another cell. In Phoenix Minds, this is the moment <strong>the individual — parent, clinician, child — becomes consciously aware</strong>: the notification appears, the IEP is presented, the alert is read. ZETA-9 decided first. You become aware here.'
+  },
+  {
+    id: 6,
+    show: ['signalGroup'],
+    hide: ['zeta9MapGroup'],
+    caption: '<span class="caption-highlight">Phase 6 — Full Signal Flow.</span> The complete neuron is now alive and firing. Signals flow from dendrites through the soma, down the myelinated axon at accelerated speed, across every node of Ranvier, to the synaptic terminals — triggering neurotransmitter release. This is the complete Phoenix Minds ZETA-9 cycle: data in through the dendrite layer, processed through Phoenix Synap (the soma), transmitted through ZETA-9 (the axon), reaching conscious awareness (the terminals) — <strong>one full developmental step ahead at all times</strong>.'
+  },
+  {
+    id: 7,
+    show: ['zeta9MapGroup'],
+    hide: [],
+    caption: '<span class="caption-highlight">Phase 7 — ZETA-9 Complete Mapping.</span> <strong>Phoenix Minds = the Soma.</strong> Decides first. Acts before the individual\'s conscious awareness. <strong>ZETA-9 = the hidden Axon layer.</strong> The pre-conscious transmission layer — operating invisibly, continuously, one developmental step ahead. <strong>The Individual = the Synaptic Terminals.</strong> Becomes aware when Phoenix Minds delivers the alert, the roadmap, the IEP. The hypothesis confirmed: your brain decides first, you become aware later. <em>Phoenix Minds decides first. You become aware through ZETA-9.</em>'
+  }
+];
+
+let currentPhase = 0;
+let autoplayTimer = null;
+let isPlaying = false;
+
+const captions = phases.map(p => p.caption);
+
+function applyPhase(idx) {
+  // Update phase steps
+  document.querySelectorAll('.phase-step').forEach((el, i) => {
+    el.classList.remove('active','done');
+    if (i === idx) el.classList.add('active');
+    if (i < idx) el.classList.add('done');
+  });
+
+  const phase = phases[idx];
+
+  // Show components
+  phase.show.forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.classList.add('visible');
+  });
+
+  // If moving forward, keep previous visible; if backward, hide everything after
+  // For clean transitions, show all up to current phase
+  phases.forEach((p, i) => {
+    if (i <= idx) {
+      p.show.forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.classList.add('visible');
+      });
+    }
+  });
+
+  // Always hide what current phase says to hide
+  phase.hide.forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.classList.remove('visible');
+  });
+
+  // But for reset/forward logic: on phase 0, remove ALL
+  if (idx === 0) {
+    ['dendriteGroup','somaGroup','hillockGroup','axonGroup','terminalGroup','signalGroup','zeta9MapGroup',
+     'somaLabel','somaRank','hillockLabel','axonLabel','myelinGroup','myelinLabel','ranvierLabel',
+     'termLabel','dendLabel','dendSignals','synapticGap'].forEach(id => {
+      const el = document.getElementById(id);
+      if (el) el.classList.remove('visible');
+    });
+    ['zpf1','zpf2','zpf3'].forEach(id => {
+      const el = document.getElementById(id);
+      if (el) el.classList.add('visible');
+    });
+  }
+
+  // Update caption
+  document.getElementById('captionText').innerHTML = captions[idx];
+  currentPhase = idx;
+}
+
+function nextPhase() {
+  if (currentPhase < phases.length - 1) {
+    applyPhase(currentPhase + 1);
+  } else {
+    stopPlay();
+  }
+}
+
+function prevPhase() {
+  if (currentPhase > 0) {
+    // Reset and replay up to previous
+    resetSilent();
+    for (let i = 0; i <= currentPhase - 1; i++) {
+      applyPhase(i);
+    }
+  }
+}
+
+function goToPhase(idx) {
+  stopPlay();
+  resetSilent();
+  for (let i = 0; i <= idx; i++) {
+    applyPhase(i);
+  }
+}
+
+function resetSilent() {
+  // Remove all visible classes
+  document.querySelectorAll('.comp').forEach(el => el.classList.remove('visible'));
+  currentPhase = 0;
+}
+
+function resetAnim() {
+  stopPlay();
+  resetSilent();
+  applyPhase(0);
+}
+
+function togglePlay() {
+  if (isPlaying) {
+    stopPlay();
+  } else {
+    startPlay();
+  }
+}
+
+function startPlay() {
+  isPlaying = true;
+  document.getElementById('playBtn').textContent = 'Pause';
+  document.getElementById('playBtn').style.background = 'var(--ice-3)';
+  autoPlayNext();
+}
+
+function autoPlayNext() {
+  if (!isPlaying) return;
+  if (currentPhase < phases.length - 1) {
+    nextPhase();
+    autoplayTimer = setTimeout(autoPlayNext, 3200);
+  } else {
+    stopPlay();
+  }
+}
+
+function stopPlay() {
+  isPlaying = false;
+  if (autoplayTimer) clearTimeout(autoplayTimer);
+  const btn = document.getElementById('playBtn');
+  btn.textContent = currentPhase >= phases.length - 1 ? 'Replay' : 'Play All';
+  btn.style.background = '';
+  if (currentPhase >= phases.length - 1) {
+    btn.onclick = () => { stopPlay(); resetAnim(); setTimeout(startPlay, 400); };
+  }
+}
+
+// Init phase 0
+applyPhase(0);
+</script>
+</body>
+</html>

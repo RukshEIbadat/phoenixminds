@@ -1,0 +1,1621 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>ZETA-9 by Phoenix Minds — Clinical Intelligence Platform</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&family=Noto+Nastaliq+Urdu:wght@400;600&family=Noto+Sans+Arabic:wght@300;400;600&display=swap" rel="stylesheet"/>
+<style>
+/* ═══════════════════════════════════════════════════════════
+   ZETA-9 — PHOENIX MINDS — ICE BLUE DESIGN SYSTEM — LOCKED
+═══════════════════════════════════════════════════════════ */
+:root {
+  --ice-1:#0A2340; --ice-2:#0D3060; --ice-3:#1A4A7A;
+  --ice-4:#2E6DA8; --ice-5:#5B9FD4; --ice-6:#A8D0EE;
+  --ice-7:#D6EAF8; --white:#FFFFFF;
+  --page:#F4F8FD; --card:#FFFFFF;
+  --text:#0A2340; --text2:#2E6DA8;
+  --muted:#5B9FD4; --border:rgba(46,109,168,0.14);
+  --gold:#B8943A; --green-bg:#E6F4ED; --green:#1A5A30;
+  --red:#8A2020; --alert:#8A4000; --alert-bg:#FFF2E0;
+  --shadow:0 2px 16px rgba(10,35,64,0.08);
+  --shadow-lg:0 8px 40px rgba(10,35,64,0.14);
+  --sidebar-w:240px;
+}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth;font-size:14px}
+body{font-family:'DM Sans',sans-serif;background:var(--page);color:var(--text);display:flex;min-height:100vh;overflow-x:hidden}
+::-webkit-scrollbar{width:4px;height:4px}
+::-webkit-scrollbar-track{background:var(--ice-7)}
+::-webkit-scrollbar-thumb{background:var(--ice-5);border-radius:2px}
+@media(prefers-reduced-motion:reduce){*{animation-duration:.01ms!important;transition-duration:.01ms!important}}
+
+/* ═══════ ANIMATED LOGO ═══════ */
+.logo-svg{width:38px;height:38px;flex-shrink:0}
+.logo-soma{transform-origin:19px 19px;animation:somaBreath 3s ease-in-out infinite}
+.logo-ring1{animation:ringPulse 3s ease-in-out infinite}
+.logo-ring2{animation:ringPulse 3s ease-in-out infinite .6s}
+.logo-ring3{animation:ringPulse 3s ease-in-out infinite 1.2s}
+.logo-axon{stroke-dasharray:40;stroke-dashoffset:40;animation:drawAxon 2s ease forwards .5s}
+.logo-signal{animation:signalMove 2s linear infinite 2s}
+.logo-dendrite{stroke-dasharray:20;stroke-dashoffset:20;animation:drawDendrite 1.5s ease forwards}
+.logo-d1{animation-delay:.2s}
+.logo-d2{animation-delay:.4s}
+.logo-d3{animation-delay:.6s}
+.logo-d4{animation-delay:.8s}
+@keyframes somaBreath{0%,100%{transform:scale(1)}50%{transform:scale(1.06)}}
+@keyframes ringPulse{0%,100%{opacity:.3;transform:scale(1)}50%{opacity:.7;transform:scale(1.04)}}
+@keyframes drawAxon{to{stroke-dashoffset:0}}
+@keyframes drawDendrite{to{stroke-dashoffset:0}}
+@keyframes signalMove{0%{offset-distance:0%;opacity:0}10%{opacity:1}90%{opacity:1}100%{offset-distance:100%;opacity:0}}
+
+/* ═══════ SIDEBAR ═══════ */
+.sidebar{
+  width:var(--sidebar-w);
+  background:var(--ice-1);
+  display:flex;
+  flex-direction:column;
+  position:fixed;
+  top:0;left:0;bottom:0;
+  z-index:100;
+  overflow-y:auto;
+  overflow-x:hidden;
+}
+.sidebar::-webkit-scrollbar{width:3px}
+.sidebar::-webkit-scrollbar-track{background:rgba(255,255,255,0.05)}
+.sidebar::-webkit-scrollbar-thumb{background:rgba(133,193,233,0.3)}
+
+/* Brand section */
+.sb-brand{padding:18px 16px 14px;border-bottom:1px solid rgba(133,193,233,0.12);flex-shrink:0}
+.sb-brand-row{display:flex;align-items:center;gap:10px}
+.sb-brand-text{display:flex;flex-direction:column}
+.sb-brand-name{font-family:'Playfair Display',serif;font-size:16px;font-weight:700;color:#fff;line-height:1.1;letter-spacing:-.01em}
+.sb-brand-sub{font-size:8px;letter-spacing:.18em;text-transform:uppercase;color:var(--ice-6);margin-top:2px}
+.sb-brand-tagline{font-size:8px;color:rgba(133,193,233,0.5);letter-spacing:.05em;margin-top:8px;padding-top:8px;border-top:1px solid rgba(133,193,233,0.1);line-height:1.6}
+
+/* Child profile chip */
+.sb-child-chip{margin:10px 12px;background:rgba(91,159,212,0.15);border:1px solid rgba(91,159,212,0.3);border-radius:10px;padding:10px 12px}
+.sb-child-name{font-size:11px;font-weight:500;color:#fff}
+.sb-child-meta{font-size:9px;color:var(--ice-6);margin-top:2px;letter-spacing:.04em}
+.sb-child-badges{display:flex;gap:4px;flex-wrap:wrap;margin-top:7px}
+.sb-badge{font-size:8px;padding:2px 8px;border-radius:8px;font-weight:500;letter-spacing:.04em}
+.sb-badge-gold{background:#FFF0C0;color:#7A5A00}
+.sb-badge-blue{background:var(--ice-7);color:var(--ice-3)}
+.sb-badge-alert{background:var(--alert-bg);color:var(--alert)}
+
+/* Nav groups */
+.sb-nav{flex:1;padding:6px 0}
+.sb-group-label{font-size:8px;letter-spacing:.18em;text-transform:uppercase;color:rgba(133,193,233,0.4);padding:12px 16px 4px;font-weight:600}
+.sb-item{display:flex;align-items:center;gap:9px;padding:9px 14px 9px 16px;cursor:pointer;transition:all .18s;border-left:2px solid transparent;user-select:none;position:relative}
+.sb-item:hover{background:rgba(91,159,212,0.12);border-left-color:rgba(91,159,212,0.4)}
+.sb-item.active{background:rgba(91,159,212,0.22);border-left-color:var(--ice-5)}
+.sb-item-icon{width:14px;height:14px;flex-shrink:0;opacity:.65}
+.sb-item.active .sb-item-icon{opacity:1}
+.sb-item-label{font-size:11px;font-weight:500;color:rgba(255,255,255,0.7);letter-spacing:.02em;line-height:1.2}
+.sb-item.active .sb-item-label{color:#fff}
+.sb-item-badge{margin-left:auto;font-size:8px;padding:1px 6px;border-radius:6px;background:#C03030;color:#fff;font-weight:600}
+.sb-item-new{margin-left:auto;font-size:7px;padding:1px 5px;border-radius:4px;background:var(--ice-4);color:#fff;font-weight:700;letter-spacing:.06em;text-transform:uppercase}
+
+/* Alert indicator on sidebar */
+.sb-live-dot{width:6px;height:6px;border-radius:50%;background:#3DBA6A;flex-shrink:0;animation:sbBlink 1.4s ease-in-out infinite}
+@keyframes sbBlink{0%,100%{opacity:1}50%{opacity:.3}}
+
+/* Sidebar footer */
+.sb-footer{padding:12px 14px;border-top:1px solid rgba(133,193,233,0.1);flex-shrink:0}
+.sb-footer-row{display:flex;align-items:center;gap:8px}
+.sb-avatar{width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,var(--ice-4),var(--ice-3));display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.sb-footer-name{font-size:10px;font-weight:500;color:rgba(255,255,255,0.8)}
+.sb-footer-role{font-size:8px;color:var(--ice-6);margin-top:1px;letter-spacing:.06em;text-transform:uppercase}
+.sb-footer-lang{margin-left:auto}
+.sb-lang-select{background:rgba(91,159,212,0.15);border:1px solid rgba(91,159,212,0.3);color:var(--ice-6);padding:3px 7px;border-radius:6px;font-size:9px;font-family:'DM Sans',sans-serif;cursor:pointer}
+
+/* ═══════ MAIN AREA ═══════ */
+.main{margin-left:var(--sidebar-w);flex:1;min-height:100vh;display:flex;flex-direction:column}
+
+/* Top bar */
+.topbar{height:50px;background:var(--ice-1);display:flex;align-items:center;justify-content:space-between;padding:0 22px;border-bottom:1px solid rgba(91,159,212,0.2);position:sticky;top:0;z-index:50;flex-shrink:0}
+.topbar-left{display:flex;align-items:center;gap:10px}
+.topbar-title{font-size:12px;font-weight:500;color:var(--ice-6);letter-spacing:.06em;text-transform:uppercase}
+.topbar-sep{width:1px;height:16px;background:rgba(91,159,212,0.25)}
+.topbar-subtitle{font-size:12px;font-weight:500;color:#fff}
+.topbar-chips{display:flex;gap:6px}
+.t-chip{font-size:9px;letter-spacing:.08em;text-transform:uppercase;color:var(--ice-6);background:rgba(91,159,212,0.12);border:1px solid rgba(91,159,212,0.25);padding:3px 10px;border-radius:12px}
+.t-chip.live-chip{background:rgba(26,106,58,0.75);border-color:#3DBA6A;color:#7AE0A0}
+.t-chip.alert-chip{background:#C03030;border-color:#C03030;color:#fff}
+
+/* Content panels */
+.content{flex:1;padding:20px 22px}
+.panel{display:none}
+.panel.active{display:block;animation:panelIn .25s ease}
+@keyframes panelIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+
+/* ═══════ TYPOGRAPHY / LAYOUT UTILS ═══════ */
+.label{font-size:8px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);margin-bottom:5px;display:block;font-weight:600}
+.heading{font-family:'Playfair Display',serif;font-size:18px;font-weight:500;color:var(--ice-1);margin-bottom:4px}
+.heading-sm{font-family:'Playfair Display',serif;font-size:14px;font-weight:500;color:var(--ice-1);margin-bottom:4px}
+.body{font-size:12px;color:var(--text2);line-height:1.7}
+.divider{height:1px;background:var(--border);margin:14px 0}
+.sec-hdr{margin-bottom:14px}
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.grid-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
+.grid-4{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.flex{display:flex;align-items:center;gap:8px}
+.flex-between{display:flex;justify-content:space-between;align-items:center}
+.mt6{margin-top:6px}.mt10{margin-top:10px}.mt14{margin-top:14px}
+.mb10{margin-bottom:10px}.mb14{margin-bottom:14px}
+
+/* ═══════ CARDS ═══════ */
+.card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:16px;box-shadow:var(--shadow)}
+.card-sm{background:var(--card);border:1px solid var(--border);border-radius:9px;padding:12px}
+.ice-card{background:linear-gradient(135deg,var(--ice-7),#EAF3FB);border:1px solid var(--ice-6);border-radius:12px;padding:16px}
+.dark-card{background:var(--ice-1);border:1px solid rgba(91,159,212,0.2);border-radius:12px;padding:16px}
+.stat-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:14px;text-align:center;transition:all .2s}
+.stat-card:hover{background:var(--ice-1);border-color:var(--ice-3)}
+.stat-card:hover .stat-num,.stat-card:hover .stat-label{color:#fff}
+.stat-num{font-family:'Playfair Display',serif;font-size:22px;font-weight:700;color:var(--ice-1);line-height:1}
+.stat-label{font-size:9px;letter-spacing:.08em;text-transform:uppercase;color:var(--ice-4);margin-top:4px;transition:color .2s}
+
+/* ═══════ BADGES ═══════ */
+.badge{display:inline-block;padding:2px 9px;border-radius:14px;font-size:8px;font-weight:500;letter-spacing:.07em;text-transform:uppercase}
+.b-blue{background:var(--ice-7);color:var(--ice-3)}
+.b-gold{background:#FFF0C0;color:#7A5A00}
+.b-green{background:var(--green-bg);color:var(--green)}
+.b-red{background:#FEE8E8;color:var(--red)}
+.b-alert{background:var(--alert-bg);color:var(--alert)}
+.b-ice{background:var(--ice-6);color:var(--ice-1)}
+.b-live{background:rgba(26,106,58,0.75);color:#7AE0A0;border:1px solid #3DBA6A}
+
+/* ═══════ BUTTONS ═══════ */
+.btn{padding:6px 16px;border-radius:18px;border:none;cursor:pointer;font-family:'DM Sans',sans-serif;font-size:10px;font-weight:500;letter-spacing:.04em;transition:all .18s}
+.btn-primary{background:var(--ice-4);color:#fff}
+.btn-primary:hover{background:var(--ice-3)}
+.btn-outline{background:transparent;border:1px solid var(--ice-5);color:var(--ice-4)}
+.btn-outline:hover{background:var(--ice-7)}
+.btn-gold{background:var(--gold);color:#fff}
+.btn-danger{background:#C03030;color:#fff;border:none}
+.btn-sm{padding:4px 12px;font-size:9px}
+.btn-lg{padding:9px 24px;font-size:11px}
+
+/* ═══════ PROGRESS BARS ═══════ */
+.prog-bar{height:4px;background:var(--ice-7);border-radius:3px;overflow:hidden}
+.prog-fill{height:100%;border-radius:3px;background:linear-gradient(90deg,var(--ice-4),var(--ice-5));transition:width .8s ease}
+
+/* ═══════ BLINK ANIMATION ═══════ */
+.rt-pulse{width:7px;height:7px;border-radius:50%;background:#3DBA6A;display:inline-block;margin-right:5px;animation:blink 1.3s ease-in-out infinite;flex-shrink:0}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.2}}
+
+/* ═══════ BEH BARS ═══════ */
+.beh-row{padding:7px 0;border-bottom:1px solid var(--border)}
+.beh-row:last-child{border-bottom:none}
+.beh-label{font-size:10px;color:var(--text2);margin-bottom:3px;display:flex;justify-content:space-between}
+.beh-bar{height:4px;background:var(--ice-7);border-radius:3px;overflow:hidden}
+.beh-fill{height:100%;border-radius:3px;transition:width 1s ease}
+
+/* ═══════ VIDEO CALL ═══════ */
+.vcall-wrap{display:grid;grid-template-columns:1fr 300px;gap:14px;height:460px}
+.vcall-main{background:linear-gradient(160deg,var(--ice-7) 0%,#EAF3FB 60%,#F0F8FF 100%);border:1px solid var(--border);border-radius:12px;position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center}
+.vcall-patient{display:flex;flex-direction:column;align-items:center;gap:14px}
+.vcall-face{width:110px;height:110px;border-radius:50%;background:linear-gradient(135deg,var(--ice-6),var(--ice-7));border:2px dashed var(--ice-5);display:flex;align-items:center;justify-content:center;position:relative}
+.vcall-face::before{content:'';position:absolute;inset:-5px;border-radius:50%;border:1px solid rgba(91,159,212,0.3);animation:ringpulse 2.5s ease-in-out infinite}
+.vcall-face::after{content:'';position:absolute;inset:-12px;border-radius:50%;border:1px solid rgba(91,159,212,0.15);animation:ringpulse 2.5s ease-in-out infinite .5s}
+@keyframes ringpulse{0%,100%{transform:scale(1);opacity:.6}50%{transform:scale(1.06);opacity:1}}
+.vcall-hud{position:absolute;top:12px;left:12px;display:flex;flex-direction:column;gap:5px}
+.vcall-hud-chip{font-size:9px;font-weight:500;background:rgba(10,35,64,0.65);color:var(--ice-6);padding:3px 10px;border-radius:12px;letter-spacing:.06em}
+.vcall-hud-chip.live{background:rgba(26,106,58,0.75);color:#7AE0A0}
+.vcall-thumb{position:absolute;bottom:50px;right:12px;width:90px;height:64px;background:linear-gradient(135deg,var(--ice-7),var(--white));border:1px solid var(--border);border-radius:9px;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:3px}
+.vcall-tray{position:absolute;bottom:12px;left:50%;transform:translateX(-50%);display:flex;gap:8px}
+.vcall-ctrl{width:34px;height:34px;border-radius:50%;background:var(--ice-7);border:1px solid var(--ice-6);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .2s;font-size:9px;font-weight:500;color:var(--ice-3)}
+.vcall-ctrl.end{background:#C03030;border-color:#C03030;color:#fff}
+.vcall-sidebar{display:flex;flex-direction:column;gap:10px;overflow-y:auto}
+
+/* ═══════ METRIC CARDS ═══════ */
+.metric-card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:12px;position:relative;overflow:hidden}
+.metric-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;border-radius:3px 3px 0 0}
+.metric-card.critical::before{background:linear-gradient(90deg,#C03030,#E05050)}
+.metric-card.moderate::before{background:linear-gradient(90deg,var(--gold),#E0A830)}
+.metric-card.good::before{background:linear-gradient(90deg,#1A8A40,#3DBA6A)}
+.metric-card.info::before{background:linear-gradient(90deg,var(--ice-4),var(--ice-5))}
+.metric-val{font-family:'Playfair Display',serif;font-size:22px;color:var(--ice-1);line-height:1;margin:5px 0 2px}
+.metric-name{font-size:9px;color:var(--muted);letter-spacing:.07em;text-transform:uppercase}
+.metric-trend{font-size:9px;margin-top:3px}
+.trend-up{color:#C03030}.trend-down{color:var(--green)}.trend-stable{color:var(--muted)}
+
+/* ═══════ TRANSCRIPT ═══════ */
+.transcript{background:linear-gradient(160deg,var(--ice-7),#EAF3FB);border:1px solid var(--ice-6);border-radius:10px;padding:12px;height:180px;overflow-y:auto}
+.t-line{margin-bottom:9px}
+.t-spk{font-size:8px;letter-spacing:.1em;text-transform:uppercase;color:var(--ice-4);margin-bottom:2px;font-weight:500}
+.t-words{font-size:11px;color:var(--text);line-height:1.5}
+.t-words .hl{background:rgba(46,109,168,0.12);border-radius:3px;padding:0 3px;color:var(--ice-2)}
+
+/* ═══════ IEP GOALS ═══════ */
+.iep-goal{background:var(--page);border:1px solid var(--border);border-radius:9px;padding:12px;margin-bottom:9px}
+.iep-title{font-size:12px;font-weight:500;color:var(--ice-1);margin-bottom:3px}
+
+/* ═══════ DIET GRID ═══════ */
+.diet-col{text-align:center}
+.diet-day-lbl{font-size:8px;font-weight:500;color:var(--muted);letter-spacing:.1em;text-transform:uppercase;margin-bottom:5px}
+.diet-slot{background:var(--page);border:1px solid var(--border);border-radius:7px;padding:5px 3px;margin-bottom:3px;font-size:9px;color:var(--text2);line-height:1.35;min-height:36px;display:flex;align-items:center;justify-content:center;text-align:center}
+.diet-slot.ok{background:var(--green-bg);border-color:#A8D8BA;color:#1A4A28}
+.diet-slot.warn{background:var(--alert-bg);border-color:#F0C88A;color:#7A4A00}
+
+/* ═══════ NEURON ANIMATION STAGE ═══════ */
+.neuron-wrap{background:linear-gradient(160deg,var(--ice-7) 0%,#EAF3FB 100%);border:1px solid var(--ice-6);border-radius:14px;overflow:hidden}
+.anim-stage-header{background:linear-gradient(135deg,rgba(214,234,248,.6),rgba(234,243,251,.8));border-bottom:1px solid var(--border);padding:11px 16px;display:flex;align-items:center;justify-content:space-between}
+.anim-stage-title{font-size:11px;font-weight:500;color:var(--ice-1)}
+.anim-controls{display:flex;gap:6px}
+.anim-btn{padding:4px 13px;border-radius:16px;border:1px solid var(--ice-5);background:#fff;font-family:'DM Sans',sans-serif;font-size:9px;font-weight:500;color:var(--ice-4);cursor:pointer;transition:all .2s}
+.anim-btn.primary{background:var(--ice-4);border-color:var(--ice-4);color:#fff}
+.phase-indicator{display:flex;gap:0;margin:10px 16px 6px;background:var(--ice-7);border-radius:8px;padding:3px;border:1px solid var(--border)}
+.phase-step{flex:1;padding:5px 8px;text-align:center;border-radius:6px;font-size:8px;font-weight:500;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);transition:all .35s;cursor:pointer;user-select:none}
+.phase-step.active{background:#fff;color:var(--ice-2);box-shadow:0 1px 5px rgba(10,35,64,.08);font-weight:600}
+.phase-step.done{color:var(--ice-4)}
+.neuron-canvas{width:100%;display:block;max-width:100%;padding:10px 16px 6px}
+.caption-panel{background:#fff;border:1px solid var(--border);border-radius:0 0 14px 14px;padding:12px 16px;display:flex;gap:10px;align-items:flex-start;min-height:58px}
+.caption-indicator{width:7px;height:7px;border-radius:50%;background:var(--ice-4);margin-top:4px;flex-shrink:0;animation:capdot 1.6s ease-in-out infinite}
+@keyframes capdot{0%,100%{opacity:1}50%{opacity:.3}}
+.caption-text{font-size:11px;color:var(--text2);line-height:1.65}
+.caption-highlight{font-weight:600;color:var(--ice-3)}
+.comp{opacity:0;transition:opacity .6s ease}
+.comp.visible{opacity:1}
+.dendrite-group path{stroke-dasharray:300;stroke-dashoffset:300;transition:stroke-dashoffset .8s ease}
+.dendrite-group.visible path{stroke-dashoffset:0}
+.soma-group{transform-origin:290px 170px}
+.soma-group.visible{animation:somaBreath2 4s ease-in-out infinite}
+@keyframes somaBreath2{0%,100%{transform:scale(1)}50%{transform:scale(1.02)}}
+.signal-line{stroke-dasharray:30 8}
+.signal-line.flowing{animation:sigFlow 2.4s linear infinite}
+@keyframes sigFlow{0%{stroke-dashoffset:400}100%{stroke-dashoffset:-200}}
+.terminal-dot.firing{animation:termFire 1.6s ease-in-out infinite}
+@keyframes termFire{0%,100%{r:5;opacity:.8}50%{r:8;opacity:1}}
+.zpf-ring{animation:zpfPulse 3.5s ease-in-out infinite;transform-origin:290px 170px}
+@keyframes zpfPulse{0%,100%{opacity:.15;transform:scale(1)}50%{opacity:.35;transform:scale(1.08)}}
+.axon-hillock{animation:hillockPulse 2s ease-in-out infinite}
+@keyframes hillockPulse{0%,100%{fill:#C8E0F0}50%{fill:#A8D0EE}}
+.ranvier-node{animation:nodeGlow 2s ease-in-out infinite}
+@keyframes nodeGlow{0%,100%{r:3;opacity:.7}50%{r:4.5;opacity:1}}
+
+/* ═══════ COMPARISON TABLE ═══════ */
+.comp-wrap{overflow-x:auto}
+.comp-tbl{width:100%;border-collapse:separate;border-spacing:0;min-width:700px}
+.comp-tbl th{background:var(--ice-3);color:var(--ice-7);font-size:9px;letter-spacing:.1em;text-transform:uppercase;padding:10px 12px;text-align:left;font-weight:500}
+.comp-tbl td{padding:8px 12px;font-size:10px;color:var(--text2);border-bottom:1px solid var(--border)}
+.comp-tbl tr:nth-child(even) td{background:var(--page)}
+.comp-tbl .self td{background:var(--ice-7)!important;font-weight:500;color:var(--ice-2)}
+.win{color:var(--green);font-weight:500}.lose{color:var(--red)}
+
+/* ═══════ SIGN LANGUAGE SECTION ═══════ */
+.sign-gesture-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:8px;margin-top:10px}
+.sign-card{background:var(--page);border:1px solid var(--border);border-radius:8px;padding:8px 5px;text-align:center;transition:all .2s;cursor:default}
+.sign-card:hover{border-color:var(--ice-4);background:var(--ice-7)}
+.sign-letter{font-family:'Playfair Display',serif;font-size:18px;font-weight:700;color:var(--ice-1);line-height:1}
+.sign-name{font-size:8px;color:var(--muted);margin-top:3px;letter-spacing:.06em;text-transform:uppercase}
+.sign-hand{font-size:20px;margin:3px 0}
+
+/* ═══════ LANG FLAGS ═══════ */
+.lang-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:8px;max-height:280px;overflow-y:auto}
+.lang-item{display:flex;align-items:center;gap:7px;padding:6px 10px;border-radius:7px;background:var(--page);border:1px solid var(--border);font-size:10px;color:var(--text2)}
+.lang-flag{font-size:14px}
+.lang-active{border-color:var(--ice-4);background:var(--ice-7)}
+
+/* ═══════ ISO REGION SEARCH ═══════ */
+.region-search{display:flex;gap:8px;margin-bottom:10px}
+.region-input{flex:1;padding:7px 12px;border:1px solid var(--border);border-radius:8px;font-family:'DM Sans',sans-serif;font-size:11px;color:var(--text);background:#fff;outline:none}
+.region-input:focus{border-color:var(--ice-4)}
+.region-results{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:6px;max-height:260px;overflow-y:auto}
+.region-item{padding:8px 10px;border-radius:8px;background:var(--page);border:1px solid var(--border);font-size:10px;color:var(--text2);cursor:default;transition:all .15s}
+.region-item:hover{border-color:var(--ice-4);background:var(--ice-7)}
+.region-iso{font-size:8px;color:var(--muted);letter-spacing:.08em;text-transform:uppercase;margin-top:2px}
+
+/* ═══════ PORTAL CARDS ═══════ */
+.portal-card{background:var(--card);border:1px solid var(--border);border-radius:14px;overflow:hidden;cursor:pointer;transition:all .2s}
+.portal-card:hover{box-shadow:var(--shadow-lg);transform:translateY(-2px);border-color:var(--ice-4)}
+.portal-card-header{padding:16px;background:linear-gradient(135deg,var(--ice-1),var(--ice-3))}
+.portal-card-icon{width:36px;height:36px;border-radius:9px;background:rgba(255,255,255,0.15);display:flex;align-items:center;justify-content:center;margin-bottom:8px}
+.portal-card-title{font-family:'Playfair Display',serif;font-size:15px;color:#fff;font-weight:500}
+.portal-card-sub{font-size:9px;color:rgba(133,193,233,0.75);margin-top:2px;letter-spacing:.06em;text-transform:uppercase}
+.portal-card-body{padding:14px}
+.portal-feature-list{display:flex;flex-direction:column;gap:6px;margin-top:8px}
+.portal-feature-item{display:flex;align-items:center;gap:7px;font-size:10px;color:var(--text2)}
+.portal-feature-dot{width:5px;height:5px;border-radius:50%;background:var(--ice-4);flex-shrink:0}
+
+/* ═══════ SIBLING / PARENT SECTION ═══════ */
+.mood-row{display:flex;gap:6px;margin:8px 0;flex-wrap:wrap}
+.mood-btn{padding:4px 12px;border-radius:14px;border:1px solid var(--border);background:var(--card);font-size:10px;color:var(--text2);cursor:pointer;transition:all .18s;font-family:'DM Sans',sans-serif}
+.mood-btn.active{background:var(--ice-4);border-color:var(--ice-4);color:#fff}
+.resource-link{display:flex;align-items:center;gap:8px;padding:8px 12px;background:var(--card);border:1px solid var(--border);border-radius:8px;font-size:11px;color:var(--text2);margin-bottom:6px;cursor:pointer;transition:all .18s;text-decoration:none}
+.resource-link:hover{border-color:var(--ice-4);background:var(--ice-7)}
+.resource-arrow{margin-left:auto;font-size:10px;color:var(--muted)}
+
+/* ═══════ PUBERTY MODULE ═══════ */
+.puberty-timeline{display:flex;flex-direction:column;gap:0;position:relative;padding-left:28px}
+.puberty-timeline::before{content:'';position:absolute;left:10px;top:8px;bottom:8px;width:2px;background:linear-gradient(180deg,var(--ice-4),var(--ice-6))}
+.puberty-step{position:relative;padding:10px 0;padding-left:16px}
+.puberty-step::before{content:'';position:absolute;left:-18px;top:14px;width:10px;height:10px;border-radius:50%;background:var(--ice-4);border:2px solid #fff;box-shadow:0 0 0 2px var(--ice-4)}
+.puberty-step-title{font-size:11px;font-weight:500;color:var(--ice-1);margin-bottom:3px}
+.puberty-step-desc{font-size:10px;color:var(--text2);line-height:1.6}
+
+/* ═══════ CRISIS BUTTON ═══════ */
+.crisis-btn-wrap{position:fixed;bottom:22px;right:22px;z-index:999}
+.crisis-btn{background:#C03030;color:#fff;border:none;border-radius:50px;padding:10px 20px;font-family:'DM Sans',sans-serif;font-size:11px;font-weight:600;cursor:pointer;box-shadow:0 4px 20px rgba(192,48,48,0.5);display:flex;align-items:center;gap:7px;animation:crisisBreath 2s ease-in-out infinite}
+@keyframes crisisBreath{0%,100%{box-shadow:0 4px 20px rgba(192,48,48,0.4)}50%{box-shadow:0 4px 30px rgba(192,48,48,0.7)}}
+.crisis-dot{width:8px;height:8px;border-radius:50%;background:#fff;animation:blink 1s ease-in-out infinite}
+
+/* ═══════ DISCLAIMER ═══════ */
+.disclaimer-strip{background:var(--ice-7);border-top:2px solid var(--ice-4);padding:8px 22px;font-size:9px;color:var(--ice-3);text-align:center;flex-shrink:0}
+
+/* ═══════ THERAPY CARDS ═══════ */
+.therapy-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:14px;transition:box-shadow .2s}
+.therapy-card:hover{box-shadow:0 4px 16px rgba(46,109,168,.1)}
+.therapy-tag{display:inline-block;font-size:8px;letter-spacing:.1em;text-transform:uppercase;padding:2px 9px;border-radius:9px;margin-bottom:7px;font-weight:500}
+.tag-cbt{background:#E8F0FA;color:#1A3A7A}
+.tag-dbt{background:#EEE8FA;color:#4A1A7A}
+.tag-aba{background:var(--green-bg);color:var(--green)}
+.tag-play{background:#FAE8F0;color:#7A1A4A}
+.tag-sign{background:#E8F8FA;color:#1A5A7A}
+.tag-ucam{background:#E8FAF0;color:#1A5A3A}
+.therapy-title{font-family:'Playfair Display',serif;font-size:13px;color:var(--ice-1);margin-bottom:7px}
+.therapy-steps{list-style:none;padding:0}
+.therapy-steps li{font-size:10px;color:var(--text2);padding:4px 0 4px 12px;position:relative;border-bottom:1px solid var(--border);line-height:1.5}
+.therapy-steps li::before{content:'';position:absolute;left:0;top:10px;width:5px;height:5px;background:var(--ice-4);border-radius:50%}
+.therapy-steps li:last-child{border-bottom:none}
+
+/* ═══════ PAGE FOOTER ═══════ */
+.page-footer{background:var(--ice-1);padding:16px 22px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
+.pf-brand-name{font-size:12px;font-weight:500;color:#fff;letter-spacing:.04em}
+.pf-tag{font-size:9px;color:var(--ice-6);letter-spacing:.1em;text-transform:uppercase;margin-top:1px}
+.pf-right{font-size:9px;color:rgba(133,193,233,0.4);text-align:right;line-height:1.8}
+
+/* ═══════ RESPONSIVE ═══════ */
+@media(max-width:900px){
+  .sidebar{width:200px;--sidebar-w:200px}
+  .main{margin-left:200px}
+  .grid-3{grid-template-columns:1fr 1fr}
+  .grid-4{grid-template-columns:1fr 1fr}
+  .vcall-wrap{grid-template-columns:1fr}
+}
+@media(max-width:640px){
+  .sidebar{transform:translateX(-100%);transition:transform .3s}
+  .sidebar.open{transform:translateX(0)}
+  .main{margin-left:0}
+  .grid-2,.grid-3,.grid-4{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════
+     SIDEBAR NAVIGATION
+═══════════════════════════════════ -->
+<aside class="sidebar" id="sidebar">
+
+  <!-- BRAND with Animated Logo -->
+  <div class="sb-brand">
+    <div class="sb-brand-row">
+      <!-- ANIMATED SVG LOGO -->
+      <svg class="logo-svg" viewBox="0 0 38 38" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <radialGradient id="somaG" cx="45%" cy="40%" r="55%">
+            <stop offset="0%" stop-color="#85C1E9"/>
+            <stop offset="60%" stop-color="#2E6DA8"/>
+            <stop offset="100%" stop-color="#0A2340"/>
+          </radialGradient>
+          <radialGradient id="nucG" cx="45%" cy="40%" r="55%">
+            <stop offset="0%" stop-color="#FFF8E0"/>
+            <stop offset="100%" stop-color="#B8943A"/>
+          </radialGradient>
+        </defs>
+        <!-- ZPF rings -->
+        <ellipse cx="19" cy="19" rx="17" ry="15" fill="none" stroke="rgba(133,193,233,0.18)" stroke-width="1" class="logo-ring1"/>
+        <ellipse cx="19" cy="19" rx="14" ry="12" fill="none" stroke="rgba(133,193,233,0.14)" stroke-width="1" class="logo-ring2"/>
+        <!-- Dendrites -->
+        <path d="M13 17 Q7 13 4 9" stroke="#85C1E9" stroke-width="1.2" fill="none" stroke-linecap="round" class="logo-dendrite logo-d1"/>
+        <path d="M13 19 Q7 19 3 19" stroke="#85C1E9" stroke-width="1.2" fill="none" stroke-linecap="round" class="logo-dendrite logo-d2"/>
+        <path d="M13 21 Q7 24 4 28" stroke="#85C1E9" stroke-width="1.2" fill="none" stroke-linecap="round" class="logo-dendrite logo-d3"/>
+        <path d="M14 16 Q10 11 8 7" stroke="#5B9FD4" stroke-width="1" fill="none" stroke-linecap="round" class="logo-dendrite logo-d4"/>
+        <!-- Dendrite tips -->
+        <circle cx="4" cy="9" r="2" fill="#85C1E9" opacity=".8"/>
+        <circle cx="3" cy="19" r="2" fill="#85C1E9" opacity=".8"/>
+        <circle cx="4" cy="28" r="2" fill="#85C1E9" opacity=".8"/>
+        <!-- Axon -->
+        <path d="M25 19 L35 19" stroke="#A8D0EE" stroke-width="3" stroke-linecap="round" class="logo-axon"/>
+        <!-- Myelin -->
+        <rect x="26" y="17.5" width="7" height="3" rx="1.5" fill="none" stroke="#2A7A5A" stroke-width=".8" opacity=".7"/>
+        <rect x="31" y="17.5" width="4" height="3" rx="1.5" fill="none" stroke="#2A7A5A" stroke-width=".8" opacity=".7"/>
+        <!-- Terminal -->
+        <circle cx="35" cy="19" r="2.5" fill="#C05050" opacity=".85"/>
+        <!-- Soma (cell body) -->
+        <ellipse cx="19" cy="19" rx="6.5" ry="6" fill="url(#somaG)" stroke="#2E6DA8" stroke-width="1.2" class="logo-soma"/>
+        <!-- Nucleus -->
+        <ellipse cx="18.5" cy="18.5" rx="3" ry="2.7" fill="url(#nucG)" stroke="#B8943A" stroke-width=".8" opacity=".9"/>
+        <!-- Signal pulse -->
+        <circle r="1.5" fill="rgba(91,159,212,0.9)">
+          <animateMotion dur="1.6s" repeatCount="indefinite" path="M25,19 L34,19"/>
+          <animate attributeName="opacity" values="0;1;1;0" dur="1.6s" repeatCount="indefinite"/>
+        </circle>
+      </svg>
+      <div class="sb-brand-text">
+        <div class="sb-brand-name">ZETA-9</div>
+        <div class="sb-brand-sub">Phoenix Minds</div>
+      </div>
+    </div>
+    <div class="sb-brand-tagline">Every Mind Deserves a ZETA-9 — Determination Driven · Mining Potential · Analysing Growth</div>
+  </div>
+
+  <!-- Active Child Chip -->
+  <div class="sb-child-chip">
+    <div class="sb-child-name">Aayan Rehman · 7y 3m</div>
+    <div class="sb-child-meta">ISO-PK · Karachi, Sindh</div>
+    <div class="sb-child-badges">
+      <span class="sb-badge sb-badge-gold">ASD L2</span>
+      <span class="sb-badge sb-badge-blue">ADHD-I</span>
+      <span class="sb-badge sb-badge-alert">SPD</span>
+    </div>
+  </div>
+
+  <!-- Navigation -->
+  <nav class="sb-nav">
+
+    <div class="sb-group-label">Live Session</div>
+    <div class="sb-item active" onclick="showPanel('teleconsult',this)">
+      <svg class="sb-item-icon" viewBox="0 0 14 14" fill="none"><rect x="1" y="2" width="9" height="7" rx="1.5" stroke="#85C1E9" stroke-width="1.2"/><path d="M10 5.5L13 4v6l-3-1.5V5.5z" stroke="#85C1E9" stroke-width="1.2" stroke-linejoin="round"/></svg>
+      <span class="sb-item-label">Teleconsult + Behaviour</span>
+      <span class="sb-live-dot"></span>
+    </div>
+    <div class="sb-item" onclick="showPanel('realtime',this)">
+      <svg class="sb-item-icon" viewBox="0 0 14 14" fill="none"><path d="M2 10 L4 7 L6 8.5 L8 5 L10 6.5 L12 3" stroke="#85C1E9" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <span class="sb-item-label">Real-Time Analysis</span>
+      <span class="sb-item-badge">!</span>
+    </div>
+    <div class="sb-item" onclick="showPanel('transcription',this)">
+      <svg class="sb-item-icon" viewBox="0 0 14 14" fill="none"><rect x="2" y="2" width="10" height="10" rx="2" stroke="#85C1E9" stroke-width="1.2"/><path d="M4.5 5h5M4.5 7h5M4.5 9h3" stroke="#85C1E9" stroke-width="1" stroke-linecap="round"/></svg>
+      <span class="sb-item-label">Transcription + 7,168 Langs</span>
+    </div>
+
+    <div class="sb-group-label">Clinical Tools</div>
+    <div class="sb-item" onclick="showPanel('evaluation',this)">
+      <svg class="sb-item-icon" viewBox="0 0 14 14" fill="none"><path d="M3 2h8a1 1 0 011 1v8a1 1 0 01-1 1H3a1 1 0 01-1-1V3a1 1 0 011-1z" stroke="#85C1E9" stroke-width="1.2"/><path d="M5 5l1.5 1.5L9 4M5 8.5h4" stroke="#85C1E9" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <span class="sb-item-label">Evaluation — 149 Tools</span>
+    </div>
+    <div class="sb-item" onclick="showPanel('iep',this)">
+      <svg class="sb-item-icon" viewBox="0 0 14 14" fill="none"><path d="M2 3h10M2 6h7M2 9h5M2 12h3" stroke="#85C1E9" stroke-width="1.2" stroke-linecap="round"/></svg>
+      <span class="sb-item-label">IEP Generator — 1,315 Boards</span>
+    </div>
+    <div class="sb-item" onclick="showPanel('diet',this)">
+      <svg class="sb-item-icon" viewBox="0 0 14 14" fill="none"><path d="M7 2C4.8 2 3 3.8 3 6c0 1.7 1 3.2 2.5 3.8V12h3V9.8C10 9.2 11 7.7 11 6c0-2.2-1.8-4-4-4z" stroke="#85C1E9" stroke-width="1.2"/></svg>
+      <span class="sb-item-label">Diet + Nutrition</span>
+    </div>
+    <div class="sb-item" onclick="showPanel('cbt',this)">
+      <svg class="sb-item-icon" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="5" stroke="#85C1E9" stroke-width="1.2"/><path d="M5 7.5C5 8.3 5.9 9 7 9s2-.7 2-1.5M7 4.5v1" stroke="#85C1E9" stroke-width="1.1" stroke-linecap="round"/></svg>
+      <span class="sb-item-label">CBT / DBT Training</span>
+    </div>
+
+    <div class="sb-group-label">Support Modules</div>
+    <div class="sb-item" onclick="showPanel('sibling',this)">
+      <svg class="sb-item-icon" viewBox="0 0 14 14" fill="none"><circle cx="5" cy="4" r="2" stroke="#85C1E9" stroke-width="1.2"/><circle cx="9.5" cy="5" r="1.5" stroke="#85C1E9" stroke-width="1.2"/><path d="M1.5 12C1.5 9.8 3 8 5 8s3.5 1.8 3.5 4M7 12c0-1.6 1.1-2.8 2.5-2.8" stroke="#85C1E9" stroke-width="1.1" stroke-linecap="round"/></svg>
+      <span class="sb-item-label">Sibling Support Module</span>
+      <span class="sb-item-badge">!</span>
+    </div>
+    <div class="sb-item" onclick="showPanel('parent',this)">
+      <svg class="sb-item-icon" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="4" r="2.5" stroke="#85C1E9" stroke-width="1.2"/><path d="M2 13c0-2.8 2.2-5 5-5s5 2.2 5 5" stroke="#85C1E9" stroke-width="1.2" stroke-linecap="round"/></svg>
+      <span class="sb-item-label">Parent Support + SDOH</span>
+    </div>
+    <div class="sb-item" onclick="showPanel('puberty',this)">
+      <svg class="sb-item-icon" viewBox="0 0 14 14" fill="none"><path d="M7 2v10M4 5l3-3 3 3M4 10l3 3 3-3" stroke="#85C1E9" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <span class="sb-item-label">Puberty Module</span>
+      <span class="sb-item-new">NEW</span>
+    </div>
+    <div class="sb-item" onclick="showPanel('crisis',this)">
+      <svg class="sb-item-icon" viewBox="0 0 14 14" fill="none"><path d="M7 2L1.5 12h11L7 2z" stroke="#C03030" stroke-width="1.2" stroke-linejoin="round"/><path d="M7 6v2.5M7 10v.5" stroke="#C03030" stroke-width="1.2" stroke-linecap="round"/></svg>
+      <span class="sb-item-label" style="color:rgba(255,100,100,0.8)">Crisis Protocol 24/7</span>
+    </div>
+
+    <div class="sb-group-label">Communication</div>
+    <div class="sb-item" onclick="showPanel('signlang',this)">
+      <svg class="sb-item-icon" viewBox="0 0 14 14" fill="none"><path d="M4 10V7a1 1 0 012 0v1a1 1 0 012 0V6a1 1 0 012 0v4c0 1.1-.9 2-2 2H6a2 2 0 01-2-2z" stroke="#85C1E9" stroke-width="1.1"/><path d="M4 7V4a1 1 0 00-1-1H2" stroke="#85C1E9" stroke-width="1" stroke-linecap="round"/></svg>
+      <span class="sb-item-label">Sign Languages — 300+</span>
+      <span class="sb-item-new">NEW</span>
+    </div>
+    <div class="sb-item" onclick="showPanel('languages',this)">
+      <svg class="sb-item-icon" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="5" stroke="#85C1E9" stroke-width="1.2"/><path d="M7 2C5.5 4 5 5.5 5 7s.5 3 2 5M7 2C8.5 4 9 5.5 9 7s-.5 3-2 5M2.5 5h9M2.5 9h9" stroke="#85C1E9" stroke-width="1" stroke-linecap="round"/></svg>
+      <span class="sb-item-label">7,168 Languages + ISO</span>
+    </div>
+
+    <div class="sb-group-label">Intelligence</div>
+    <div class="sb-item" onclick="showPanel('agentic',this)">
+      <svg class="sb-item-icon" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="2.5" stroke="#85C1E9" stroke-width="1.2"/><path d="M7 1v2M7 11v2M1 7h2M11 7h2M3.1 3.1l1.4 1.4M9.5 9.5l1.4 1.4M3.1 10.9l1.4-1.4M9.5 4.5l1.4-1.4" stroke="#85C1E9" stroke-width="1.1" stroke-linecap="round"/></svg>
+      <span class="sb-item-label">Phoenix Synap Agents</span>
+    </div>
+    <div class="sb-item" onclick="showPanel('neuron',this)">
+      <svg class="sb-item-icon" viewBox="0 0 14 14" fill="none"><ellipse cx="7" cy="7" rx="3" ry="2.5" stroke="#B8943A" stroke-width="1.2"/><path d="M4 5L1 3M4 7L1 7M4 9L1 11M10 7L13 7M7 4.5L7 1" stroke="#85C1E9" stroke-width="1" stroke-linecap="round"/></svg>
+      <span class="sb-item-label">ZETA-9 Hypothesis</span>
+    </div>
+    <div class="sb-item" onclick="showPanel('comparison',this)">
+      <svg class="sb-item-icon" viewBox="0 0 14 14" fill="none"><path d="M2 4h4M2 7h6M2 10h3M8 3l4 4-4 4" stroke="#85C1E9" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <span class="sb-item-label">Global Comparison</span>
+    </div>
+
+    <div class="sb-group-label">Portals</div>
+    <div class="sb-item" onclick="showPanel('portals',this)">
+      <svg class="sb-item-icon" viewBox="0 0 14 14" fill="none"><rect x="1" y="1" width="5" height="5" rx="1" stroke="#85C1E9" stroke-width="1.2"/><rect x="8" y="1" width="5" height="5" rx="1" stroke="#85C1E9" stroke-width="1.2"/><rect x="1" y="8" width="5" height="5" rx="1" stroke="#85C1E9" stroke-width="1.2"/><rect x="8" y="8" width="5" height="5" rx="1" stroke="#85C1E9" stroke-width="1.2"/></svg>
+      <span class="sb-item-label">All Portals — 5 Roles</span>
+    </div>
+
+  </nav>
+
+  <!-- Sidebar Footer -->
+  <div class="sb-footer">
+    <div class="sb-footer-row">
+      <div class="sb-avatar">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="5" r="3" stroke="white" stroke-width="1.2"/><path d="M2 13c0-2.8 2.2-5 5-5s5 2.2 5 5" stroke="white" stroke-width="1.2" stroke-linecap="round"/></svg>
+      </div>
+      <div>
+        <div class="sb-footer-name">Dr. Nadia K.</div>
+        <div class="sb-footer-role">BCBA — Active</div>
+      </div>
+      <div class="sb-footer-lang">
+        <select class="sb-lang-select" onchange="switchLang(this.value)">
+          <option value="en">EN</option>
+          <option value="ur">اردو</option>
+          <option value="ar">عربي</option>
+          <option value="fr">FR</option>
+          <option value="es">ES</option>
+          <option value="nl">NL</option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+</aside>
+
+<!-- ═══════════════════════════════════
+     MAIN CONTENT AREA
+═══════════════════════════════════ -->
+<main class="main">
+
+  <!-- Top Bar -->
+  <div class="topbar">
+    <div class="topbar-left">
+      <span class="topbar-title">Phoenix Minds</span>
+      <div class="topbar-sep"></div>
+      <span class="topbar-subtitle" id="topbar-title-text">Teleconsult + Behaviour Observation</span>
+    </div>
+    <div class="topbar-chips">
+      <span class="t-chip">Child: Aayan R. · 7y</span>
+      <span class="t-chip">BCBA View</span>
+      <span class="t-chip live-chip">Live Session</span>
+      <span class="t-chip alert-chip">Alert: 1</span>
+    </div>
+  </div>
+
+  <!-- Content Panels -->
+  <div class="content">
+
+    <!-- ══════════════════ TELECONSULT ══════════════════ -->
+    <div id="panel-teleconsult" class="panel active">
+      <div class="sec-hdr">
+        <div class="label">Teleconsultation Module — Behaviour Observation Mode</div>
+        <div class="heading">Live Session — Aayan Rehman, 7y 3m</div>
+        <div class="body">HD encrypted video call with real-time face pixelation, live behaviour scoring, clinical annotation, and session logging. HIPAA, GDPR, and Pakistan PECA 2016 compliant. Dual consent active.</div>
+      </div>
+      <div class="vcall-wrap">
+        <div class="vcall-main">
+          <div class="vcall-hud">
+            <div class="vcall-hud-chip live">Live — 24:38</div>
+            <div class="vcall-hud-chip">E2E Encrypted</div>
+            <div class="vcall-hud-chip">Face Pixelated</div>
+          </div>
+          <div class="vcall-patient">
+            <div class="vcall-face">
+              <svg viewBox="0 0 52 52" width="44" height="44" fill="none"><circle cx="26" cy="19" r="10" stroke="#5B9FD4" stroke-width="1.5"/><path d="M8 50c0-9.941 8.059-18 18-18s18 8.059 18 18" stroke="#5B9FD4" stroke-width="1.5" stroke-linecap="round"/></svg>
+            </div>
+            <div style="display:flex;gap:6px;flex-wrap:wrap;justify-content:center">
+              <span class="badge b-gold">ASD Level 2</span>
+              <span class="badge b-blue">ADHD Inattentive</span>
+              <span class="badge b-alert">SPD Seeking</span>
+            </div>
+            <div style="font-size:9px;color:var(--muted);text-align:center;letter-spacing:.05em">Identity Protected — Clinical Observation Mode Active</div>
+          </div>
+          <div class="vcall-thumb">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="8" r="4" stroke="#A8D0EE" stroke-width="1"/><path d="M4 22c0-4.4 3.6-8 8-8s8 3.6 8 8" stroke="#A8D0EE" stroke-width="1" stroke-linecap="round"/></svg>
+            <div style="font-size:8px;color:var(--ice-5);margin-top:2px">Dr. Nadia K.</div>
+          </div>
+          <div class="vcall-tray">
+            <div class="vcall-ctrl">Mic</div>
+            <div class="vcall-ctrl">Cam</div>
+            <div class="vcall-ctrl">Rec</div>
+            <div class="vcall-ctrl">Note</div>
+            <div class="vcall-ctrl end">End</div>
+          </div>
+        </div>
+        <div class="vcall-sidebar">
+          <div class="card-sm">
+            <div class="label">Session Details</div>
+            <div class="flex-between mt6"><span style="font-size:10px;color:var(--text2)">Type</span><span class="badge b-blue">ABA Observation</span></div>
+            <div class="flex-between mt6"><span style="font-size:10px;color:var(--text2)">Professional</span><span style="font-size:10px;font-weight:500;color:var(--ice-3)">Dr. Nadia K.</span></div>
+            <div class="flex-between mt6"><span style="font-size:10px;color:var(--text2)">Consent</span><span class="badge b-green">Dual Granted</span></div>
+            <div class="flex-between mt6"><span style="font-size:10px;color:var(--text2)">Jurisdiction</span><span class="badge b-blue">ISO-PK</span></div>
+          </div>
+          <div class="card-sm">
+            <div class="flex-between mb10">
+              <div class="flex"><span class="rt-pulse"></span><span style="font-size:8px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)">Live Behaviour AI</span></div>
+              <span class="badge b-gold">Auto-Scoring</span>
+            </div>
+            <div class="beh-row"><div class="beh-label"><span>Eye Contact</span><span style="color:#C03030">Low</span></div><div class="beh-bar"><div class="beh-fill" style="width:22%;background:linear-gradient(90deg,#C03030,#E05050)"></div></div></div>
+            <div class="beh-row"><div class="beh-label"><span>Stimming</span><span style="color:var(--gold)">Moderate</span></div><div class="beh-bar"><div class="beh-fill" style="width:58%;background:linear-gradient(90deg,var(--gold),#E0A830)"></div></div></div>
+            <div class="beh-row"><div class="beh-label"><span>Task Compliance</span><span style="color:var(--green)">Good</span></div><div class="beh-bar"><div class="beh-fill" style="width:72%;background:linear-gradient(90deg,var(--ice-4),var(--ice-5))"></div></div></div>
+            <div class="beh-row"><div class="beh-label"><span>Response Latency</span><span style="color:var(--gold)">High</span></div><div class="beh-bar"><div class="beh-fill" style="width:65%;background:linear-gradient(90deg,var(--gold),#E0A830)"></div></div></div>
+            <div class="beh-row"><div class="beh-label"><span>Emotional Regulation</span><span style="color:var(--gold)">Moderate</span></div><div class="beh-bar"><div class="beh-fill" style="width:50%;background:linear-gradient(90deg,var(--gold),#E0A830)"></div></div></div>
+          </div>
+          <div class="card-sm">
+            <div class="label">Live Clinical Notes</div>
+            <textarea style="width:100%;background:var(--page);border:1px solid var(--border);border-radius:7px;padding:8px;font-size:10px;color:var(--text2);font-family:'DM Sans',sans-serif;resize:none;height:60px;outline:none;margin-top:5px" placeholder="Auto-saves every 30 sec...">Child showing reduced eye contact. Hand flapping at transition. Responded well to visual schedule cues.</textarea>
+            <div class="flex-between mt6">
+              <button class="btn btn-outline btn-sm">Flag</button>
+              <button class="btn btn-primary btn-sm">Save Note</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════════════════ REAL-TIME ANALYSIS ══════════════════ -->
+    <div id="panel-realtime" class="panel">
+      <div class="sec-hdr">
+        <div class="label">Real-Time Patient Analysis — Phoenix Synap AI Engine</div>
+        <div class="heading">Live Clinical Monitoring — Aayan Rehman</div>
+        <div class="body">Phoenix Synap scores 149 evaluation criteria every 30 seconds during live sessions. All data written permanently to child's clinical record. Alert generated and delivered to professional team within 90 seconds of trigger.</div>
+      </div>
+      <div class="grid-4" style="margin-bottom:14px">
+        <div class="metric-card critical"><div class="metric-name">Eye Contact</div><div class="metric-val">2.1</div><div style="font-size:9px;color:var(--muted)">/ 4.0 — CARS-2</div><div class="metric-trend trend-up">Below baseline. Flag.</div></div>
+        <div class="metric-card moderate"><div class="metric-name">Stimming Freq.</div><div class="metric-val">6x</div><div style="font-size:9px;color:var(--muted)">per 10 min</div><div class="metric-trend trend-up">Above target: 3x/10m</div></div>
+        <div class="metric-card good"><div class="metric-name">Task Compliance</div><div class="metric-val">72%</div><div style="font-size:9px;color:var(--muted)">18 trials</div><div class="metric-trend trend-down">+18% vs last session</div></div>
+        <div class="metric-card good"><div class="metric-name">Expressive Lang.</div><div class="metric-val">2.3</div><div style="font-size:9px;color:var(--muted)">words/utterance</div><div class="metric-trend trend-down">Target: 4 words</div></div>
+      </div>
+      <div class="grid-2">
+        <div class="card">
+          <div class="label">Live Evaluation Record — CARS-2 Criteria</div>
+          <div style="background:var(--page);border:1px solid var(--border);border-radius:9px;padding:12px;margin-top:6px">
+            <div class="flex-between" style="margin-bottom:7px"><span style="font-size:10px;font-weight:500;color:var(--ice-1)">Criterion</span><span style="font-size:10px;font-weight:500;color:var(--ice-1)">Live</span><span style="font-size:10px;font-weight:500;color:var(--ice-1)">Base</span><span style="font-size:10px;font-weight:500;color:var(--ice-1)">Flag</span></div>
+            <div class="divider" style="margin:4px 0 8px"></div>
+            <div class="flex-between" style="margin-bottom:7px"><span style="font-size:10px;color:var(--text2)">Relating to People</span><span class="badge b-red">2.5</span><span style="font-size:10px;color:var(--muted)">2.0</span><span class="badge b-alert">Watch</span></div>
+            <div class="flex-between" style="margin-bottom:7px"><span style="font-size:10px;color:var(--text2)">Imitation</span><span class="badge b-gold">2.0</span><span style="font-size:10px;color:var(--muted)">2.0</span><span class="badge b-blue">Stable</span></div>
+            <div class="flex-between" style="margin-bottom:7px"><span style="font-size:10px;color:var(--text2)">Body Use</span><span class="badge b-red">3.0</span><span style="font-size:10px;color:var(--muted)">2.5</span><span class="badge b-red">Alert</span></div>
+            <div class="flex-between"><span style="font-size:10px;color:var(--text2)">Verbal Communication</span><span class="badge b-gold">2.0</span><span style="font-size:10px;color:var(--muted)">2.0</span><span class="badge b-blue">Stable</span></div>
+          </div>
+          <div class="flex mt10" style="gap:6px">
+            <button class="btn btn-outline btn-sm">Export to Record</button>
+            <button class="btn btn-primary btn-sm">Auto-Generate Report</button>
+          </div>
+        </div>
+        <div class="card">
+          <div class="label">AI Clinical Alerts — This Session</div>
+          <div style="background:#FFF5E6;border-left:3px solid #E08030;border-radius:0 9px 9px 0;padding:10px 12px;margin-bottom:9px">
+            <div style="font-size:10px;font-weight:500;color:#7A4A00;margin-bottom:3px">Priority Alert — Elevated Stimming</div>
+            <div style="font-size:10px;color:#9A6A20;line-height:1.6">Hand flapping 40% above baseline 09:18–09:22 during transition. Recommend sensory break protocol.</div>
+            <div style="font-size:8px;color:#C0901A;margin-top:4px;letter-spacing:.05em;text-transform:uppercase">Phoenix Synap — Requires Clinician Review</div>
+          </div>
+          <div style="background:var(--green-bg);border-left:3px solid #3DBA6A;border-radius:0 9px 9px 0;padding:10px 12px">
+            <div style="font-size:10px;font-weight:500;color:var(--green);margin-bottom:3px">Positive Milestone</div>
+            <div style="font-size:10px;color:#2A6A40;line-height:1.6">Task compliance 72% — highest this month. Share progress with school resource teacher.</div>
+          </div>
+          <div class="divider"></div>
+          <div class="flex-between"><span style="font-size:10px;color:var(--text2)">Data written to record</span><span class="badge b-live">Live</span></div>
+          <div class="flex-between mt6"><span style="font-size:10px;color:var(--text2)">CARS-2 interim score</span><span class="badge b-gold">37.5 — Moderate-Severe</span></div>
+          <div class="flex-between mt6"><span style="font-size:10px;color:var(--text2)">Next auto-save</span><span class="badge b-blue">28 seconds</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════════════════ TRANSCRIPTION ══════════════════ -->
+    <div id="panel-transcription" class="panel">
+      <div class="sec-hdr">
+        <div class="label">Real-Time Transcription and Language Translation</div>
+        <div class="heading">Live Session Transcript — 7,168 Language Variants</div>
+        <div class="body">All speakers identified, timestamped, and role-tagged. Translation runs simultaneously. RTL supported for Urdu and Arabic. Stored permanently in child's clinical record.</div>
+      </div>
+      <div class="grid-2">
+        <div>
+          <div class="transcript">
+            <div style="font-size:8px;letter-spacing:.1em;text-transform:uppercase;color:var(--ice-4);margin-bottom:9px;display:flex;align-items:center"><span class="rt-pulse"></span>Live Transcript — English</div>
+            <div class="t-line"><div class="t-spk">Dr. Nadia K. [09:24]</div><div class="t-words">Aayan, can you show me where the red block goes?</div></div>
+            <div class="t-line"><div class="t-spk">Parent — Mrs. Rehana [09:26]</div><div class="t-words">He knows this one. Aayan, dekho — red wala kahan jaata hai?</div></div>
+            <div class="t-line"><div class="t-spk">Aayan [09:29]</div><div class="t-words">...here. <span class="hl">Red. Here.</span></div></div>
+            <div class="t-line"><div class="t-spk">Dr. Nadia K. [09:31]</div><div class="t-words">Well done. <span class="hl">Two-word response — noting for report.</span></div></div>
+          </div>
+          <div class="card mt10">
+            <div class="label">Translated — Urdu (RTL)</div>
+            <div style="background:var(--page);border:1px solid var(--border);border-radius:8px;padding:10px;font-size:11px;color:var(--text2);line-height:1.9;direction:rtl;text-align:right;font-family:'Noto Nastaliq Urdu',serif;margin-top:5px">
+              ڈاکٹر نادیا: عیان، مجھے دکھاؤ سرخ بلاک کہاں جاتا ہے۔<br>
+              والدہ: وہ جانتا ہے — عیان، سرخ والا کہاں جاتا ہے؟<br>
+              عیان: <strong>یہاں۔ سرخ۔ یہاں۔</strong>
+            </div>
+            <div class="flex-between mt10"><span style="font-size:9px;color:var(--muted)">Phoenix Synap NLP — 98.7% accuracy</span><button class="btn btn-outline btn-sm">Export Transcript</button></div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="label">Active Language Streams</div>
+          <div class="flex mt6" style="flex-wrap:wrap;gap:5px">
+            <span class="badge b-ice">English</span><span class="badge b-ice">Urdu</span><span class="badge b-blue">Arabic</span><span class="badge b-blue">French</span><span class="badge b-blue">Dutch</span><span class="badge b-blue">Spanish</span>
+          </div>
+          <div class="divider"></div>
+          <div class="label">Translation Accuracy</div>
+          <div class="flex-between mt6"><span style="font-size:10px;color:var(--text2)">English</span><span style="font-size:10px;font-weight:500;color:var(--green)">99.2%</span></div>
+          <div class="flex-between mt6"><span style="font-size:10px;color:var(--text2)">Urdu</span><span style="font-size:10px;font-weight:500;color:var(--green)">98.7%</span></div>
+          <div class="flex-between mt6"><span style="font-size:10px;color:var(--text2)">Arabic MSA</span><span style="font-size:10px;font-weight:500;color:var(--green)">98.1%</span></div>
+          <div class="flex-between mt6"><span style="font-size:10px;color:var(--text2)">Clinical Terminology</span><span class="badge b-green">Active</span></div>
+          <div class="divider"></div>
+          <div class="label">Face Censoring</div>
+          <div class="flex-between mt6"><span style="font-size:10px;color:var(--text2)">Parent Consent</span><span class="badge b-green">Granted 09:05 AM</span></div>
+          <div class="flex-between mt6"><span style="font-size:10px;color:var(--text2)">Recording Scope</span><span class="badge b-gold">Censored Export Only</span></div>
+          <div class="flex-between mt6"><span style="font-size:10px;color:var(--text2)">Data Jurisdiction</span><span class="badge b-blue">ISO-PK — Karachi</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════════════════ EVALUATION ══════════════════ -->
+    <div id="panel-evaluation" class="panel">
+      <div class="flex-between mb14">
+        <div><div class="label">Evaluation Reports</div><div class="heading">Aayan Rehman — Age 7y 3m</div></div>
+        <div class="flex" style="gap:5px;flex-wrap:wrap"><span class="badge b-gold">ASD Level 2</span><span class="badge b-blue">ADHD-I</span><span class="badge b-alert">SPD</span><button class="btn btn-primary btn-sm">Generate Full Report</button></div>
+      </div>
+      <div class="grid-2">
+        <div class="card">
+          <div class="label">Administered Instruments — 149 Available</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:7px">
+            <div class="card-sm"><div class="label">CARS-2</div><div style="font-size:20px;font-weight:500;color:var(--ice-4);font-family:'Playfair Display',serif">37.5</div><div style="font-size:9px;color:var(--muted)">Moderate-Severe</div><span class="badge b-gold mt6" style="display:inline-block;margin-top:5px">Apr 2025</span></div>
+            <div class="card-sm"><div class="label">WISC-V</div><div style="font-size:20px;font-weight:500;color:var(--ice-4);font-family:'Playfair Display',serif">IQ 74</div><div style="font-size:9px;color:var(--muted)">Borderline Range</div><span class="badge b-blue mt6" style="display:inline-block;margin-top:5px">Mar 2025</span></div>
+            <div class="card-sm"><div class="label">Vineland-3</div><div style="font-size:20px;font-weight:500;color:var(--ice-4);font-family:'Playfair Display',serif">ABC 68</div><div style="font-size:9px;color:var(--muted)">Adaptive Behaviour</div><span class="badge b-blue mt6" style="display:inline-block;margin-top:5px">Mar 2025</span></div>
+            <div class="card-sm"><div class="label">Conners-3</div><div style="font-size:20px;font-weight:500;color:var(--gold);font-family:'Playfair Display',serif">T-72</div><div style="font-size:9px;color:var(--muted)">Very Elevated</div><span class="badge b-alert mt6" style="display:inline-block;margin-top:5px">Feb 2025</span></div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="label">Domain Progress — This Quarter</div>
+          <div class="iep-goal"><div class="flex-between"><span class="iep-title">Communication — Expressive</span><span class="badge b-alert">18% gain</span></div><div style="font-size:10px;color:var(--muted);margin-top:2px">Baseline: 2-word — Target: 4-word</div><div class="prog-bar" style="margin-top:6px"><div class="prog-fill" style="width:38%"></div></div></div>
+          <div class="iep-goal"><div class="flex-between"><span class="iep-title">Social Interaction</span><span class="badge b-green">22% gain</span></div><div class="prog-bar" style="margin-top:6px"><div class="prog-fill" style="width:55%"></div></div></div>
+          <div class="iep-goal"><div class="flex-between"><span class="iep-title">ADL — Self-Care</span><span class="badge b-green">34% gain</span></div><div class="prog-bar" style="margin-top:6px"><div class="prog-fill" style="width:62%"></div></div></div>
+          <div class="iep-goal"><div class="flex-between"><span class="iep-title">Sensory Regulation</span><span class="badge b-alert">8% gain</span></div><div class="prog-bar" style="margin-top:6px"><div class="prog-fill" style="width:24%"></div></div></div>
+          <div class="flex-between mt10"><button class="btn btn-outline btn-sm">Download PDF</button><button class="btn btn-primary btn-sm">Share with School</button></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════════════════ IEP ══════════════════ -->
+    <div id="panel-iep" class="panel">
+      <div class="sec-hdr">
+        <div class="label">IEP Generator — Phoenix Synap AI — 1,315 Curriculum Boards</div>
+        <div class="heading">Individualised Education Programme — Aayan Rehman, Grade 2</div>
+        <div class="body">Aligned to IB, Cambridge, CBSE, FBISE, IDEA, EHCP, UAE SEN Policy, and all boards across 5,046 ISO subdivisions. Uniqueness-scored. Legal compliance checked per jurisdiction. Never finalised without licensed special educator sign-off.</div>
+      </div>
+      <div class="grid-2">
+        <div class="card">
+          <div class="label">Annual Goals — 2025–26</div>
+          <div class="iep-goal"><div class="flex-between"><span class="iep-title">Goal 1 — Expressive Language (SLT)</span><span class="badge b-blue">In Progress</span></div><div style="font-size:10px;color:var(--text2);margin-top:3px;line-height:1.5">4-word spontaneous utterances in 4/5 opportunities across 3 consecutive sessions by December 2025.</div><div class="prog-bar" style="margin-top:5px"><div class="prog-fill" style="width:38%"></div></div></div>
+          <div class="iep-goal"><div class="flex-between"><span class="iep-title">Goal 2 — Maths 1–20 (Resource Teacher)</span><span class="badge b-blue">In Progress</span></div><div style="font-size:10px;color:var(--text2);margin-top:3px;line-height:1.5">Identify, count, and sequence numbers 1–20 with 80% accuracy by March 2026.</div><div class="prog-bar" style="margin-top:5px"><div class="prog-fill" style="width:45%"></div></div></div>
+          <div class="iep-goal"><div class="flex-between"><span class="iep-title">Goal 3 — Transition Compliance (BCBA)</span><span class="badge b-alert">Below Target</span></div><div class="prog-bar" style="margin-top:5px"><div class="prog-fill" style="width:25%"></div></div></div>
+          <div class="iep-goal"><div class="flex-between"><span class="iep-title">Goal 4 — Independent Dressing (OT)</span><span class="badge b-green">On Track</span></div><div class="prog-bar" style="margin-top:5px"><div class="prog-fill" style="width:60%"></div></div></div>
+        </div>
+        <div>
+          <div class="card mb10">
+            <div class="label">Accommodations Active</div>
+            <div class="flex-between mt6"><span style="font-size:10px;color:var(--text2)">Extended time (1.5x)</span><span class="badge b-green">Active</span></div>
+            <div class="flex-between mt6"><span style="font-size:10px;color:var(--text2)">Visual schedule on desk</span><span class="badge b-green">Active</span></div>
+            <div class="flex-between mt6"><span style="font-size:10px;color:var(--text2)">Sensory break every 45 min</span><span class="badge b-green">Active</span></div>
+            <div class="flex-between mt6"><span style="font-size:10px;color:var(--text2)">Shadow teacher 5 days/week</span><span class="badge b-gold">Review May</span></div>
+          </div>
+          <div class="card">
+            <div class="label">Curriculum Board Alignment</div>
+            <div class="flex-between mt6"><span style="font-size:10px;color:var(--text2)">Cambridge Primary (Pakistan)</span><span class="badge b-blue">Aligned</span></div>
+            <div class="flex-between mt6"><span style="font-size:10px;color:var(--text2)">FBISE National Grade 2</span><span class="badge b-blue">Aligned</span></div>
+            <div class="flex-between mt6"><span style="font-size:10px;color:var(--text2)">UN CRPD Article 24</span><span class="badge b-green">Compliant</span></div>
+            <div class="flex-between mt6"><span style="font-size:10px;color:var(--text2)">IEP Uniqueness Score</span><span class="badge b-green">94% — Pass</span></div>
+            <div class="divider"></div>
+            <div class="flex-between"><button class="btn btn-outline btn-sm">Download IEP</button><button class="btn btn-gold btn-sm">Send to School</button></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════════════════ DIET ══════════════════ -->
+    <div id="panel-diet" class="panel">
+      <div class="sec-hdr">
+        <div class="label">Therapeutic Nutrition</div>
+        <div class="heading">Weekly Diet Plan — Aayan, Age 7</div>
+        <div class="body">AI-generated, dietitian-reviewed. Condition-specific: ASD gut-brain, ADHD (Omega-3, Zinc, Magnesium), epilepsy protocols. Regional food availability in ISO-PK. GF/CF monitoring active.</div>
+      </div>
+      <div class="card">
+        <div class="flex-between mb10"><div class="flex" style="gap:5px;flex-wrap:wrap"><span class="badge b-gold">Gluten-Free</span><span class="badge b-blue">Casein Reduced</span><span class="badge b-green">High Omega-3</span></div><button class="btn btn-primary btn-sm">Regenerate Plan</button></div>
+        <div style="overflow-x:auto">
+          <div style="display:grid;grid-template-columns:repeat(7,1fr);gap:6px;min-width:600px">
+            <div class="diet-col"><div class="diet-day-lbl">Mon</div><div class="diet-slot ok">Rice flakes + banana</div><div class="diet-slot ok">Grilled chicken + rice</div><div class="diet-slot ok">Dal + brown rice</div></div>
+            <div class="diet-col"><div class="diet-day-lbl">Tue</div><div class="diet-slot ok">GF oats + berries</div><div class="diet-slot ok">Egg wrap (GF)</div><div class="diet-slot ok">Salmon + quinoa</div></div>
+            <div class="diet-col"><div class="diet-day-lbl">Wed</div><div class="diet-slot ok">Smoothie + flax</div><div class="diet-slot ok">Lentil soup + GF bread</div><div class="diet-slot ok">Chicken stew</div></div>
+            <div class="diet-col"><div class="diet-day-lbl">Thu</div><div class="diet-slot ok">Boiled eggs + avocado</div><div class="diet-slot ok">Tuna rice bowl</div><div class="diet-slot warn">Review: casein</div></div>
+            <div class="diet-col"><div class="diet-day-lbl">Fri</div><div class="diet-slot ok">GF pancakes</div><div class="diet-slot ok">Grilled fish + rice</div><div class="diet-slot ok">Veg curry + GF roti</div></div>
+            <div class="diet-col"><div class="diet-day-lbl">Sat</div><div class="diet-slot ok">Rice porridge</div><div class="diet-slot ok">Chicken kebabs</div><div class="diet-slot ok">Lamb + lentils</div></div>
+            <div class="diet-col"><div class="diet-day-lbl">Sun</div><div class="diet-slot ok">Family GF waffles</div><div class="diet-slot ok">Grilled chicken</div><div class="diet-slot ok">Fish tacos (GF)</div></div>
+          </div>
+        </div>
+        <div class="divider"></div>
+        <div class="grid-3">
+          <div class="card-sm"><div class="label">Gut-Brain Alert</div><div style="font-size:10px;color:var(--alert);line-height:1.5">Digestive issues 3 days. Review casein. Consider probiotic consult.</div></div>
+          <div class="card-sm"><div class="label">Daily Targets</div><div style="font-size:10px;color:var(--text2);line-height:1.7">Omega-3: 1000mg · Iron: 10mg · Vit-D: 600IU · Mg: 110mg</div></div>
+          <div class="card-sm"><div class="label">Next Dietitian Review</div><div style="font-size:10px;color:var(--text2)">15 June 2025</div><button class="btn btn-outline btn-sm" style="margin-top:7px">Upload Food Diary</button></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════════════════ CBT / DBT ══════════════════ -->
+    <div id="panel-cbt" class="panel">
+      <div class="sec-hdr">
+        <div class="label">Parent Training — Evidence-Based Therapeutic Techniques</div>
+        <div class="heading">CBT, DBT, ABA, Play Therapy — Home Strategy Modules</div>
+        <div class="body">Clinician-validated in English, Urdu, Arabic, French, Spanish, Dutch. Step-by-step instructions, printable worksheets, session tracking. Each module is individualised to Aayan's profile by Phoenix Synap.</div>
+      </div>
+      <div class="grid-3">
+        <div class="therapy-card"><div class="therapy-tag tag-cbt">CBT</div><div class="therapy-title">Thought-Feeling-Behaviour Triangle</div><ul class="therapy-steps"><li>Draw triangle: Think / Feel / Do</li><li>Use a recent situation — what did Aayan think first?</li><li>Name the feeling using emotion chart — do not guess</li><li>Explore what he did — think of 3 alternatives</li><li>Role-play the new thought and action 5 minutes</li></ul><div class="flex mt10" style="gap:5px"><button class="btn btn-outline btn-sm">Worksheet</button><button class="btn btn-primary btn-sm">Watch Demo</button></div></div>
+        <div class="therapy-card"><div class="therapy-tag tag-dbt">DBT</div><div class="therapy-title">TIPP Skills — Emotional Regulation</div><ul class="therapy-steps"><li>T — Cold water on face — 30 seconds</li><li>I — 2 minutes jumping jacks</li><li>P — Breathe in 4, hold 2, out 6 — repeat 5x</li><li>P — Progressive muscle squeeze and release</li><li>After regulation: use feelings card — never debrief in crisis</li></ul><div class="flex mt10" style="gap:5px"><button class="btn btn-outline btn-sm">TIPP Card</button><button class="btn btn-primary btn-sm">Log Practice</button></div></div>
+        <div class="therapy-card"><div class="therapy-tag tag-aba">ABA Home</div><div class="therapy-title">Discrete Trial Training — Parent Version</div><ul class="therapy-steps"><li>Choose ONE skill: e.g., Touch your nose</li><li>Give clear instruction — wait 3 seconds</li><li>Correct: immediate praise + preferred reward</li><li>Incorrect: guide physically — then reward</li><li>10 trials, twice daily, 5 days/week — log each</li></ul><div class="flex mt10" style="gap:5px"><button class="btn btn-outline btn-sm">Data Sheet</button><button class="btn btn-primary btn-sm">Track Progress</button></div></div>
+        <div class="therapy-card"><div class="therapy-tag tag-play">Social Stories</div><div class="therapy-title">Personalised Narrative — AI Generated</div><ul class="therapy-steps"><li>Phoenix Synap generates story using Aayan's name</li><li>Preferred characters and uploaded photo used</li><li>Read slowly — 1 page per minute</li><li>After: ask 2 questions — explore, do not quiz</li><li>Same story 5 days before real-life exposure</li></ul><button class="btn btn-primary btn-sm mt10">Generate Story for Aayan</button></div>
+        <div class="therapy-card"><div class="therapy-tag tag-play">Play Therapy</div><div class="therapy-title">Child-Directed Play — 30 Minutes Daily</div><ul class="therapy-steps"><li>Child chooses the activity entirely</li><li>Describe what you observe, not direct</li><li>Reflect feelings: You seem happy when that falls</li><li>Set only safety limits — permit everything else</li><li>No phone. 30 full minutes undivided.</li></ul><div class="flex mt10" style="gap:5px"><button class="btn btn-outline btn-sm">Library</button><button class="btn btn-primary btn-sm">Log Session</button></div></div>
+        <div class="therapy-card"><div class="therapy-tag tag-dbt">Caregiver Mindfulness</div><div class="therapy-title">Regulate Yourself First</div><ul class="therapy-steps"><li>5-4-3-2-1 Grounding before re-engaging post-meltdown</li><li>Self-compassion: hand on chest — This is hard. I am enough.</li><li>Log personal triggers weekly in wellness section</li><li>3 minutes alone after every crisis — permission granted</li><li>Connect with parent support group in ISO-PK</li></ul><button class="btn btn-primary btn-sm mt10">Wellness Module</button></div>
+      </div>
+    </div>
+
+    <!-- ══════════════════ SIBLING SUPPORT ══════════════════ -->
+    <div id="panel-sibling" class="panel">
+      <div class="sec-hdr">
+        <div class="label">Sibling Support Module — First Platform to Include Siblings as Primary Users</div>
+        <div class="heading">Supporting Children Who Have a Sibling with Special Needs</div>
+        <div class="body">Siblings are not peripheral to ZETA-9 — they are a primary care population. Dedicated clinical screening, wellbeing monitoring, parentification risk scoring, peer groups, and professional connection pathways for every sibling on the platform.</div>
+      </div>
+      <div class="grid-2">
+        <div>
+          <div class="ice-card" style="margin-bottom:12px">
+            <div class="label">Sibling Profile</div>
+            <div class="heading-sm">Sara Rehman — Age 10, Grade 5</div>
+            <div class="body mt6">Sara is Aayan's elder sister. ZETA-9 has flagged signs of emotional burden and parentification over the past 6 weeks based on check-in responses and session observation notes.</div>
+            <div class="divider"></div>
+            <div class="label">Wellbeing Check-In Today</div>
+            <div class="mood-row">
+              <button class="mood-btn">Happy</button>
+              <button class="mood-btn active">Worried</button>
+              <button class="mood-btn">Angry</button>
+              <button class="mood-btn">Tired</button>
+              <button class="mood-btn">Sad</button>
+            </div>
+            <div style="background:rgba(46,109,168,.08);border:1px solid var(--ice-6);border-radius:9px;padding:10px 12px;margin-top:6px">
+              <div style="font-size:10px;font-weight:500;color:var(--ice-2);margin-bottom:3px">AI Flag — 14-Day Pattern</div>
+              <div style="font-size:10px;color:var(--text2);line-height:1.6">Sara reported worried on 9 of last 14 check-ins. Recommend professional consultation within 7 days.</div>
+            </div>
+          </div>
+          <div style="background:var(--alert-bg);border-left:3px solid #E08030;border-radius:0 9px 9px 0;padding:10px 12px">
+            <div style="font-size:10px;font-weight:500;color:#7A4A00;margin-bottom:3px">Parentification Risk — Flagged</div>
+            <div style="font-size:10px;color:#9A6A20;line-height:1.6">Sara is taking on caregiving responsibilities not age-appropriate. Noted in 3 recent session observations. Allocate dedicated one-on-one time with Sara daily.</div>
+          </div>
+        </div>
+        <div>
+          <div class="card mb10">
+            <div class="label">Sibling Resources — Age 10</div>
+            <a class="resource-link">Understanding your brother or sister — Age 8–12 guide<span class="resource-arrow">›</span></a>
+            <a class="resource-link">Talking to a friend about your sibling — conversation starter cards<span class="resource-arrow">›</span></a>
+            <a class="resource-link">What is autism? — illustrated guide for siblings<span class="resource-arrow">›</span></a>
+            <a class="resource-link">Sibshops — sibling support groups Karachi, UAE, UK<span class="resource-arrow">›</span></a>
+            <a class="resource-link">Feelings journal — downloadable, private<span class="resource-arrow">›</span></a>
+            <a class="resource-link">When it feels unfair — guided reflection for siblings<span class="resource-arrow">›</span></a>
+          </div>
+          <div class="card">
+            <div class="label">Parent Conversation Guide — Talking with Sara</div>
+            <div style="background:var(--page);border:1px solid var(--border);border-radius:8px;padding:11px 13px;margin-top:6px;font-size:11px;color:var(--text2);line-height:1.85;font-style:italic">
+              "Sara, I noticed you have been very helpful with Aayan lately. I want you to know that is not your job — it is mine and Baba's. Your job is to be a 10-year-old. I want to know how YOU are feeling. There is no wrong answer."
+            </div>
+            <div class="flex-between mt10"><button class="btn btn-outline btn-sm">Download Guide</button><button class="btn btn-primary btn-sm">Schedule Sara Consult</button></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════════════════ PARENT SUPPORT ══════════════════ -->
+    <div id="panel-parent" class="panel">
+      <div class="sec-hdr">
+        <div class="label">Parent Support Module — SDOH + Wellbeing + Insurance Navigator</div>
+        <div class="heading">Complete Parent Intelligence — Mrs. Rehana Rehman</div>
+        <div class="body">ZETA-9 supports the whole family ecosystem. Parent wellbeing monitoring, caregiver burnout screening, SDOH assessment, community connection, insurance navigator, government funding guidance, and father-specific module all integrated.</div>
+      </div>
+      <div class="grid-3">
+        <div class="card">
+          <div class="label">Parent Wellbeing Check — This Week</div>
+          <div class="flex-between mt6"><span style="font-size:10px;color:var(--text2)">Stress Level</span><span class="badge b-alert">Elevated</span></div>
+          <div class="flex-between mt6"><span style="font-size:10px;color:var(--text2)">Sleep Quality</span><span class="badge b-gold">Disrupted</span></div>
+          <div class="flex-between mt6"><span style="font-size:10px;color:var(--text2)">Social Connection</span><span class="badge b-red">Isolated</span></div>
+          <div class="flex-between mt6"><span style="font-size:10px;color:var(--text2)">Caregiver Strain Index</span><span class="badge b-alert">Score: 9/13 — High</span></div>
+          <div class="divider"></div>
+          <div style="background:var(--alert-bg);border-left:3px solid #E08030;border-radius:0 8px 8px 0;padding:9px 11px">
+            <div style="font-size:10px;font-weight:500;color:#7A4A00;margin-bottom:2px">Caregiver Burnout Alert</div>
+            <div style="font-size:10px;color:#9A6A20;line-height:1.55">CSI score indicates high caregiver strain. Recommend professional support referral and respite care connection.</div>
+          </div>
+          <button class="btn btn-primary btn-sm mt10" style="width:100%">Connect to Therapist</button>
+        </div>
+        <div class="card">
+          <div class="label">SDOH Screening — PRAPARE Tool</div>
+          <div class="flex-between mt6"><span style="font-size:10px;color:var(--text2)">Economic Stability</span><span class="badge b-blue">Moderate — Stable</span></div>
+          <div class="flex-between mt6"><span style="font-size:10px;color:var(--text2)">Neighbourhood Safety</span><span class="badge b-gold">Moderate Risk</span></div>
+          <div class="flex-between mt6"><span style="font-size:10px;color:var(--text2)">Education Access</span><span class="badge b-green">Low Risk</span></div>
+          <div class="flex-between mt6"><span style="font-size:10px;color:var(--text2)">Food Security</span><span class="badge b-green">Stable</span></div>
+          <div class="flex-between mt6"><span style="font-size:10px;color:var(--text2)">Community Support</span><span class="badge b-alert">Flagged — Isolated</span></div>
+          <div class="divider"></div>
+          <div class="label">SDOH-Linked Resources — Karachi</div>
+          <a class="resource-link">Autism Resource Centre Karachi — parent groups<span class="resource-arrow">›</span></a>
+          <a class="resource-link">Ehsaas Rashan Programme — nutrition support<span class="resource-arrow">›</span></a>
+        </div>
+        <div class="card">
+          <div class="label">Insurance + Funding Navigator</div>
+          <div class="flex-between mt6"><span style="font-size:10px;color:var(--text2)">ABA — State Life</span><span class="badge b-gold">60% covered</span></div>
+          <div class="flex-between mt6"><span style="font-size:10px;color:var(--text2)">SLT — State Life</span><span class="badge b-green">100% covered</span></div>
+          <div class="flex-between mt6"><span style="font-size:10px;color:var(--text2)">Psychology</span><span class="badge b-red">Not covered</span></div>
+          <div class="divider"></div>
+          <div class="label">Government Schemes</div>
+          <div class="flex-between mt6"><span style="font-size:10px;color:var(--text2)">Ehsaas Programme</span><span class="badge b-green">Eligible — Apply</span></div>
+          <div class="flex-between mt6"><span style="font-size:10px;color:var(--text2)">PEEF Education Fund</span><span class="badge b-blue">Check eligibility</span></div>
+          <button class="btn btn-gold btn-sm mt10" style="width:100%">Generate Ehsaas Application</button>
+          <div class="divider"></div>
+          <div class="label">Father Module</div>
+          <a class="resource-link">Understanding your child's needs — a father's guide<span class="resource-arrow">›</span></a>
+          <a class="resource-link">Father support group — Karachi fathers network<span class="resource-arrow">›</span></a>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════════════════ PUBERTY MODULE ══════════════════ -->
+    <div id="panel-puberty" class="panel">
+      <div class="sec-hdr">
+        <div class="label">Puberty Module — The Most Under-Served Clinical Gap in Neurodevelopmental Care</div>
+        <div class="heading">Puberty Readiness and Adolescent Health — Aayan Rehman</div>
+        <div class="body">No other platform in the world addresses puberty and adolescence for children with special needs. ZETA-9 provides structured readiness assessment, age-appropriate psychoeducation, safeguarding and consent education, and gynaecologist-connected pathways.</div>
+      </div>
+      <div class="grid-2">
+        <div>
+          <div class="ice-card mb10">
+            <div class="label">Puberty Readiness Assessment — Status</div>
+            <div class="flex-between mt6"><span style="font-size:10px;color:var(--text2)">Aayan's Current Age</span><span class="badge b-blue">7y 3m</span></div>
+            <div class="flex-between mt6"><span style="font-size:10px;color:var(--text2)">Readiness Assessment Trigger</span><span class="badge b-blue">Activates at Age 9</span></div>
+            <div class="flex-between mt6"><span style="font-size:10px;color:var(--text2)">Estimated Trigger Date</span><span style="font-size:10px;font-weight:500;color:var(--ice-3)">January 2027</span></div>
+            <div class="flex-between mt6"><span style="font-size:10px;color:var(--text2)">Parent Preparation Module</span><span class="badge b-gold">Available Now</span></div>
+            <div class="divider"></div>
+            <div style="font-size:10px;color:var(--text2);line-height:1.65">Parents can begin reading the preparation module now so the conversation is not rushed when Aayan approaches puberty. The module is adapted to Aayan's cognitive level, sensory profile, and communication ability.</div>
+            <button class="btn btn-primary btn-sm mt10">Start Parent Preparation Module</button>
+          </div>
+          <div class="card">
+            <div class="label">Safeguarding and Consent Education</div>
+            <div class="body mt6">Children and adolescents with special needs are at significantly elevated risk of abuse. ZETA-9 provides age-appropriate consent education for both the child and the family, created in partnership with safeguarding organisations. Mandatory safeguarding framework active for ISO-PK.</div>
+            <div class="divider"></div>
+            <div class="flex-between mt6"><span style="font-size:10px;color:var(--text2)">Safeguarding Framework</span><span class="badge b-blue">UNCRC + PECA 2016</span></div>
+            <div class="flex-between mt6"><span style="font-size:10px;color:var(--text2)">Mandatory Reporting</span><span class="badge b-green">Active</span></div>
+            <a class="resource-link mt10">Safeguarding guide for parents of children with ASD<span class="resource-arrow">›</span></a>
+          </div>
+        </div>
+        <div class="card">
+          <div class="label">What the Puberty Module Covers — Full Roadmap</div>
+          <div class="puberty-timeline">
+            <div class="puberty-step">
+              <div class="puberty-step-title">Age 9 — Puberty Readiness Assessment</div>
+              <div class="puberty-step-desc">Structured clinical tool screening for cognitive understanding, sensory sensitivity to bodily changes, communication ability to express discomfort, and family readiness. Delivered to parents and professionals simultaneously.</div>
+            </div>
+            <div class="puberty-step">
+              <div class="puberty-step-title">Age 9–10 — Parent Preparation Programme</div>
+              <div class="puberty-step-desc">Psychoeducation module for parents on how to explain puberty based on the child's cognitive level, sensory profile, and communication ability. Available in all 6 platform languages with RTL support.</div>
+            </div>
+            <div class="puberty-step">
+              <div class="puberty-step-title">Age 10–12 — Child Psychoeducation Resources</div>
+              <div class="puberty-step-desc">Age-appropriate puberty education resources for children at each cognitive level — Level 1 through profound intellectual disability. Visual, symbol-based, video, and text formats all available.</div>
+            </div>
+            <div class="puberty-step">
+              <div class="puberty-step-title">Adolescence — Gynaecologist-Connected Pathway (Female)</div>
+              <div class="puberty-step-desc">When a female child with special needs begins menstruation-related challenges, the platform connects directly to the gynaecologist on the care team with pre-filled clinical notes about sensory sensitivities and communication needs.</div>
+            </div>
+            <div class="puberty-step">
+              <div class="puberty-step-title">Ongoing — Safeguarding and Consent Education</div>
+              <div class="puberty-step-desc">Age-appropriate body autonomy, consent, and safeguarding education delivered continuously — adapted to communication method and cognitive level. Resources for the child, the family, and the school team.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════════════════ CRISIS PROTOCOL ══════════════════ -->
+    <div id="panel-crisis" class="panel">
+      <div class="sec-hdr">
+        <div class="label">Crisis Protocol — 24/7 Emergency Escalation System</div>
+        <div class="heading">Every Parent. Every Crisis. Every Timezone.</div>
+        <div class="body">When Phoenix Synap detects crisis signals in text or voice input, the escalation pathway surfaces immediately before any other response. Country-specific hotlines pre-loaded for all 5,046 ISO subdivisions. Safe messaging follows WHO and JED Foundation standards.</div>
+      </div>
+      <div class="grid-2">
+        <div>
+          <div style="background:#FEE8E8;border:2px solid var(--red);border-radius:12px;padding:18px;margin-bottom:12px">
+            <div style="font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--red);font-weight:700;margin-bottom:7px">24/7 Crisis Escalation — Active</div>
+            <div style="font-family:'Playfair Display',serif;font-size:15px;color:var(--red);margin-bottom:12px;font-weight:500">If you or your child are in immediate danger — act now</div>
+            <div style="margin-bottom:10px"><div style="font-size:10px;font-weight:500;color:#7A0000;margin-bottom:3px">Pakistan — Umang Helpline</div><div style="font-size:17px;font-weight:700;color:var(--red);font-family:'Playfair Display',serif">0317-4288665</div><div style="font-size:9px;color:#9A2020">24 hours · Urdu + English</div></div>
+            <div style="margin-bottom:10px"><div style="font-size:10px;font-weight:500;color:#7A0000;margin-bottom:3px">UAE — MoH Mental Health Line</div><div style="font-size:17px;font-weight:700;color:var(--red);font-family:'Playfair Display',serif">800-HOPE (4673)</div><div style="font-size:9px;color:#9A2020">24 hours · Arabic + English</div></div>
+            <div><div style="font-size:10px;font-weight:500;color:#7A0000;margin-bottom:3px">International</div><div style="font-size:12px;font-weight:600;color:var(--red)">befrienders.org</div></div>
+          </div>
+          <div class="card">
+            <div class="label">Phoenix Synap Crisis Detection</div>
+            <div class="flex-between mt6"><span style="font-size:10px;color:var(--text2)">Crisis detection</span><span class="badge b-live">Active 24/7</span></div>
+            <div class="flex-between mt6"><span style="font-size:10px;color:var(--text2)">Safe messaging standard</span><span class="badge b-green">WHO + JED Foundation</span></div>
+            <div class="flex-between mt6"><span style="font-size:10px;color:var(--text2)">Hotlines database</span><span class="badge b-blue">5,046 subdivisions</span></div>
+            <div class="flex-between mt6"><span style="font-size:10px;color:var(--text2)">Professional alert on crisis</span><span class="badge b-green">Under 90 seconds</span></div>
+          </div>
+        </div>
+        <div>
+          <div class="card mb10">
+            <div class="label">Psychiatric Emergency Protocol</div>
+            <div class="body mt6">When a professional marks a case clinically urgent during a session, the platform simultaneously alerts every connected professional on the child's team AND the parent within 90 seconds.</div>
+            <div class="divider"></div>
+            <div class="flex-between"><span style="font-size:10px;color:var(--text2)">Aayan's emergency team</span><span style="font-size:10px;font-weight:500;color:var(--ice-3)">Dr. Nadia (BCBA) + Dr. Ayesha (Psych) + Mrs. Rehana</span></div>
+            <div class="flex-between mt6"><span style="font-size:10px;color:var(--text2)">Emergency substitution</span><span class="badge b-green">Auto-triggered</span></div>
+          </div>
+          <div class="card mb10">
+            <div class="label">Child Safeguarding</div>
+            <div class="body mt6">ZETA-9 follows mandatory reporting requirements for all 5,046 ISO subdivisions. Safeguarding flags cannot be dismissed without documented clinical reasoning.</div>
+            <div class="divider"></div>
+            <div class="flex-between"><span style="font-size:10px;color:var(--text2)">Framework</span><span class="badge b-blue">UNCRC + Local Legislation</span></div>
+            <div class="flex-between mt6"><span style="font-size:10px;color:var(--text2)">Mandatory reporting</span><span class="badge b-green">5,046 Subdivisions</span></div>
+          </div>
+          <div class="card">
+            <div class="label">PhxSynap 24/7 Parent Chat</div>
+            <div class="body mt6">A parent can speak to Phoenix Synap at any hour — including 2am during a meltdown. Every conversation is logged, summarised, and available to the professional team at next session.</div>
+            <div class="divider"></div>
+            <button class="btn btn-primary btn-lg" style="width:100%">Open Phoenix Synap Chat</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════════════════ SIGN LANGUAGES ══════════════════ -->
+    <div id="panel-signlang" class="panel">
+      <div class="sec-hdr">
+        <div class="label">Universal Communication Access Module — Domain N10 — Sign Languages</div>
+        <div class="heading">300+ Sign Languages · 28 Communication Modalities · Every Child Reachable</div>
+        <div class="body">Sign languages are full, complete, complex linguistic systems — not simplified codes. ZETA-9 treats every sign language with the same priority as every spoken language. Phase 1 covers 16 major sign languages. Phase 2 expands to all 300+ via federated model training with Deaf community partnerships at Gallaudet University and World Federation of the Deaf.</div>
+      </div>
+      <div class="grid-2">
+        <div>
+          <div class="card mb10">
+            <div class="label">Phase 1 — Active Sign Languages</div>
+            <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:7px;margin-top:7px">
+              <div class="card-sm"><div style="font-size:11px;font-weight:500;color:var(--ice-1)">ASL</div><div style="font-size:9px;color:var(--muted)">American Sign Language</div><span class="badge b-green" style="margin-top:4px;display:inline-block">Live</span></div>
+              <div class="card-sm"><div style="font-size:11px;font-weight:500;color:var(--ice-1)">BSL</div><div style="font-size:9px;color:var(--muted)">British Sign Language</div><span class="badge b-green" style="margin-top:4px;display:inline-block">Live</span></div>
+              <div class="card-sm"><div style="font-size:11px;font-weight:500;color:var(--ice-1)">ISL / PSL</div><div style="font-size:9px;color:var(--muted)">Indian / Pakistani SL</div><span class="badge b-green" style="margin-top:4px;display:inline-block">Live</span></div>
+              <div class="card-sm"><div style="font-size:11px;font-weight:500;color:var(--ice-1)">ArSL</div><div style="font-size:9px;color:var(--muted)">Arabic Sign Language</div><span class="badge b-green" style="margin-top:4px;display:inline-block">Live</span></div>
+              <div class="card-sm"><div style="font-size:11px;font-weight:500;color:var(--ice-1)">CSL</div><div style="font-size:9px;color:var(--muted)">Chinese Sign Language</div><span class="badge b-green" style="margin-top:4px;display:inline-block">Live</span></div>
+              <div class="card-sm"><div style="font-size:11px;font-weight:500;color:var(--ice-1)">Auslan</div><div style="font-size:9px;color:var(--muted)">Australian SL</div><span class="badge b-green" style="margin-top:4px;display:inline-block">Live</span></div>
+              <div class="card-sm"><div style="font-size:11px;font-weight:500;color:var(--ice-1)">LSF</div><div style="font-size:9px;color:var(--muted)">French Sign Language</div><span class="badge b-green" style="margin-top:4px;display:inline-block">Live</span></div>
+              <div class="card-sm"><div style="font-size:11px;font-weight:500;color:var(--ice-1)">DGS</div><div style="font-size:9px;color:var(--muted)">German Sign Language</div><span class="badge b-green" style="margin-top:4px;display:inline-block">Live</span></div>
+            </div>
+            <div style="font-size:9px;color:var(--muted);margin-top:9px">Phase 2 target: all 300+ global sign languages. MediaPipe Holistic: 21 hand keypoints + 33 body + 468 facial landmarks. YOLOv11: 98.2% gesture accuracy.</div>
+          </div>
+          <div class="card">
+            <div class="label">Symbol and AAC Systems</div>
+            <div class="flex-between mt6"><span style="font-size:10px;color:var(--text2)">Makaton — 40+ countries</span><span class="badge b-green">Active</span></div>
+            <div class="flex-between mt6"><span style="font-size:10px;color:var(--text2)">Widgit Symbols</span><span class="badge b-green">Active</span></div>
+            <div class="flex-between mt6"><span style="font-size:10px;color:var(--text2)">PCS — Picture Communication</span><span class="badge b-green">Active</span></div>
+            <div class="flex-between mt6"><span style="font-size:10px;color:var(--text2)">Tobii Dynavox / TouchChat AAC</span><span class="badge b-blue">Integrated</span></div>
+            <div class="flex-between mt6"><span style="font-size:10px;color:var(--text2)">Blissymbolics</span><span class="badge b-green">Active</span></div>
+            <div class="flex-between mt6"><span style="font-size:10px;color:var(--text2)">PECS — Phase 1–6</span><span class="badge b-green">Active</span></div>
+          </div>
+        </div>
+        <div>
+          <div class="card mb10">
+            <div class="label">Deafblind and Tactile Communication Systems</div>
+            <div class="flex-between mt6"><span style="font-size:10px;color:var(--text2)">Tactile Sign — Hands-On BSL / PT-ASL</span><span class="badge b-blue">Protocol Active</span></div>
+            <div class="flex-between mt6"><span style="font-size:10px;color:var(--text2)">Deafblind Manual Alphabet</span><span class="badge b-blue">Protocol Active</span></div>
+            <div class="flex-between mt6"><span style="font-size:10px;color:var(--text2)">Block Alphabet — Palm Writing</span><span class="badge b-blue">Protocol Active</span></div>
+            <div class="flex-between mt6"><span style="font-size:10px;color:var(--text2)">Tadoma Method</span><span class="badge b-blue">Protocol Active</span></div>
+            <div class="flex-between mt6"><span style="font-size:10px;color:var(--text2)">Haptics — Touch Signal System</span><span class="badge b-blue">Protocol Active</span></div>
+            <div class="flex-between mt6"><span style="font-size:10px;color:var(--text2)">Braille Export — LibLouis BRF</span><span class="badge b-green">Active</span></div>
+            <div class="flex-between mt6"><span style="font-size:10px;color:var(--text2)">Cued Speech — 65+ countries</span><span class="badge b-green">Active</span></div>
+          </div>
+          <div class="card mb10">
+            <div class="label">Visual Impairment Access</div>
+            <div class="flex-between mt6"><span style="font-size:10px;color:var(--text2)">JAWS / NVDA / VoiceOver / TalkBack</span><span class="badge b-green">Fully compatible</span></div>
+            <div class="flex-between mt6"><span style="font-size:10px;color:var(--text2)">AI Alt Text — Microsoft Seeing AI</span><span class="badge b-green">Active</span></div>
+            <div class="flex-between mt6"><span style="font-size:10px;color:var(--text2)">WCAG 2.2 AA+ — 4.5:1 contrast min</span><span class="badge b-green">Compliant</span></div>
+            <div class="flex-between mt6"><span style="font-size:10px;color:var(--text2)">High Contrast Mode</span><span class="badge b-green">Available</span></div>
+          </div>
+          <div class="card">
+            <div class="label">52 Communication Specialist Professionals</div>
+            <div style="display:flex;gap:5px;flex-wrap:wrap;margin-top:7px">
+              <span class="badge b-blue">Deaf Educator</span><span class="badge b-blue">Sign Language Interpreter</span><span class="badge b-blue">Cued Speech Specialist</span><span class="badge b-blue">Deafblind Specialist</span><span class="badge b-blue">Intervenor/SSP</span><span class="badge b-blue">O&M Specialist</span><span class="badge b-blue">TVI</span><span class="badge b-blue">VRT/CLVT</span><span class="badge b-blue">CATIS</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════════════════ LANGUAGES + ISO REGIONS ══════════════════ -->
+    <div id="panel-languages" class="panel">
+      <div class="sec-hdr">
+        <div class="label">Global Reach — 7,168 Languages · 5,046 ISO Subdivisions</div>
+        <div class="heading">Every Language. Every Region. No Exclusions.</div>
+        <div class="body">7,168 living languages from Ethnologue 27th Edition. 5,046 ISO 3166-2 subdivisions mapped. Real-time translation via Google Cloud Translation v3 + OpenAI Whisper transcription. RTL full-layout mirror for Arabic and Urdu.</div>
+      </div>
+      <div class="grid-2">
+        <div>
+          <div class="card mb10">
+            <div class="label">Search Languages — 7,168 Available</div>
+            <div class="region-search"><input class="region-input" id="langSearch" placeholder="Search language (e.g. Sindhi, Pashto, Swahili...)" onkeyup="filterLangs(this.value)"/></div>
+            <div class="lang-grid" id="langGrid">
+              <!-- Major languages listed -->
+              <div class="lang-item lang-active"><span class="lang-flag">🇬🇧</span>English<span class="badge b-blue" style="margin-left:auto;font-size:7px">Active</span></div>
+              <div class="lang-item lang-active"><span class="lang-flag">🇵🇰</span>Urdu<span class="badge b-blue" style="margin-left:auto;font-size:7px">RTL</span></div>
+              <div class="lang-item lang-active"><span class="lang-flag">🇸🇦</span>Arabic<span class="badge b-blue" style="margin-left:auto;font-size:7px">RTL</span></div>
+              <div class="lang-item lang-active"><span class="lang-flag">🇫🇷</span>French</div>
+              <div class="lang-item lang-active"><span class="lang-flag">🇪🇸</span>Spanish</div>
+              <div class="lang-item lang-active"><span class="lang-flag">🇳🇱</span>Dutch</div>
+              <div class="lang-item"><span class="lang-flag">🇵🇰</span>Sindhi</div>
+              <div class="lang-item"><span class="lang-flag">🇵🇰</span>Pashto</div>
+              <div class="lang-item"><span class="lang-flag">🇵🇰</span>Punjabi</div>
+              <div class="lang-item"><span class="lang-flag">🇮🇳</span>Hindi</div>
+              <div class="lang-item"><span class="lang-flag">🇮🇳</span>Bengali</div>
+              <div class="lang-item"><span class="lang-flag">🇨🇳</span>Mandarin</div>
+              <div class="lang-item"><span class="lang-flag">🇧🇷</span>Portuguese</div>
+              <div class="lang-item"><span class="lang-flag">🇷🇺</span>Russian</div>
+              <div class="lang-item"><span class="lang-flag">🇩🇪</span>German</div>
+              <div class="lang-item"><span class="lang-flag">🇯🇵</span>Japanese</div>
+              <div class="lang-item"><span class="lang-flag">🇰🇷</span>Korean</div>
+              <div class="lang-item"><span class="lang-flag">🇹🇷</span>Turkish</div>
+              <div class="lang-item"><span class="lang-flag">🇮🇩</span>Indonesian</div>
+              <div class="lang-item"><span class="lang-flag">🇳🇬</span>Hausa</div>
+              <div class="lang-item"><span class="lang-flag">🇳🇬</span>Yoruba</div>
+              <div class="lang-item"><span class="lang-flag">🇰🇪</span>Swahili</div>
+              <div class="lang-item"><span class="lang-flag">🇪🇹</span>Amharic</div>
+              <div class="lang-item"><span class="lang-flag">🇻🇳</span>Vietnamese</div>
+              <div class="lang-item"><span class="lang-flag">🇹🇭</span>Thai</div>
+              <div class="lang-item"><span class="lang-flag">🇮🇷</span>Persian/Farsi</div>
+              <div class="lang-item"><span class="lang-flag">🌐</span>+ 7,142 more languages</div>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div class="card mb10">
+            <div class="label">Search ISO Regions — 5,046 Subdivisions</div>
+            <div class="region-search"><input class="region-input" id="regionSearch" placeholder="Search region (e.g. Karachi, Dubai, London...)" onkeyup="filterRegions(this.value)"/><button class="btn btn-outline btn-sm" onclick="filterRegions('')">Show All</button></div>
+            <div class="region-results" id="regionGrid">
+              <div class="region-item"><strong style="font-size:10px">Karachi, Sindh</strong><div class="region-iso">ISO: PK-SD · Active</div></div>
+              <div class="region-item"><strong style="font-size:10px">Abu Dhabi, UAE</strong><div class="region-iso">ISO: AE-AZ · Active</div></div>
+              <div class="region-item"><strong style="font-size:10px">Lahore, Punjab</strong><div class="region-iso">ISO: PK-PB</div></div>
+              <div class="region-item"><strong style="font-size:10px">Islamabad, ICT</strong><div class="region-iso">ISO: PK-IS</div></div>
+              <div class="region-item"><strong style="font-size:10px">Dubai, UAE</strong><div class="region-iso">ISO: AE-DU</div></div>
+              <div class="region-item"><strong style="font-size:10px">London, England</strong><div class="region-iso">ISO: GB-ENG</div></div>
+              <div class="region-item"><strong style="font-size:10px">New York, USA</strong><div class="region-iso">ISO: US-NY</div></div>
+              <div class="region-item"><strong style="font-size:10px">Sydney, NSW</strong><div class="region-iso">ISO: AU-NSW</div></div>
+              <div class="region-item"><strong style="font-size:10px">Toronto, Ontario</strong><div class="region-iso">ISO: CA-ON</div></div>
+              <div class="region-item"><strong style="font-size:10px">Riyadh, Saudi Arabia</strong><div class="region-iso">ISO: SA-01</div></div>
+              <div class="region-item"><strong style="font-size:10px">Mumbai, Maharashtra</strong><div class="region-iso">ISO: IN-MH</div></div>
+              <div class="region-item"><strong style="font-size:10px">Nairobi, Kenya</strong><div class="region-iso">ISO: KE-30</div></div>
+              <div class="region-item" style="grid-column:1/-1;text-align:center;color:var(--muted);font-style:italic">+ 5,034 more ISO 3166-2 subdivisions mapped</div>
+            </div>
+          </div>
+          <div class="grid-4">
+            <div class="stat-card"><div class="stat-num">5,046</div><div class="stat-label">ISO Regions</div></div>
+            <div class="stat-card"><div class="stat-num">7,168</div><div class="stat-label">Languages</div></div>
+            <div class="stat-card"><div class="stat-num">300+</div><div class="stat-label">Sign Languages</div></div>
+            <div class="stat-card"><div class="stat-num">173</div><div class="stat-label">CRPD Nations</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════════════════ AGENTIC ══════════════════ -->
+    <div id="panel-agentic" class="panel">
+      <div class="sec-hdr">
+        <div class="label">Phoenix Synap — Multi-Agent Agentic Architecture — 2026</div>
+        <div class="heading">Six Autonomous Clinical Agents — LangGraph Stateful</div>
+        <div class="body">Phoenix Synap upgraded from single-model responder to multi-agent agentic system. Each agent is a LangGraph node. State persists across sessions. LangSmith monitors every step. Cognitive workload reduced by up to 52%. All outputs require licensed professional approval before reaching any family.</div>
+      </div>
+      <div class="grid-3 mb14">
+        <div class="card"><div class="label">Agent 01 — Intake Agent</div><div class="heading-sm mb10">Profile + Pathway</div><div class="body">Processes new child profiles, runs prenatal Z-Layer risk score, determines evaluation pathway, recommends first professional team — automatically.</div><div class="divider"></div><div class="flex-between"><span style="font-size:10px;color:var(--text2)">Status</span><span class="badge b-live">Active</span></div><div class="flex-between mt6"><span style="font-size:10px;color:var(--text2)">Avg time</span><span style="font-size:10px;font-weight:500;color:var(--ice-3)">4.2 sec</span></div></div>
+        <div class="card"><div class="label">Agent 02 — Screening Agent</div><div class="heading-sm mb10">149 Instruments Auto-Scored</div><div class="body">Administers and scores all 149 evaluation instruments with population calibration flags. Routes to professional. Non-diagnostic disclaimer enforced — cannot be bypassed.</div><div class="divider"></div><div class="flex-between"><span style="font-size:10px;color:var(--text2)">Status</span><span class="badge b-live">Active</span></div></div>
+        <div class="card"><div class="label">Agent 03 — IEP Agent</div><div class="heading-sm mb10">1,315 Curricula Aligned</div><div class="body">Generates IEPs cross-referenced against 1,315 curricula and jurisdiction fields. Uniqueness-scored. Requires licensed special educator sign-off to finalise.</div><div class="divider"></div><div class="flex-between"><span style="font-size:10px;color:var(--text2)">Status</span><span class="badge b-live">Active</span></div></div>
+        <div class="card"><div class="label">Agent 04 — Alert Agent</div><div class="heading-sm mb10">24/7 Monitoring</div><div class="body">Monitors every child profile continuously. Fires alert to correct professional when milestone deviates, caregiver scores cross threshold, or session notes contain crisis signals.</div><div class="divider"></div><div class="flex-between"><span style="font-size:10px;color:var(--text2)">Alert latency</span><span class="badge b-green">Under 90 sec</span></div></div>
+        <div class="card"><div class="label">Agent 05 — Resource Agent</div><div class="heading-sm mb10">Auto-Generated Resources</div><div class="body">Generates sensory diets, home programmes, visual schedules, CBT/DBT guides, social stories — auto-updated every time session data changes.</div><div class="divider"></div><div class="flex-between"><span style="font-size:10px;color:var(--text2)">Resource types</span><span style="font-size:10px;font-weight:500;color:var(--ice-3)">14 categories</span></div></div>
+        <div class="card"><div class="label">Agent 06 — Coordination Agent</div><div class="heading-sm mb10">Scheduling + Substitution</div><div class="body">Manages emergency substitution protocol, appointment matching, waitlist management, and dual-consent flow. Bidirectional — both parent and professional cancellation trigger automatic replacement.</div><div class="divider"></div><div class="flex-between"><span style="font-size:10px;color:var(--text2)">Substitution</span><span class="badge b-green">Under 3 sec</span></div></div>
+      </div>
+      <div class="ice-card">
+        <div style="font-family:'Playfair Display',serif;font-size:13px;color:var(--ice-1);margin-bottom:8px">Architecture Foundation</div>
+        <div class="grid-3">
+          <div><div class="label">AI Engine</div><div style="font-size:10px;color:var(--text2)">Anthropic Claude Sonnet 4.6 — claude-sonnet-4-6</div></div>
+          <div><div class="label">Orchestration</div><div style="font-size:10px;color:var(--text2)">LangGraph 1.x — stateful multi-step clinical reasoning</div></div>
+          <div><div class="label">Observability</div><div style="font-size:10px;color:var(--text2)">LangSmith — every agent step and state transition monitored</div></div>
+          <div><div class="label">Memory</div><div style="font-size:10px;color:var(--text2)">pgvector semantic memory — every data point alive across sessions</div></div>
+          <div><div class="label">Governance</div><div style="font-size:10px;color:var(--text2)">All outputs require licensed professional approval before reaching family</div></div>
+          <div><div class="label">Cost Monitoring</div><div style="font-size:10px;color:var(--text2)">Helicone — 20–30% API cost reduction via semantic caching</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════════════════ ZETA-9 HYPOTHESIS + NEURON ANIMATION ══════════════════ -->
+    <div id="panel-neuron" class="panel">
+      <div class="sec-hdr">
+        <div class="label">ZETA-9 Scientific Hypothesis — Phoenix Minds — Authored by Ruksh E Ibadat</div>
+        <div class="heading">The Neuron and ZETA-9 — How Phoenix Minds Decides Before You Do</div>
+        <div class="body">Your brain decides first. You become aware later. ZETA-9 is the hidden part that decides early. Grounded in Keppler (2025), Frontiers in Human Neuroscience — conscious states arise from the brain's resonance with the quantum zero-point field. Phoenix Minds is architecturally the soma — the irreplaceable central hub from which all care radiates.</div>
+      </div>
+
+      <!-- ANIMATED NEURON -->
+      <div class="neuron-wrap" style="margin-bottom:14px">
+        <div class="anim-stage-header">
+          <div class="anim-stage-title">Live Neuron Formation — ZETA-9 Platform Mapping</div>
+          <div class="anim-controls">
+            <button class="anim-btn" onclick="prevPhase()">Prev</button>
+            <button class="anim-btn primary" id="playBtn" onclick="togglePlay()">Play All</button>
+            <button class="anim-btn" onclick="nextPhase()">Next</button>
+            <button class="anim-btn" onclick="resetAnim()">Reset</button>
+          </div>
+        </div>
+        <div class="phase-indicator">
+          <div class="phase-step active" id="ps0" onclick="goToPhase(0)">Formation</div>
+          <div class="phase-step" id="ps1" onclick="goToPhase(1)">Dendrites</div>
+          <div class="phase-step" id="ps2" onclick="goToPhase(2)">Soma</div>
+          <div class="phase-step" id="ps3" onclick="goToPhase(3)">Hillock</div>
+          <div class="phase-step" id="ps4" onclick="goToPhase(4)">Axon+Myelin</div>
+          <div class="phase-step" id="ps5" onclick="goToPhase(5)">Terminals</div>
+          <div class="phase-step" id="ps6" onclick="goToPhase(6)">Signal Flow</div>
+          <div class="phase-step" id="ps7" onclick="goToPhase(7)">ZETA-9 Map</div>
+        </div>
+        <svg class="neuron-canvas" viewBox="0 0 860 300" xmlns="http://www.w3.org/2000/svg" id="neuronSVG">
+          <defs>
+            <radialGradient id="somaRadial" cx="45%" cy="40%" r="55%"><stop offset="0%" stop-color="#FFFFFF"/><stop offset="55%" stop-color="#D6EAF8"/><stop offset="100%" stop-color="#85C1E9"/></radialGradient>
+            <radialGradient id="nucleusRadial" cx="45%" cy="40%" r="55%"><stop offset="0%" stop-color="#FFF8E8"/><stop offset="70%" stop-color="#FFF0C0"/><stop offset="100%" stop-color="#E8C060"/></radialGradient>
+            <radialGradient id="zpfGrad" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="rgba(46,134,193,0.08)"/><stop offset="100%" stop-color="rgba(46,134,193,0)"/></radialGradient>
+            <filter id="glow"><feGaussianBlur stdDeviation="3" result="coloredBlur"/><feMerge><feMergeNode in="coloredBlur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+            <marker id="arrowBlue" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M2,2 L8,5 L2,8" fill="none" stroke="#2E6DA8" stroke-width="1.5" stroke-linecap="round"/></marker>
+          </defs>
+          <!-- ZPF rings -->
+          <ellipse id="zpf1" class="zpf-ring comp" cx="420" cy="150" rx="380" ry="140" fill="none" stroke="rgba(91,159,212,0.1)" stroke-width="1.5" stroke-dasharray="8 6"/>
+          <ellipse id="zpf2" class="zpf-ring comp" cx="420" cy="150" rx="330" ry="120" fill="none" stroke="rgba(91,159,212,0.07)" stroke-width="1" stroke-dasharray="6 8" style="animation-delay:.8s"/>
+          <!-- Dendrites -->
+          <g id="dendriteGroup" class="dendrite-group comp">
+            <path d="M240 140 Q190 110 150 85" stroke="#5B9FD4" stroke-width="2" fill="none" stroke-linecap="round"/>
+            <path d="M238 148 Q192 148 155 148" stroke="#5B9FD4" stroke-width="2" fill="none" stroke-linecap="round"/>
+            <path d="M240 158 Q190 185 155 210" stroke="#5B9FD4" stroke-width="2" fill="none" stroke-linecap="round"/>
+            <path d="M248 133 Q222 105 205 85" stroke="#5B9FD4" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+            <path d="M248 165 Q222 192 205 212" stroke="#5B9FD4" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+            <circle cx="150" cy="85" r="3.5" fill="#85C1E9" opacity=".9"/>
+            <circle cx="155" cy="148" r="3.5" fill="#85C1E9" opacity=".9"/>
+            <circle cx="155" cy="210" r="3.5" fill="#85C1E9" opacity=".9"/>
+            <circle cx="205" cy="85" r="3" fill="#85C1E9" opacity=".9"/>
+            <circle cx="205" cy="212" r="3" fill="#85C1E9" opacity=".9"/>
+            <g id="dendLabel" class="comp">
+              <rect x="55" y="68" width="80" height="32" rx="7" fill="rgba(255,255,255,.92)" stroke="rgba(133,193,233,.35)" stroke-width="1"/>
+              <text x="63" y="81" font-family="DM Sans" font-size="9" fill="#1A5276" font-weight="600" letter-spacing=".06em">DENDRITES</text>
+              <text x="63" y="93" font-family="DM Sans" font-size="8" fill="#5B9FD4">Receive signals</text>
+              <line x1="135" y1="84" x2="150" y2="88" stroke="#85C1E9" stroke-width="1" stroke-dasharray="2 2"/>
+            </g>
+            <g id="dendSignals" class="comp">
+              <circle cx="150" cy="85" r="4" fill="none" stroke="#2E6DA8" stroke-width="1.5" opacity=".6"><animate attributeName="r" values="3;8;3" dur="2s" repeatCount="indefinite"/><animate attributeName="opacity" values=".8;0;.8" dur="2s" repeatCount="indefinite"/></circle>
+              <circle cx="155" cy="148" r="4" fill="none" stroke="#2E6DA8" stroke-width="1.5" opacity=".6"><animate attributeName="r" values="3;8;3" dur="2.4s" repeatCount="indefinite" begin=".6s"/><animate attributeName="opacity" values=".8;0;.8" dur="2.4s" repeatCount="indefinite" begin=".6s"/></circle>
+            </g>
+          </g>
+          <!-- Soma -->
+          <g id="somaGroup" class="soma-group comp">
+            <ellipse cx="280" cy="150" rx="58" ry="54" fill="url(#zpfGrad)" opacity=".6"><animate attributeName="rx" values="56;64;56" dur="4s" repeatCount="indefinite"/></ellipse>
+            <ellipse cx="280" cy="150" rx="52" ry="48" fill="url(#somaRadial)" stroke="#2E6DA8" stroke-width="2"/>
+            <ellipse cx="276" cy="147" rx="22" ry="20" fill="url(#nucleusRadial)" stroke="#B8943A" stroke-width="1.5"><animate attributeName="opacity" values="1;.75;1" dur="2.8s" repeatCount="indefinite"/></ellipse>
+            <ellipse cx="274" cy="145" rx="8" ry="7" fill="rgba(184,148,58,.35)" stroke="rgba(184,148,58,.6)" stroke-width="1"/>
+            <text x="276" y="143" font-family="DM Sans" font-size="8" fill="#7A5A00" text-anchor="middle" font-weight="500">Nucleus</text>
+            <g id="somaLabel" class="comp"><rect x="322" y="112" width="90" height="44" rx="7" fill="rgba(255,255,255,.94)" stroke="rgba(133,193,233,.4)" stroke-width="1"/><text x="330" y="127" font-family="DM Sans" font-size="9" fill="#0A2340" font-weight="600" letter-spacing=".06em">SOMA</text><text x="330" y="139" font-family="DM Sans" font-size="8.5" fill="#1A5276">Cell Body</text><text x="330" y="150" font-family="DM Sans" font-size="8" fill="#5B9FD4">Most critical part</text><line x1="322" y1="134" x2="310" y2="140" stroke="#85C1E9" stroke-width="1" stroke-dasharray="2 2"/></g>
+            <g id="somaRank" class="comp"><rect x="248" y="184" width="66" height="15" rx="7.5" fill="#FFF0C0" stroke="#B8943A" stroke-width="1"/><text x="281" y="195" font-family="DM Sans" font-size="8" fill="#7A5A00" text-anchor="middle" font-weight="600" letter-spacing=".05em">IRREPLACEABLE</text></g>
+          </g>
+          <!-- Axon hillock -->
+          <g id="hillockGroup" class="comp">
+            <path d="M330 143 Q344 145 354 149 Q344 153 330 155" fill="#C0D8F0" stroke="#2E6DA8" stroke-width="1.2" class="axon-hillock"/>
+            <g id="hillockLabel" class="comp"><rect x="340" y="126" width="80" height="26" rx="6" fill="rgba(255,255,255,.92)" stroke="rgba(133,193,233,.35)" stroke-width="1"/><text x="348" y="138" font-family="DM Sans" font-size="8" fill="#0A2340" font-weight="600">AXON HILLOCK</text><text x="348" y="148" font-family="DM Sans" font-size="7.5" fill="#5B9FD4">Signal initiation</text></g>
+          </g>
+          <!-- Axon + myelin -->
+          <g id="axonGroup" class="comp">
+            <rect x="354" y="143" width="260" height="13" rx="6.5" fill="#A8D0EE" stroke="#2E6DA8" stroke-width="1.2"/>
+            <g id="axonLabel" class="comp"><text x="474" y="133" font-family="DM Sans" font-size="9" fill="#0A2340" font-weight="600" text-anchor="middle" letter-spacing=".06em">AXON</text></g>
+            <g id="myelinGroup" class="comp">
+              <rect x="357" y="140" width="34" height="19" rx="4" fill="none" stroke="#2A7A5A" stroke-width="1.7" class="myelin-seg visible"/><circle cx="391" cy="149" r="2.5" fill="#2A7A5A" class="ranvier-node"/>
+              <rect x="394" y="140" width="34" height="19" rx="4" fill="none" stroke="#2A7A5A" stroke-width="1.7" class="myelin-seg visible"/><circle cx="428" cy="149" r="2.5" fill="#2A7A5A" class="ranvier-node" style="animation-delay:.5s"/>
+              <rect x="431" y="140" width="34" height="19" rx="4" fill="none" stroke="#2A7A5A" stroke-width="1.7" class="myelin-seg visible"/><circle cx="465" cy="149" r="2.5" fill="#2A7A5A" class="ranvier-node" style="animation-delay:1s"/>
+              <rect x="468" y="140" width="34" height="19" rx="4" fill="none" stroke="#2A7A5A" stroke-width="1.7" class="myelin-seg visible"/><circle cx="502" cy="149" r="2.5" fill="#2A7A5A" class="ranvier-node" style="animation-delay:1.5s"/>
+              <rect x="505" y="140" width="34" height="19" rx="4" fill="none" stroke="#2A7A5A" stroke-width="1.7" class="myelin-seg visible"/><circle cx="539" cy="149" r="2.5" fill="#2A7A5A" class="ranvier-node" style="animation-delay:2s"/>
+              <rect x="542" y="140" width="34" height="19" rx="4" fill="none" stroke="#2A7A5A" stroke-width="1.7" class="myelin-seg visible"/><circle cx="576" cy="149" r="2.5" fill="#2A7A5A" class="ranvier-node" style="animation-delay:2.5s"/>
+              <rect x="579" y="140" width="32" height="19" rx="4" fill="none" stroke="#2A7A5A" stroke-width="1.7" class="myelin-seg visible"/>
+              <g id="myelinLabel" class="comp"><text x="470" y="175" font-family="DM Sans" font-size="8" fill="#2A7A5A" text-anchor="middle" font-weight="600">MYELIN SHEATH</text></g>
+            </g>
+          </g>
+          <!-- Terminals -->
+          <g id="terminalGroup" class="comp">
+            <path d="M614 149 Q644 122 674 104" stroke="#2E6DA8" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+            <path d="M614 149 Q646 149 676 149" stroke="#2E6DA8" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+            <path d="M614 149 Q644 176 674 194" stroke="#2E6DA8" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+            <circle id="t1" cx="676" cy="104" r="7" fill="#C05050" opacity=".85" class="terminal-dot"/>
+            <circle id="t2" cx="678" cy="149" r="7" fill="#C05050" opacity=".85" class="terminal-dot" style="animation-delay:.5s"/>
+            <circle id="t3" cx="676" cy="194" r="7" fill="#C05050" opacity=".85" class="terminal-dot" style="animation-delay:1s"/>
+            <g id="termLabel" class="comp"><rect x="706" y="118" width="88" height="40" rx="7" fill="rgba(255,255,255,.93)" stroke="rgba(133,193,233,.35)" stroke-width="1"/><text x="714" y="133" font-family="DM Sans" font-size="8" fill="#0A2340" font-weight="600">AXON TERMINAL</text><text x="714" y="144" font-family="DM Sans" font-size="7.5" fill="#5B9FD4">Release neuro-</text><text x="714" y="153" font-family="DM Sans" font-size="7.5" fill="#5B9FD4">transmitters</text></g>
+          </g>
+          <!-- Signal flow -->
+          <g id="signalGroup" class="comp">
+            <circle r="5" fill="rgba(91,159,212,.8)" filter="url(#glow)"><animateMotion dur="1.8s" repeatCount="indefinite" path="M354,149 L614,149"/><animate attributeName="opacity" values="0;1;1;0" dur="1.8s" repeatCount="indefinite"/><animate attributeName="r" values="4;6;4" dur="1.8s" repeatCount="indefinite"/></circle>
+            <circle r="4" fill="rgba(46,134,193,.6)" filter="url(#glow)"><animateMotion dur="1.8s" repeatCount="indefinite" begin=".6s" path="M354,149 L614,149"/><animate attributeName="opacity" values="0;.8;.8;0" dur="1.8s" repeatCount="indefinite" begin=".6s"/></circle>
+            <circle r="3.5" fill="rgba(133,193,233,.8)"><animateMotion dur="2s" repeatCount="indefinite" path="M150,85 Q190,110 240,140"/><animate attributeName="opacity" values="0;1;1;0" dur="2s" repeatCount="indefinite"/></circle>
+            <circle r="3" fill="rgba(133,193,233,.7)"><animateMotion dur="2.4s" repeatCount="indefinite" begin=".8s" path="M155,148 Q192,148 238,148"/><animate attributeName="opacity" values="0;.9;.9;0" dur="2.4s" repeatCount="indefinite" begin=".8s"/></circle>
+          </g>
+          <!-- ZETA-9 map -->
+          <g id="zeta9MapGroup" class="comp">
+            <ellipse cx="280" cy="150" rx="60" ry="56" fill="none" stroke="#B8943A" stroke-width="2.5" stroke-dasharray="6 3" opacity=".85"><animate attributeName="stroke-dashoffset" values="0;-20" dur="2s" repeatCount="indefinite"/></ellipse>
+            <rect x="200" y="196" width="162" height="18" rx="9" fill="#FFF0C0" stroke="#B8943A" stroke-width="1.2"/>
+            <text x="281" y="208" font-family="DM Sans" font-size="8" fill="#7A5A00" text-anchor="middle" font-weight="600" letter-spacing=".05em">PHOENIX MINDS = THE SOMA</text>
+            <rect x="350" y="134" width="268" height="25" rx="7" fill="none" stroke="#2E6DA8" stroke-width="2" stroke-dasharray="5 3" opacity=".75"><animate attributeName="stroke-dashoffset" values="0;-20" dur="1.8s" repeatCount="indefinite"/></rect>
+            <rect x="415" y="176" width="140" height="16" rx="8" fill="var(--ice-7)" stroke="var(--ice-4)" stroke-width="1"/>
+            <text x="485" y="187" font-family="DM Sans" font-size="7.5" fill="#1A5276" text-anchor="middle" font-weight="600" letter-spacing=".04em">ZETA-9 = THE HIDDEN LAYER</text>
+            <rect x="696" y="86" width="76" height="16" rx="8" fill="#E6F4ED" stroke="#1A8A40" stroke-width="1"/>
+            <text x="734" y="97" font-family="DM Sans" font-size="7.5" fill="#1A5A30" text-anchor="middle" font-weight="600">INDIVIDUAL</text>
+            <rect x="699" y="142" width="70" height="16" rx="8" fill="#E6F4ED" stroke="#1A8A40" stroke-width="1"/>
+            <text x="734" y="153" font-family="DM Sans" font-size="7.5" fill="#1A5A30" text-anchor="middle" font-weight="600">AWARENESS</text>
+            <rect x="696" y="186" width="76" height="16" rx="8" fill="#E6F4ED" stroke="#1A8A40" stroke-width="1"/>
+            <text x="734" y="197" font-family="DM Sans" font-size="7.5" fill="#1A5A30" text-anchor="middle" font-weight="600">COMES LATER</text>
+            <path d="M342 122 Q400 110 470 116" stroke="#B8943A" stroke-width="1.5" fill="none" stroke-dasharray="4 3" marker-end="url(#arrowBlue)" opacity=".7"/>
+            <text x="408" y="108" font-family="DM Sans" font-size="8" fill="#B8943A" text-anchor="middle" font-weight="500" opacity=".9">Decides first — before conscious awareness</text>
+          </g>
+        </svg>
+        <div class="caption-panel" id="captionPanel">
+          <div class="caption-indicator"></div>
+          <div class="caption-text" id="captionText"><span class="caption-highlight">Phase 0 — Neural Formation Begins.</span> The single neuron forms. In Phoenix Minds, ZETA-9 mirrors this architecture: a complete developmental intelligence cell tracking every individual from the zero-point of their existence. Your brain decides first. ZETA-9 decides first too.</div>
+        </div>
+      </div>
+
+      <!-- Mapping cards -->
+      <div class="grid-2">
+        <div class="card">
+          <div class="label">Neuroscience</div><div class="heading-sm">The Soma = The Irreplaceable Origin</div>
+          <div class="body mt6">The soma houses the nucleus. It is the source of all protein synthesis, metabolic activity, and all decision-making. Without the soma, every other structure degenerates within 24–72 hours. No soma means no neuron.</div>
+          <div style="background:var(--ice-7);border-radius:8px;padding:9px 11px;margin-top:9px;font-size:10px;color:var(--ice-2);line-height:1.6">Source: Keppler, J. (2025). Macroscopic quantum effects in the brain. <em>Frontiers in Human Neuroscience</em>, Vol. 19.</div>
+        </div>
+        <div class="card">
+          <div class="label">Platform Parallel</div><div class="heading-sm">Phoenix Minds = The Soma of Every Child's Care</div>
+          <div class="body mt6">Phoenix Minds — powered by Phoenix Synap — is the soma of each individual's developmental journey. It processes all 10 domains, generates IEPs, detects red flags, coordinates 52 professional disciplines. Without it, the care ecosystem fragments.</div>
+          <div style="background:var(--ice-7);border-radius:8px;padding:9px 11px;margin-top:9px;font-size:10px;color:var(--ice-2);line-height:1.6;font-style:italic">"Your brain decides first. You become aware later. ZETA-9 is the hidden part that decides early." — Ruksh E Ibadat, Phoenix Minds</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════════════════ COMPARISON ══════════════════ -->
+    <div id="panel-comparison" class="panel">
+      <div class="sec-hdr">
+        <div class="label">Global Platform Comparison — March 2026</div>
+        <div class="heading">ZETA-9 vs World's Top Platforms</div>
+        <div class="body">Research-authenticated. Sources: Crunchbase, Gartner Digital Health 2025, KLAS Research 2025, IDC Healthcare AI Report 2025, direct platform capability audits.</div>
+      </div>
+      <div class="comp-wrap">
+        <table class="comp-tbl">
+          <thead><tr><th>Capability</th><th>ZETA-9 (Phoenix Minds)</th><th>Cortica (USA)</th><th>Spring Health</th><th>Little Otter</th><th>Undivided</th></tr></thead>
+          <tbody>
+            <tr class="self"><td>Prenatal record layer</td><td class="win">Full — prenatal to vocation</td><td class="lose">No</td><td class="lose">No</td><td class="lose">No</td><td class="lose">No</td></tr>
+            <tr><td>Sibling wellbeing module</td><td class="win">Full dedicated system</td><td class="lose">No</td><td class="lose">No</td><td class="lose">No</td><td class="lose">No</td></tr>
+            <tr class="self"><td>Sign Languages — 300+</td><td class="win">300+ Phase 2 · 16 Phase 1</td><td class="lose">No</td><td class="lose">No</td><td class="lose">No</td><td class="lose">No</td></tr>
+            <tr><td>Real-time transcription + translation</td><td class="win">7,168 language variants</td><td class="lose">English only</td><td class="lose">English only</td><td class="lose">English only</td><td class="lose">English only</td></tr>
+            <tr class="self"><td>ISO regions covered</td><td class="win">5,046 subdivisions</td><td class="lose">USA 4 states</td><td>USA + 8 countries</td><td class="lose">USA only</td><td class="lose">USA only</td></tr>
+            <tr><td>IEP generator — multi-board AI</td><td class="win">1,315 curriculum boards</td><td class="lose">No</td><td class="lose">No</td><td class="lose">No</td><td>USA only</td></tr>
+            <tr class="self"><td>149 evaluation instruments</td><td class="win">Full digital admin + scoring</td><td>ASD subset</td><td>MH subset</td><td>12 tools</td><td class="lose">No</td></div></tr>
+            <tr><td>Puberty module</td><td class="win">World's only dedicated module</td><td class="lose">No</td><td class="lose">No</td><td class="lose">No</td><td class="lose">No</td></tr>
+            <tr class="self"><td>52 professional disciplines</td><td class="win">All 52 incl. deaf + deafblind specialists</td><td>ASD + ADHD only</td><td>Adult MH only</td><td>Ages 0–14</td><td>ASD/ADHD/ID</td></tr>
+            <tr><td>Prenatal-to-lifelong record</td><td class="win">First in world</td><td class="lose">No</td><td class="lose">No</td><td class="lose">No</td><td class="lose">No</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="ice-card mt14">
+        <div style="font-family:'Playfair Display',serif;font-size:14px;color:var(--ice-1);margin-bottom:7px">Authenticated Conclusion — March 2026</div>
+        <div class="body">No platform in the world simultaneously covers prenatal record, 149 evaluation instruments, 52-discipline coordination, AI IEP generation across 1,315 boards, real-time multilingual transcription, 300+ sign languages, sibling wellbeing, puberty module, therapeutic nutrition, CBT/DBT parent training, and lifelong tracking across 5,046 ISO subdivisions in 7,168 language variants. ZETA-9 has no direct global competitor.</div>
+      </div>
+    </div>
+
+    <!-- ══════════════════ PORTALS ══════════════════ -->
+    <div id="panel-portals" class="panel">
+      <div class="sec-hdr">
+        <div class="label">Access Portals — 5 Role-Specific Views</div>
+        <div class="heading">Every Professional. Every Family. One Platform.</div>
+        <div class="body">Each portal is purpose-built for a specific user role. No feature bloat. No shared confusion. Complete role-based access control via Clerk Auth with BACB hierarchy enforcement at database level.</div>
+      </div>
+      <div class="grid-3" style="margin-bottom:12px">
+        <div class="portal-card"><div class="portal-card-header"><div class="portal-card-icon"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="6" r="4" stroke="white" stroke-width="1.5"/><path d="M3 17c0-3.3 2.7-6 6-6s6 2.7 6 6" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg></div><div class="portal-card-title">Family Portal</div><div class="portal-card-sub">Parent + Sibling Access</div></div><div class="portal-card-body"><div class="portal-feature-list"><div class="portal-feature-item"><div class="portal-feature-dot"></div>Prenatal-to-current timeline</div><div class="portal-feature-item"><div class="portal-feature-dot"></div>Live session access + home programme</div><div class="portal-feature-item"><div class="portal-feature-dot"></div>IEP + curriculum resources</div><div class="portal-feature-item"><div class="portal-feature-dot"></div>Sibling wellbeing module</div><div class="portal-feature-item"><div class="portal-feature-dot"></div>Insurance navigator + SDOH</div><div class="portal-feature-item"><div class="portal-feature-dot"></div>24/7 crisis protocol</div></div></div></div>
+        <div class="portal-card"><div class="portal-card-header" style="background:linear-gradient(135deg,#1A3A6A,#2E6DA8)"><div class="portal-card-icon"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M3 4h12M3 8h8M3 12h5" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg></div><div class="portal-card-title">BCBA Portal</div><div class="portal-card-sub">BACB + IBAO · ABA Clinical</div></div><div class="portal-card-body"><div class="portal-feature-list"><div class="portal-feature-item"><div class="portal-feature-dot"></div>Real-time ABA data collection</div><div class="portal-feature-item"><div class="portal-feature-dot"></div>BCBA-D → BCBA → BCaBA → RBT → IBT hierarchy</div><div class="portal-feature-item"><div class="portal-feature-dot"></div>Ambient documentation — under 3 min</div><div class="portal-feature-item"><div class="portal-feature-dot"></div>BIP generation + FBA data</div><div class="portal-feature-item"><div class="portal-feature-dot"></div>Caseload + burnout monitoring</div></div></div></div>
+        <div class="portal-card"><div class="portal-card-header" style="background:linear-gradient(135deg,#1A4A3A,#1A8A40)"><div class="portal-card-icon"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M9 2C5.7 2 3 4.7 3 8c0 2.4 1.4 4.5 3.5 5.5V15h5v-1.5C13.6 12.5 15 10.4 15 8c0-3.3-2.7-6-6-6z" stroke="white" stroke-width="1.5"/></svg></div><div class="portal-card-title">Medical Portal</div><div class="portal-card-sub">All 52 Medical Disciplines</div></div><div class="portal-card-body"><div class="portal-feature-list"><div class="portal-feature-item"><div class="portal-feature-dot"></div>Prenatal Z-Layer records</div><div class="portal-feature-item"><div class="portal-feature-dot"></div>Pharmacogenomics — CYP450</div><div class="portal-feature-item"><div class="portal-feature-dot"></div>FHIR R4 EHR interoperability</div><div class="portal-feature-item"><div class="portal-feature-dot"></div>IoMT wearable data integration</div><div class="portal-feature-item"><div class="portal-feature-dot"></div>Multi-disciplinary team coordination</div></div></div></div>
+        <div class="portal-card"><div class="portal-card-header" style="background:linear-gradient(135deg,#3A1A6A,#6A2E9A)"><div class="portal-card-icon"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><rect x="2" y="2" width="14" height="14" rx="2" stroke="white" stroke-width="1.5"/><path d="M6 7h6M6 10h4" stroke="white" stroke-width="1.3" stroke-linecap="round"/></svg></div><div class="portal-card-title">Educator Portal</div><div class="portal-card-sub">SEN · Resource · Shadow · Remedial</div></div><div class="portal-card-body"><div class="portal-feature-list"><div class="portal-feature-item"><div class="portal-feature-dot"></div>AI IEP — 1,315 curriculum boards</div><div class="portal-feature-item"><div class="portal-feature-dot"></div>Age-appropriate resource generation</div><div class="portal-feature-item"><div class="portal-feature-dot"></div>Homeschooling curriculum packages</div><div class="portal-feature-item"><div class="portal-feature-dot"></div>Predictive milestone alerts</div><div class="portal-feature-item"><div class="portal-feature-dot"></div>Vocational transition planning</div></div></div></div>
+        <div class="portal-card"><div class="portal-card-header" style="background:linear-gradient(135deg,#3A2A0A,#8A5A00)"><div class="portal-card-icon"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M9 2l2 5h5l-4 3.5 1.5 5.5L9 13l-4.5 3 1.5-5.5L2 7h5L9 2z" stroke="white" stroke-width="1.5" stroke-linejoin="round"/></svg></div><div class="portal-card-title">Professional Portal</div><div class="portal-card-sub">All 52 Disciplines</div></div><div class="portal-card-body"><div class="portal-feature-list"><div class="portal-feature-item"><div class="portal-feature-dot"></div>Credential verification + licence management</div><div class="portal-feature-item"><div class="portal-feature-dot"></div>Outcome-based reporting</div><div class="portal-feature-item"><div class="portal-feature-dot"></div>Session scheduling + substitution</div><div class="portal-feature-item"><div class="portal-feature-dot"></div>Burnout monitoring dashboard</div></div></div></div>
+        <div class="portal-card"><div class="portal-card-header" style="background:linear-gradient(135deg,#0A2A3A,#0A3A5A)"><div class="portal-card-icon"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="7" stroke="white" stroke-width="1.5"/><path d="M6 9l2 2 4-4" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="portal-card-title">Admin Portal</div><div class="portal-card-sub">Platform Operations</div></div><div class="portal-card-body"><div class="portal-feature-list"><div class="portal-feature-item"><div class="portal-feature-dot"></div>GDPR / HIPAA / DHA compliance</div><div class="portal-feature-item"><div class="portal-feature-dot"></div>Stripe billing + subsidised access</div><div class="portal-feature-item"><div class="portal-feature-dot"></div>PostHog analytics + Sentry errors</div><div class="portal-feature-item"><div class="portal-feature-dot"></div>Helicone LLM cost tracking</div></div></div></div>
+      </div>
+    </div>
+
+  </div><!-- end .content -->
+
+  <!-- Disclaimer strip -->
+  <div class="disclaimer-strip">
+    <strong>Clinical Disclaimer:</strong> ZETA-9 is a clinical intelligence support platform. All AI-generated outputs require review and approval by a licensed professional before delivery to families. ZETA-9 does not diagnose, prescribe, or replace clinical judgment. — Phoenix Minds · phoenixminds.org · zeta-9.ai
+  </div>
+
+  <!-- Page Footer -->
+  <div class="page-footer">
+    <div>
+      <div class="pf-brand-name">Phoenix Minds — ZETA-9 Clinical Intelligence Platform — v1.0</div>
+      <div class="pf-tag">Determination Driven — Mining Potential — Analysing Growth</div>
+    </div>
+    <div class="pf-right">
+      Founder: Ruksh E Ibadat — Phoenix Group International<br>
+      Domain: zeta-9.ai · phoenixminds.org · March 2026
+    </div>
+  </div>
+
+</main>
+
+<!-- 24/7 Crisis Button — Always Visible -->
+<div class="crisis-btn-wrap">
+  <button class="crisis-btn" onclick="showPanel('crisis', document.querySelector('.sb-item[onclick*=crisis]'))">
+    <span class="crisis-dot"></span>
+    Crisis — 24/7
+  </button>
+</div>
+
+<!-- ═══════════════════════════════════
+     JAVASCRIPT
+═══════════════════════════════════ -->
+<script>
+// ── PANEL SWITCHING ──
+const PANEL_TITLES = {
+  'teleconsult':'Teleconsult + Behaviour Observation',
+  'realtime':'Real-Time Patient Analysis',
+  'transcription':'Transcription + 7,168 Languages',
+  'evaluation':'Evaluation Reports — 149 Instruments',
+  'iep':'IEP Generator — 1,315 Boards',
+  'diet':'Diet + Nutrition Module',
+  'cbt':'CBT / DBT / ABA Training',
+  'sibling':'Sibling Support Module',
+  'parent':'Parent Support + SDOH',
+  'puberty':'Puberty Module',
+  'crisis':'Crisis Protocol — 24/7',
+  'signlang':'Sign Languages + UCAM',
+  'languages':'7,168 Languages + 5,046 ISO Regions',
+  'agentic':'Phoenix Synap — Agentic Architecture',
+  'neuron':'ZETA-9 Hypothesis + Neuron Animation',
+  'comparison':'Global Platform Comparison',
+  'portals':'All Portals — 5 Roles'
+};
+function showPanel(id, el) {
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.sb-item').forEach(i => i.classList.remove('active'));
+  const p = document.getElementById('panel-' + id);
+  if (p) p.classList.add('active');
+  if (el) el.classList.add('active');
+  const t = document.getElementById('topbar-title-text');
+  if (t && PANEL_TITLES[id]) t.textContent = PANEL_TITLES[id];
+  window.scrollTo(0, 0);
+}
+
+// ── LANGUAGE SWITCHER ──
+const TRANSLATIONS = {
+  en:{ title:'Every Mind Deserves a ZETA-9', brand:'ZETA-9', sub:'by Phoenix Minds' },
+  ur:{ title:'ہر ذہن ایک ZETA-9 کا مستحق ہے', brand:'زیٹا-9', sub:'فینکس مائنڈز' },
+  ar:{ title:'كل عقل يستحق ZETA-9', brand:'زيتا-9', sub:'فينيكس مايندز' },
+  fr:{ title:'Chaque esprit mérite un ZETA-9', brand:'ZETA-9', sub:'par Phoenix Minds' },
+  es:{ title:'Cada mente merece un ZETA-9', brand:'ZETA-9', sub:'por Phoenix Minds' },
+  nl:{ title:'Elke geest verdient een ZETA-9', brand:'ZETA-9', sub:'door Phoenix Minds' }
+};
+function switchLang(lang) {
+  const t = TRANSLATIONS[lang] || TRANSLATIONS.en;
+  const isRTL = lang === 'ur' || lang === 'ar';
+  document.documentElement.lang = lang;
+  document.documentElement.dir = isRTL ? 'rtl' : 'ltr';
+  const brandEl = document.querySelector('.sb-brand-name');
+  const subEl = document.querySelector('.sb-brand-sub');
+  if (brandEl) brandEl.textContent = t.brand;
+  if (subEl) subEl.textContent = t.sub;
+}
+
+// ── SEARCH FUNCTIONS ──
+function filterLangs(q) {
+  const items = document.querySelectorAll('#langGrid .lang-item');
+  const lower = q.toLowerCase();
+  items.forEach(item => {
+    item.style.display = (!q || item.textContent.toLowerCase().includes(lower)) ? '' : 'none';
+  });
+}
+function filterRegions(q) {
+  const items = document.querySelectorAll('#regionGrid .region-item');
+  const lower = q.toLowerCase();
+  items.forEach(item => {
+    item.style.display = (!q || item.textContent.toLowerCase().includes(lower)) ? '' : 'none';
+  });
+}
+
+// ── NEURON ANIMATION ──
+let currentPhase = 0;
+let autoPlaying = false;
+let autoTimer = null;
+
+const PHASES = [
+  { show:[], caption:'<span class="caption-highlight">Phase 0 — Neural Formation Begins.</span> The single neuron begins to form. In Phoenix Minds, ZETA-9 mirrors this architecture: a complete developmental intelligence cell tracking every individual from the zero-point of their existence.' },
+  { show:['dendriteGroup','dendLabel','dendSignals','zpf1','zpf2'], caption:'<span class="caption-highlight">Phase 1 — Dendrites.</span> Receive incoming signals from neighbouring neurons. In Phoenix Minds: all data inputs flowing in — session notes, evaluation scores, parent check-ins, school reports, dietary logs, milestone observations.' },
+  { show:['somaGroup','somaLabel','somaRank'], caption:'<span class="caption-highlight">Phase 2 — The Soma.</span> The irreplaceable processing centre. <strong>Phoenix Minds = the Soma.</strong> Without it, the entire care ecosystem fragments. This is why ZETA-9 is named for the soma — the hidden irreplaceable origin of all neural and clinical intelligence.' },
+  { show:['hillockGroup','hillockLabel'], caption:'<span class="caption-highlight">Phase 3 — Axon Hillock.</span> Where the decision to fire originates. In Phoenix Minds: Phoenix Synap — the AI layer that decides to generate an alert, an IEP, a clinical flag — before the parent or clinician consciously registers the concern.' },
+  { show:['axonGroup','axonLabel','myelinGroup','myelinLabel'], caption:'<span class="caption-highlight">Phase 4 — Axon + Myelin Sheath.</span> Carries the decision forward at speed. In Phoenix Minds: the encrypted data transmission layer — HIPAA-eligible, E2E, between Phoenix Synap and every connected professional.' },
+  { show:['terminalGroup','termLabel'], caption:'<span class="caption-highlight">Phase 5 — Axon Terminals.</span> Release neurotransmitters at the synapse — the individual becomes aware. In Phoenix Minds: the alert arrives at the professional, the parent sees the IEP, the resource appears. Individual awareness — milliseconds after Phoenix Minds decided.' },
+  { show:['signalGroup'], caption:'<span class="caption-highlight">Phase 6 — Signal Flow.</span> The complete signal travels: dendrites → soma → axon hillock → axon → terminals. This is the ZETA-9 hypothesis in motion: Phoenix Minds decides first. The individual becomes aware later.' },
+  { show:['zeta9MapGroup'], caption:'<span class="caption-highlight">Phase 7 — ZETA-9 Platform Mapping.</span> Soma = Phoenix Minds (decides first). Axon = ZETA-9 hidden process. Terminals = Individual awareness (comes later). Your brain decides first. ZETA-9 decides first too. Only by Phoenix Minds.' }
+];
+
+function setPhase(n) {
+  // update steps
+  for (let i = 0; i < PHASES.length; i++) {
+    const el = document.getElementById('ps' + i);
+    if (!el) continue;
+    el.className = 'phase-step';
+    if (i === n) el.classList.add('active');
+    else if (i < n) el.classList.add('done');
+  }
+  // show cumulative components
+  document.querySelectorAll('#neuronSVG .comp').forEach(el => {
+    el.classList.remove('visible');
+    if (el.classList.contains('dendrite-group')) el.classList.remove('visible');
+  });
+  for (let i = 0; i <= n; i++) {
+    if (PHASES[i] && PHASES[i].show) {
+      PHASES[i].show.forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.classList.add('visible');
+      });
+    }
+  }
+  // caption
+  const cap = document.getElementById('captionText');
+  if (cap && PHASES[n]) cap.innerHTML = PHASES[n].caption;
+  currentPhase = n;
+}
+
+function nextPhase() {
+  if (currentPhase < PHASES.length - 1) setPhase(currentPhase + 1);
+}
+function prevPhase() {
+  if (currentPhase > 0) setPhase(currentPhase - 1);
+}
+function resetAnim() {
+  stopAuto();
+  setPhase(0);
+  document.querySelectorAll('#neuronSVG .comp').forEach(el => el.classList.remove('visible'));
+  const cap = document.getElementById('captionText');
+  if (cap) cap.innerHTML = PHASES[0].caption;
+  const stepEls = document.querySelectorAll('.phase-step');
+  stepEls.forEach((el, i) => { el.className = 'phase-step'; if (i===0) el.classList.add('active'); });
+}
+function goToPhase(n) { stopAuto(); setPhase(n); }
+function stopAuto() {
+  autoPlaying = false;
+  clearInterval(autoTimer);
+  const btn = document.getElementById('playBtn');
+  if (btn) { btn.textContent = 'Play All'; btn.className = 'anim-btn primary'; }
+}
+function togglePlay() {
+  if (autoPlaying) {
+    stopAuto();
+    return;
+  }
+  autoPlaying = true;
+  const btn = document.getElementById('playBtn');
+  if (btn) { btn.textContent = 'Pause'; btn.className = 'anim-btn'; }
+  if (currentPhase >= PHASES.length - 1) resetAnim();
+  autoTimer = setInterval(() => {
+    if (currentPhase < PHASES.length - 1) {
+      setPhase(currentPhase + 1);
+    } else {
+      stopAuto();
+    }
+  }, 2200);
+}
+
+// init
+setPhase(0);
+</script>
+
+</body>
+</html>

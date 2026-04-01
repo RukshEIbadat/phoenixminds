@@ -1,0 +1,1267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RAHAT-AI — راحت اے آئی — Healthcare Wellbeing Platform</title>
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=DM+Sans:wght@300;400;500;600;700&family=DM+Mono:wght@300;400;500&family=Noto+Nastaliq+Urdu:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* ═══════════════════════════════════════════════════════════════════════
+   RAHAT-AI THERAPEUTIC BIOPHILIC DESIGN SYSTEM
+   Research-validated: Sage green + warm cream + soft teal
+   Evidence base: Color psychology for healthcare burnout prevention
+   WGSN 2026 Colour of Year: Transformative Teal
+   Manchester Color Wheel Study: avoiding grays, using warmth + nature
+   Biophilic design: deep blues + greens reduce heart rate, lower cortisol
+═══════════════════════════════════════════════════════════════════════ */
+:root {
+  /* PRIMARY PALETTE — SAGE GREEN (biophilic, reduces anxiety, nature-grounding) */
+  --sage-50:   #f6f9f6;
+  --sage-100:  #eaf2ea;
+  --sage-200:  #d0e4d0;
+  --sage-300:  #a8cba8;
+  --sage-400:  #7aaa7a;
+  --sage-500:  #5a9060;
+  --sage-600:  #437548;
+  --sage-700:  #355c39;
+
+  /* SECONDARY — WARM CREAM (welcome, safe, non-clinical warmth) */
+  --cream-50:  #fdfbf7;
+  --cream-100: #f8f4ec;
+  --cream-200: #f0e9d8;
+  --cream-300: #e4d7c0;
+  --cream-400: #c9b89a;
+
+  /* ACCENT — TRANSFORMATIVE TEAL (WGSN 2026, renewal, resilience, trust) */
+  --teal-50:   #f0fafa;
+  --teal-100:  #cceeee;
+  --teal-200:  #99dddd;
+  --teal-300:  #5fc8c8;
+  --teal-400:  #2aadad;
+  --teal-500:  #1a9090;
+  --teal-600:  #147474;
+
+  /* WARM STONE (grounding, stability) */
+  --stone-400: #9d8a78;
+  --stone-500: #7a6858;
+  --stone-600: #5c4e42;
+  --stone-700: #3d3228;
+
+  /* SUPPORTING — DUSTY ROSE (compassion, empathy, human warmth) */
+  --rose-100:  #fceeed;
+  --rose-200:  #f5d5d2;
+  --rose-300:  #e9a89f;
+  --rose-400:  #d4776c;
+
+  /* FUNCTIONAL COLORS — muted, not alarming */
+  --success:   #4a7c59;
+  --warning:   #c5832a;
+  --danger:    #b85555;
+  --info:      --teal-500;
+
+  /* TEXT */
+  --text-primary:   #2d3a2e;
+  --text-secondary: #4d5e4e;
+  --text-muted:     #7a8c7b;
+  --text-warm:      #6b5c4a;
+
+  /* SURFACES */
+  --surface-base:    #fdfbf7;
+  --surface-warm:    #f8f4ec;
+  --surface-sage:    #eaf2ea;
+  --surface-teal:    #f0fafa;
+  --surface-card:    #ffffff;
+
+  /* BORDERS */
+  --border-soft:   rgba(90,144,96,0.15);
+  --border-medium: rgba(90,144,96,0.25);
+  --border-warm:   rgba(196,163,120,0.2);
+
+  /* SHADOWS — warm, not cold */
+  --shadow-sm: 0 1px 3px rgba(61,50,40,0.08), 0 1px 2px rgba(61,50,40,0.04);
+  --shadow-md: 0 4px 12px rgba(61,50,40,0.10), 0 2px 6px rgba(61,50,40,0.05);
+  --shadow-lg: 0 8px 24px rgba(61,50,40,0.12), 0 4px 10px rgba(61,50,40,0.06);
+  --shadow-teal: 0 4px 16px rgba(26,144,144,0.15);
+
+  /* TYPOGRAPHY */
+  --font-display: 'Lora', Georgia, serif;
+  --font-body:    'DM Sans', system-ui, sans-serif;
+  --font-mono:    'DM Mono', monospace;
+  --font-urdu:    'Noto Nastaliq Urdu', serif;
+
+  /* SPACING */
+  --radius-sm: 6px;
+  --radius-md: 12px;
+  --radius-lg: 20px;
+  --radius-xl: 32px;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; font-size: 16px; }
+body {
+  font-family: var(--font-body);
+  background: var(--surface-base);
+  color: var(--text-primary);
+  overflow-x: hidden;
+  line-height: 1.6;
+}
+.ur { font-family: var(--font-urdu); direction: rtl; line-height: 2.2; }
+
+/* ── SCROLLBAR ── */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: var(--cream-100); }
+::-webkit-scrollbar-thumb { background: var(--sage-400); border-radius: 2px; }
+
+/* ── NAVIGATION ── */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 1rem 3rem;
+  background: rgba(253,251,247,0.94);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--border-warm);
+  box-shadow: 0 1px 8px rgba(61,50,40,0.06);
+}
+.nav-brand { display: flex; align-items: center; gap: 0.8rem; }
+.nav-wordmark {
+  font-family: var(--font-display);
+  font-size: 1.4rem; font-weight: 700;
+  color: var(--text-primary); letter-spacing: -0.01em;
+}
+.nav-wordmark em { font-style: normal; color: var(--teal-500); }
+.nav-ur {
+  font-family: var(--font-urdu);
+  font-size: 0.85rem; color: var(--stone-500);
+  direction: rtl; font-weight: 500;
+}
+.nav-tagline {
+  font-family: var(--font-mono);
+  font-size: 0.6rem; font-weight: 400;
+  letter-spacing: 0.06em; text-transform: uppercase;
+  color: var(--text-muted);
+  background: var(--sage-50);
+  border: 1px solid var(--border-soft);
+  padding: 0.2rem 0.6rem;
+  border-radius: var(--radius-sm);
+}
+.nav-links { display: flex; gap: 2.5rem; list-style: none; }
+.nav-links a {
+  font-size: 0.82rem; font-weight: 500;
+  color: var(--text-secondary); text-decoration: none;
+  transition: color 0.2s;
+}
+.nav-links a:hover { color: var(--teal-500); }
+.nav-cta {
+  background: var(--teal-500); color: white;
+  border: none; cursor: pointer;
+  font-family: var(--font-body); font-size: 0.82rem; font-weight: 600;
+  padding: 0.55rem 1.4rem;
+  border-radius: var(--radius-md);
+  transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+}
+.nav-cta:hover {
+  background: var(--teal-600);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-teal);
+}
+
+/* ── HERO ── */
+.hero {
+  min-height: 100vh;
+  background: linear-gradient(160deg, var(--cream-50) 0%, var(--sage-50) 40%, var(--teal-50) 100%);
+  position: relative; overflow: hidden;
+  display: grid; grid-template-columns: 1fr 1fr;
+  align-items: center; gap: 4rem;
+  padding: 8rem 3rem 5rem;
+}
+
+/* Organic background shapes */
+.hero::before {
+  content: '';
+  position: absolute; top: -8rem; right: -8rem;
+  width: 50rem; height: 50rem;
+  background: radial-gradient(ellipse, rgba(90,144,96,0.06) 0%, transparent 70%);
+  border-radius: 50%; pointer-events: none;
+}
+.hero::after {
+  content: '';
+  position: absolute; bottom: -10rem; left: -6rem;
+  width: 40rem; height: 40rem;
+  background: radial-gradient(ellipse, rgba(26,144,144,0.07) 0%, transparent 70%);
+  border-radius: 50%; pointer-events: none;
+}
+
+/* Floating botanical shapes */
+.botanical-ring {
+  position: absolute; border-radius: 50%;
+  border: 1px solid rgba(90,144,96,0.12);
+  pointer-events: none;
+}
+
+.hero-left { position: relative; z-index: 1; }
+.hero-badge {
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  background: var(--surface-sage);
+  border: 1px solid var(--border-soft);
+  border-radius: var(--radius-xl);
+  padding: 0.35rem 1rem; margin-bottom: 1.5rem;
+  font-family: var(--font-mono); font-size: 0.65rem;
+  font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase;
+  color: var(--sage-600);
+}
+.hero-badge::before {
+  content: ''; width: 6px; height: 6px;
+  background: var(--sage-500); border-radius: 50%;
+  animation: breathe 2.5s ease-in-out infinite;
+}
+@keyframes breathe {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(0.6); opacity: 0.5; }
+}
+.hero h1 {
+  font-family: var(--font-display);
+  font-size: clamp(2.8rem, 4.5vw, 4.5rem);
+  font-weight: 700; line-height: 1.08;
+  letter-spacing: -0.02em; color: var(--text-primary);
+  margin-bottom: 0.4rem;
+}
+.hero h1 em {
+  font-style: italic; color: var(--teal-500);
+  display: block;
+}
+.hero-ur-title {
+  font-family: var(--font-urdu);
+  font-size: clamp(1.4rem, 2.2vw, 2rem);
+  color: var(--stone-500); direction: rtl; text-align: right;
+  line-height: 2.2; font-weight: 600;
+  margin-bottom: 1.2rem; display: block;
+}
+.hero-desc {
+  font-size: 1rem; line-height: 1.8;
+  color: var(--text-secondary); max-width: 500px;
+  margin-bottom: 0.6rem;
+}
+.hero-desc-ur {
+  font-family: var(--font-urdu);
+  font-size: 0.88rem; line-height: 2.4;
+  color: var(--stone-400); direction: rtl; text-align: right;
+  display: block; max-width: 500px; margin-bottom: 2rem;
+}
+.hero-actions { display: flex; gap: 1rem; align-items: center; margin-bottom: 3rem; }
+.btn-primary {
+  background: var(--teal-500); color: white;
+  border: none; cursor: pointer;
+  font-family: var(--font-body); font-size: 0.88rem; font-weight: 600;
+  padding: 0.75rem 1.8rem; border-radius: var(--radius-md);
+  transition: all 0.2s; box-shadow: var(--shadow-teal);
+}
+.btn-primary:hover { background: var(--teal-600); transform: translateY(-2px); }
+.btn-secondary {
+  background: transparent; color: var(--teal-600);
+  border: 1.5px solid var(--teal-300); cursor: pointer;
+  font-family: var(--font-body); font-size: 0.88rem; font-weight: 500;
+  padding: 0.72rem 1.6rem; border-radius: var(--radius-md);
+  transition: all 0.2s;
+}
+.btn-secondary:hover { background: var(--teal-50); border-color: var(--teal-400); }
+
+.hero-stats { display: flex; gap: 2.5rem; }
+.hstat { display: flex; flex-direction: column; gap: 0.15rem; }
+.hstat-num {
+  font-family: var(--font-display);
+  font-size: 2.2rem; font-weight: 700;
+  color: var(--teal-500); line-height: 1;
+}
+.hstat-en {
+  font-family: var(--font-mono);
+  font-size: 0.6rem; letter-spacing: 0.07em;
+  text-transform: uppercase; color: var(--text-muted); line-height: 1.5;
+}
+.hstat-ur {
+  font-family: var(--font-urdu); font-size: 0.65rem;
+  color: var(--stone-400); direction: rtl; text-align: right; line-height: 1.9;
+}
+
+/* ── HERO RIGHT — LIVE DASHBOARD ── */
+.hero-right { position: relative; z-index: 1; }
+.dashboard-wrap {
+  background: var(--surface-card);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-lg);
+  border: 1px solid var(--border-warm);
+  overflow: hidden;
+}
+.dw-header {
+  background: linear-gradient(135deg, var(--sage-600) 0%, var(--teal-600) 100%);
+  padding: 1.2rem 1.5rem;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.dw-title-en {
+  font-family: var(--font-mono); font-size: 0.62rem;
+  letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.7);
+  display: block;
+}
+.dw-title-ur {
+  font-family: var(--font-urdu); font-size: 0.75rem;
+  color: rgba(255,255,255,0.85); direction: rtl; text-align: right; line-height: 2;
+  display: block;
+}
+.dw-live {
+  display: flex; align-items: center; gap: 0.4rem;
+  font-family: var(--font-mono); font-size: 0.62rem;
+  color: rgba(255,255,255,0.8);
+}
+.dw-live-dot {
+  width: 6px; height: 6px; background: #6ee7b7;
+  border-radius: 50%; animation: breathe 1.5s ease-in-out infinite;
+}
+.dw-body { padding: 1.4rem 1.5rem; }
+
+/* Risk bars */
+.risk-bars { margin-bottom: 1.2rem; }
+.rb { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.7rem; }
+.rb-labels { width: 105px; flex-shrink: 0; }
+.rb-en { font-family: var(--font-mono); font-size: 0.6rem; color: var(--text-muted); display: block; }
+.rb-ur { font-family: var(--font-urdu); font-size: 0.62rem; color: var(--stone-400); direction: rtl; text-align: right; display: block; line-height: 1.9; }
+.rb-track {
+  flex: 1; height: 8px;
+  background: var(--sage-50); border-radius: 4px; overflow: hidden;
+}
+.rb-fill { height: 100%; border-radius: 4px; transition: width 1.5s ease; }
+.rb-fill.H { background: linear-gradient(90deg, var(--danger), #e07070); }
+.rb-fill.M { background: linear-gradient(90deg, var(--warning), #e0a850); }
+.rb-fill.L { background: linear-gradient(90deg, var(--success), #6aaa7a); }
+.rb-pct { font-family: var(--font-mono); font-size: 0.64rem; font-weight: 600; width: 32px; text-align: right; }
+.rb-pct.H { color: var(--danger); }
+.rb-pct.M { color: var(--warning); }
+.rb-pct.L { color: var(--success); }
+
+/* Metric pills */
+.dw-metrics {
+  display: grid; grid-template-columns: 1fr 1fr 1fr;
+  gap: 0.7rem; border-top: 1px solid var(--border-soft); padding-top: 1rem; margin-bottom: 1rem;
+}
+.dm { display: flex; flex-direction: column; gap: 0.12rem; }
+.dm-val {
+  font-family: var(--font-display); font-size: 1.8rem; font-weight: 700;
+  color: var(--text-primary); line-height: 1;
+}
+.dm-en { font-family: var(--font-mono); font-size: 0.55rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--text-muted); }
+.dm-ur { font-family: var(--font-urdu); font-size: 0.6rem; color: var(--stone-400); direction: rtl; text-align: right; line-height: 1.9; }
+
+/* Alert strip */
+.alert-gentle {
+  display: flex; align-items: flex-start; gap: 0.7rem;
+  background: var(--rose-100);
+  border: 1px solid var(--rose-200);
+  border-radius: var(--radius-md);
+  padding: 0.8rem 1rem;
+}
+.ag-dot {
+  width: 8px; height: 8px; background: var(--danger);
+  border-radius: 50%; animation: breathe 1.2s ease-in-out infinite;
+  flex-shrink: 0; margin-top: 0.25rem;
+}
+.ag-en { font-size: 0.8rem; color: var(--stone-600); line-height: 1.5; display: block; }
+.ag-en strong { color: var(--danger); font-weight: 600; }
+.ag-ur { font-family: var(--font-urdu); font-size: 0.72rem; color: var(--stone-500); direction: rtl; text-align: right; line-height: 2; display: block; margin-top: 0.2rem; }
+
+/* ── DIVIDER ── */
+.divider { border: none; border-top: 1px solid var(--border-soft); }
+
+/* ── SECTION BASE ── */
+.section { padding: 5.5rem 3rem; }
+.section-inner { max-width: 1200px; margin: 0 auto; }
+.section-label { font-family: var(--font-mono); font-size: 0.62rem; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--teal-500); margin-bottom: 0.3rem; }
+.section-label-ur { font-family: var(--font-urdu); font-size: 0.78rem; color: var(--stone-400); direction: rtl; text-align: right; display: block; margin-bottom: 0.6rem; line-height: 2; }
+.section-title { font-family: var(--font-display); font-size: clamp(1.9rem, 3vw, 2.8rem); font-weight: 700; line-height: 1.15; letter-spacing: -0.015em; color: var(--text-primary); margin-bottom: 0.5rem; }
+.section-title em { font-style: italic; color: var(--teal-500); }
+.section-title-ur { font-family: var(--font-urdu); font-size: clamp(1.1rem, 1.8vw, 1.6rem); color: var(--stone-500); direction: rtl; text-align: right; line-height: 2.2; font-weight: 600; display: block; margin-bottom: 1rem; }
+.section-body { font-size: 0.95rem; line-height: 1.8; color: var(--text-secondary); max-width: 580px; margin-bottom: 0.5rem; }
+.section-body-ur { font-family: var(--font-urdu); font-size: 0.88rem; line-height: 2.4; color: var(--stone-400); direction: rtl; text-align: right; max-width: 580px; display: block; }
+
+/* ── LANG SELECTOR ── */
+.lang-select { display: flex; flex-wrap: wrap; gap: 0.5rem; margin: 2rem 0; }
+.lang-btn {
+  padding: 0.45rem 1rem; border-radius: var(--radius-xl);
+  border: 1.5px solid var(--border-medium);
+  background: var(--surface-card); cursor: pointer;
+  font-family: var(--font-mono); font-size: 0.62rem; font-weight: 500;
+  letter-spacing: 0.06em; color: var(--text-secondary);
+  transition: all 0.2s; display: flex; flex-direction: column; align-items: center; gap: 0.1rem;
+}
+.lang-btn .native { font-family: var(--font-urdu); font-size: 0.72rem; direction: rtl; color: var(--stone-400); }
+.lang-btn:hover { border-color: var(--teal-400); color: var(--teal-600); background: var(--teal-50); }
+.lang-btn.active { background: var(--teal-500); color: white; border-color: var(--teal-500); }
+.lang-btn.active .native { color: rgba(255,255,255,0.8); }
+
+/* ── VOICE SECTION ── */
+.voice-section { background: var(--surface-warm); border-top: 1px solid var(--border-warm); border-bottom: 1px solid var(--border-warm); }
+.voice-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; margin-top: 3rem; align-items: start; }
+.voice-card {
+  background: var(--surface-card);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border-soft);
+  padding: 2rem; box-shadow: var(--shadow-sm);
+}
+.vc-header { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 1.5rem; }
+.vc-title { font-family: var(--font-mono); font-size: 0.62rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-muted); }
+.vc-title-ur { font-family: var(--font-urdu); font-size: 0.7rem; color: var(--stone-400); direction: rtl; text-align: right; line-height: 2; display: block; }
+.vc-status { font-family: var(--font-mono); font-size: 0.6rem; display: flex; align-items: center; gap: 0.3rem; color: var(--text-muted); }
+.vc-status-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--text-muted); }
+.vc-status.listening .vc-status-dot { background: var(--danger); animation: breathe 0.8s infinite; }
+.vc-status.ready .vc-status-dot { background: var(--success); }
+
+/* Waveform */
+.waveform { display: flex; align-items: center; justify-content: center; gap: 3px; height: 50px; margin: 1.5rem 0; }
+.wbar { width: 3px; background: var(--sage-400); border-radius: 2px; height: 4px; transition: height 0.15s ease; }
+.wbar.active { animation: wave 0.8s ease-in-out infinite; }
+@keyframes wave { 0%,100% { height:4px; } 50% { height: 35px; } }
+.wbar:nth-child(1){animation-delay:0s}.wbar:nth-child(2){animation-delay:.05s}.wbar:nth-child(3){animation-delay:.1s}
+.wbar:nth-child(4){animation-delay:.15s}.wbar:nth-child(5){animation-delay:.2s}.wbar:nth-child(6){animation-delay:.25s}
+.wbar:nth-child(7){animation-delay:.3s}.wbar:nth-child(8){animation-delay:.35s}.wbar:nth-child(9){animation-delay:.3s}
+.wbar:nth-child(10){animation-delay:.25s}.wbar:nth-child(11){animation-delay:.2s}.wbar:nth-child(12){animation-delay:.15s}
+.wbar:nth-child(13){animation-delay:.1s}.wbar:nth-child(14){animation-delay:.05s}.wbar:nth-child(15){animation-delay:0s}
+
+.speak-btn {
+  width: 100%; padding: 0.85rem;
+  background: linear-gradient(135deg, var(--sage-500), var(--teal-500));
+  border: none; cursor: pointer; color: white;
+  font-family: var(--font-body); font-size: 0.82rem; font-weight: 600;
+  border-radius: var(--radius-md);
+  transition: all 0.2s; box-shadow: var(--shadow-teal);
+}
+.speak-btn:hover { transform: translateY(-1px); box-shadow: 0 6px 20px rgba(26,144,144,0.25); }
+.speak-btn.active { background: linear-gradient(135deg, var(--danger), #d06060); animation: rec-pulse 1s infinite; }
+@keyframes rec-pulse { 0%,100%{opacity:1} 50%{opacity:0.75} }
+.speak-btn-ur { font-family: var(--font-urdu); font-size: 0.8rem; direction: rtl; display: block; margin-top: 0.2rem; }
+.voice-output {
+  background: var(--surface-sage); border: 1px solid var(--border-soft);
+  border-radius: var(--radius-md); padding: 1rem; margin-top: 1rem; min-height: 80px;
+}
+.vo-label { font-family: var(--font-mono); font-size: 0.55rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 0.4rem; display: block; }
+.vo-en { font-size: 0.82rem; line-height: 1.7; color: var(--text-secondary); font-style: italic; }
+.vo-ur { font-family: var(--font-urdu); font-size: 0.8rem; color: var(--stone-500); direction: rtl; text-align: right; line-height: 2.2; display: block; margin-top: 0.4rem; }
+.lang-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 0.4rem; margin-bottom: 1rem; }
+.lc {
+  background: var(--surface-sage); border: 1px solid var(--border-soft);
+  border-radius: var(--radius-md); padding: 0.6rem 0.4rem; cursor: pointer;
+  transition: all 0.2s; text-align: center;
+}
+.lc:hover, .lc.active { background: var(--teal-100); border-color: var(--teal-300); }
+.lc-en { font-family: var(--font-mono); font-size: 0.58rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--text-muted); display: block; }
+.lc-ur { font-family: var(--font-urdu); font-size: 0.72rem; color: var(--stone-500); direction: rtl; display: block; line-height: 2; }
+.lc-speakers { font-family: var(--font-mono); font-size: 0.5rem; color: var(--sage-400); display: block; }
+
+/* ── PSL SECTION ── */
+.psl-section { background: var(--surface-teal); }
+.psl-grid { display: grid; grid-template-columns: 1.1fr 1fr; gap: 3rem; margin-top: 3rem; align-items: start; }
+.psl-viewport {
+  background: var(--surface-card);
+  border-radius: var(--radius-xl); border: 1px solid var(--border-soft);
+  overflow: hidden; box-shadow: var(--shadow-md);
+  aspect-ratio: 4/3; position: relative;
+  display: flex; align-items: center; justify-content: center;
+}
+.psl-avatar { width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.5rem; padding: 1rem; }
+.psl-sign-label {
+  position: absolute; bottom: 1rem; left: 50%; transform: translateX(-50%);
+  background: rgba(26,144,144,0.12); border: 1px solid var(--teal-200);
+  border-radius: var(--radius-xl); padding: 0.3rem 1rem;
+  font-family: var(--font-mono); font-size: 0.62rem;
+  color: var(--teal-600); white-space: nowrap;
+}
+.psl-controls { display: flex; flex-direction: column; gap: 0.8rem; }
+.psl-phrase-btn {
+  padding: 1rem 1.2rem; background: var(--surface-card);
+  border: 1.5px solid var(--border-soft); border-radius: var(--radius-md);
+  cursor: pointer; text-align: left; position: relative;
+  transition: all 0.2s; box-shadow: var(--shadow-sm);
+}
+.psl-phrase-btn:hover, .psl-phrase-btn.playing { border-color: var(--teal-300); background: var(--teal-50); }
+.ppb-en { font-size: 0.82rem; font-weight: 500; color: var(--text-primary); display: block; }
+.ppb-ur { font-family: var(--font-urdu); font-size: 0.78rem; color: var(--stone-400); direction: rtl; text-align: right; line-height: 2; display: block; }
+.ppb-play {
+  position: absolute; right: 0.9rem; top: 50%; transform: translateY(-50%);
+  width: 28px; height: 28px; background: var(--teal-500); border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.65rem; color: white;
+}
+.psl-cam-card {
+  background: var(--surface-card); border: 1px solid var(--border-soft);
+  border-radius: var(--radius-lg); padding: 1.3rem; margin-top: 0.8rem;
+  text-align: center; box-shadow: var(--shadow-sm);
+}
+
+/* ── DASHBOARD SECTION ── */
+.dash-section { background: var(--surface-base); }
+.dash-metrics { display: grid; grid-template-columns: repeat(3,1fr); gap: 1.2rem; margin-top: 2.5rem; }
+.metric-card {
+  background: var(--surface-card); border: 1px solid var(--border-soft);
+  border-radius: var(--radius-lg); padding: 1.5rem; box-shadow: var(--shadow-sm);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.metric-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); }
+.mc-label { font-family: var(--font-mono); font-size: 0.58rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-muted); }
+.mc-label-ur { font-family: var(--font-urdu); font-size: 0.62rem; color: var(--stone-400); direction: rtl; text-align: right; line-height: 1.9; display: block; margin-bottom: 0.5rem; }
+.mc-val { font-family: var(--font-display); font-size: 2.8rem; font-weight: 700; color: var(--text-primary); line-height: 1; margin-bottom: 0.25rem; }
+.mc-val.green { color: var(--success); }
+.mc-val.amber { color: var(--warning); }
+.mc-val.red   { color: var(--danger); }
+.mc-sub { font-size: 0.8rem; color: var(--text-muted); }
+.mc-sub-ur { font-family: var(--font-urdu); font-size: 0.68rem; color: var(--stone-400); direction: rtl; text-align: right; line-height: 1.9; display: block; }
+
+/* Risk bars section */
+.risk-panel {
+  background: var(--surface-card); border: 1px solid var(--border-soft);
+  border-radius: var(--radius-lg); padding: 1.8rem; margin-top: 1.5rem; box-shadow: var(--shadow-sm);
+}
+.rp-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1.5rem; }
+.rp-title { font-family: var(--font-mono); font-size: 0.62rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-muted); }
+.rp-title-ur { font-family: var(--font-urdu); font-size: 0.7rem; color: var(--stone-400); direction: rtl; text-align: right; line-height: 2; display: block; }
+.rp-live { display: flex; align-items: center; gap: 0.4rem; font-family: var(--font-mono); font-size: 0.58rem; color: var(--success); }
+.rp-live-dot { width: 5px; height: 5px; background: var(--success); border-radius: 50%; animation: breathe 1.5s infinite; }
+
+/* Pulse check */
+.pulse-panel {
+  background: var(--surface-sage); border: 1px solid var(--border-soft);
+  border-radius: var(--radius-lg); padding: 1.8rem; margin-top: 1.5rem;
+}
+.pp-q { font-size: 0.95rem; font-weight: 500; color: var(--text-primary); margin-bottom: 0.3rem; }
+.pp-q-ur { font-family: var(--font-urdu); font-size: 0.85rem; color: var(--stone-500); direction: rtl; text-align: right; line-height: 2; display: block; margin-bottom: 1rem; }
+.pp-opts { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+.pp-opt {
+  padding: 0.5rem 1rem; border-radius: var(--radius-xl);
+  border: 1.5px solid var(--border-medium);
+  background: var(--surface-card); cursor: pointer;
+  font-size: 0.82rem; font-weight: 500; color: var(--text-secondary);
+  transition: all 0.2s; display: flex; flex-direction: column; align-items: center; gap: 0.1rem;
+}
+.pp-opt:hover { border-color: var(--teal-400); color: var(--teal-600); background: var(--teal-50); }
+.pp-opt.selected { background: var(--teal-500); color: white; border-color: var(--teal-500); }
+.pp-opt .opt-ur { font-family: var(--font-urdu); font-size: 0.68rem; direction: rtl; }
+.pp-opt.selected .opt-ur { color: rgba(255,255,255,0.85); }
+.pp-voice-alt {
+  display: flex; align-items: center; gap: 0.6rem;
+  margin-top: 1rem; padding: 0.7rem 1rem; border-radius: var(--radius-md);
+  border: 1.5px dashed var(--border-medium); cursor: pointer;
+  transition: border-color 0.2s; background: var(--surface-card);
+}
+.pp-voice-alt:hover { border-color: var(--teal-300); background: var(--teal-50); }
+.pva-icon { font-size: 1.3rem; }
+.pva-en { font-size: 0.8rem; color: var(--text-secondary); }
+.pva-ur { font-family: var(--font-urdu); font-size: 0.7rem; color: var(--stone-400); direction: rtl; display: block; line-height: 1.9; }
+
+/* ── FOUR LAYERS ── */
+.layers-section { background: var(--surface-warm); }
+.layers-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 1.5rem; margin-top: 3rem; }
+.layer-card {
+  background: var(--surface-card); border: 1px solid var(--border-soft);
+  border-radius: var(--radius-lg); padding: 1.8rem;
+  transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+  cursor: pointer; position: relative; overflow: hidden;
+}
+.layer-card::before {
+  content: ''; position: absolute; left: 0; top: 0; bottom: 0;
+  width: 4px; background: var(--sage-400);
+  transform: scaleY(0); transform-origin: top; transition: transform 0.3s;
+}
+.layer-card:hover::before { transform: scaleY(1); }
+.layer-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); border-color: var(--sage-300); }
+.lc-num { font-family: var(--font-mono); font-size: 0.6rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--teal-500); margin-bottom: 0.2rem; }
+.lc-num-ur { font-family: var(--font-urdu); font-size: 0.65rem; color: var(--stone-400); direction: rtl; text-align: right; display: block; line-height: 1.9; }
+.lc-title { font-family: var(--font-display); font-size: 1.05rem; font-weight: 600; color: var(--text-primary); margin-bottom: 0.2rem; }
+.lc-title-ur { font-family: var(--font-urdu); font-size: 0.82rem; color: var(--stone-500); direction: rtl; text-align: right; line-height: 2; display: block; margin-bottom: 0.5rem; }
+.lc-desc { font-size: 0.82rem; line-height: 1.7; color: var(--text-secondary); margin-bottom: 0.4rem; }
+.lc-desc-ur { font-family: var(--font-urdu); font-size: 0.75rem; line-height: 2.2; color: var(--stone-400); direction: rtl; text-align: right; display: block; }
+.lc-tags { display: flex; flex-wrap: wrap; gap: 0.35rem; margin-top: 0.9rem; }
+.lc-tag {
+  font-family: var(--font-mono); font-size: 0.57rem; font-weight: 500;
+  letter-spacing: 0.05em; padding: 0.22rem 0.55rem;
+  background: var(--sage-50); border: 1px solid var(--border-soft);
+  color: var(--sage-600); border-radius: var(--radius-sm);
+}
+
+/* ── ACCESSIBILITY ── */
+.access-section { background: var(--surface-base); }
+.access-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1.3rem; margin-top: 3rem; }
+.access-card {
+  background: var(--surface-card); border: 1px solid var(--border-soft);
+  border-radius: var(--radius-lg); padding: 1.8rem;
+  transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+}
+.access-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); border-color: var(--teal-200); }
+.ac-icon { font-size: 2rem; display: block; margin-bottom: 0.8rem; }
+.ac-title { font-family: var(--font-display); font-size: 0.95rem; font-weight: 600; color: var(--text-primary); margin-bottom: 0.2rem; }
+.ac-title-ur { font-family: var(--font-urdu); font-size: 0.78rem; color: var(--stone-400); direction: rtl; text-align: right; line-height: 2; display: block; margin-bottom: 0.5rem; }
+.ac-desc { font-size: 0.8rem; line-height: 1.7; color: var(--text-secondary); margin-bottom: 0.35rem; }
+.ac-desc-ur { font-family: var(--font-urdu); font-size: 0.72rem; line-height: 2.2; color: var(--stone-400); direction: rtl; text-align: right; display: block; }
+.ac-chips { display: flex; flex-wrap: wrap; gap: 0.3rem; margin-top: 0.7rem; }
+.ac-chip {
+  font-family: var(--font-mono); font-size: 0.54rem; font-weight: 500;
+  padding: 0.18rem 0.45rem; border: 1px solid var(--teal-200);
+  color: var(--teal-600); border-radius: var(--radius-sm);
+  background: var(--teal-50);
+}
+
+/* ── IMPACT ── */
+.impact-section {
+  background: linear-gradient(135deg, var(--sage-600) 0%, var(--teal-600) 100%);
+  position: relative; overflow: hidden;
+}
+.impact-section::before {
+  content: ''; position: absolute; top: -5rem; right: -5rem;
+  width: 30rem; height: 30rem; border: 1px solid rgba(255,255,255,0.08); border-radius: 50%;
+}
+.impact-section::after {
+  content: ''; position: absolute; bottom: -8rem; left: -8rem;
+  width: 40rem; height: 40rem; border: 1px solid rgba(255,255,255,0.05); border-radius: 50%;
+}
+.impact-section .section-label { color: rgba(255,255,255,0.6); }
+.impact-section .section-label-ur { color: rgba(255,255,255,0.5); }
+.impact-section .section-title { color: white; }
+.impact-section .section-title em { color: #a7e9d4; }
+.impact-section .section-title-ur { color: rgba(255,255,255,0.8); }
+.impact-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1.5rem; margin-top: 3.5rem; position: relative; z-index: 1; }
+.impact-card {
+  background: rgba(255,255,255,0.1);
+  border: 1px solid rgba(255,255,255,0.18);
+  border-radius: var(--radius-lg); padding: 2rem 1.8rem;
+  backdrop-filter: blur(8px); transition: background 0.2s;
+}
+.impact-card:hover { background: rgba(255,255,255,0.16); }
+.ic-num { font-family: var(--font-display); font-size: 3.2rem; font-weight: 700; color: white; line-height: 1; margin-bottom: 0.4rem; }
+.ic-title { font-weight: 600; font-size: 0.9rem; color: white; margin-bottom: 0.2rem; }
+.ic-title-ur { font-family: var(--font-urdu); font-size: 0.8rem; color: rgba(255,255,255,0.8); direction: rtl; text-align: right; line-height: 2; display: block; margin-bottom: 0.4rem; }
+.ic-desc { font-size: 0.78rem; line-height: 1.7; color: rgba(255,255,255,0.7); margin-bottom: 0.4rem; }
+.ic-desc-ur { font-family: var(--font-urdu); font-size: 0.72rem; line-height: 2.2; color: rgba(255,255,255,0.55); direction: rtl; text-align: right; display: block; }
+
+/* ── FEASIBILITY ── */
+.feas-section { background: var(--cream-100); }
+.feas-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-top: 3.5rem; }
+.feas-item { display: flex; gap: 1.2rem; padding-bottom: 1.8rem; border-bottom: 1px solid var(--border-warm); }
+.feas-item:last-child { border-bottom: none; }
+.feas-num {
+  font-family: var(--font-urdu); font-size: 1.8rem; font-weight: 700;
+  color: var(--teal-400); line-height: 1; flex-shrink: 0; width: 2rem;
+}
+.feas-title { font-family: var(--font-display); font-size: 0.9rem; font-weight: 600; color: var(--text-primary); margin-bottom: 0.15rem; }
+.feas-title-ur { font-family: var(--font-urdu); font-size: 0.78rem; color: var(--stone-400); direction: rtl; text-align: right; line-height: 2; display: block; margin-bottom: 0.3rem; }
+.feas-body { font-size: 0.8rem; line-height: 1.7; color: var(--text-secondary); margin-bottom: 0.25rem; }
+.feas-body-ur { font-family: var(--font-urdu); font-size: 0.72rem; line-height: 2.2; color: var(--stone-400); direction: rtl; text-align: right; display: block; }
+
+/* ── FOOTER ── */
+footer {
+  background: var(--sage-700); padding: 2.8rem 3rem;
+  display: flex; align-items: flex-start; justify-content: space-between;
+  flex-wrap: wrap; gap: 1.5rem;
+}
+.ft-brand { font-family: var(--font-display); font-size: 1.25rem; font-weight: 700; color: white; }
+.ft-brand em { font-style: normal; color: #a7e9d4; }
+.ft-ur { font-family: var(--font-urdu); font-size: 0.88rem; color: rgba(255,255,255,0.7); direction: rtl; display: block; margin-top: 0.2rem; }
+.ft-sub { font-family: var(--font-mono); font-size: 0.56rem; letter-spacing: 0.07em; color: rgba(255,255,255,0.4); margin-top: 0.3rem; }
+.ft-sub-ur { font-family: var(--font-urdu); font-size: 0.62rem; color: rgba(255,255,255,0.35); direction: rtl; text-align: right; display: block; margin-top: 0.2rem; line-height: 1.9; }
+.ft-r { font-family: var(--font-mono); font-size: 0.56rem; letter-spacing: 0.06em; color: rgba(255,255,255,0.38); text-align: right; line-height: 1.9; }
+.ft-r-ur { font-family: var(--font-urdu); font-size: 0.62rem; color: rgba(255,255,255,0.35); direction: rtl; text-align: right; display: block; margin-top: 0.2rem; line-height: 2; }
+
+/* ── TOAST ── */
+.toast {
+  position: fixed; bottom: 1.5rem; left: 50%; transform: translateX(-50%);
+  background: var(--surface-card); border: 1px solid var(--border-medium);
+  border-radius: var(--radius-lg); padding: 0.8rem 1.5rem;
+  box-shadow: var(--shadow-lg); z-index: 9999;
+  font-size: 0.82rem; color: var(--text-secondary); text-align: center;
+  max-width: 500px; animation: toast-in 0.3s ease;
+}
+@keyframes toast-in { from { opacity:0; transform:translateX(-50%) translateY(10px); } to { opacity:1; transform:translateX(-50%) translateY(0); } }
+
+/* ── REVEAL ── */
+.reveal { opacity: 0; transform: translateY(22px); transition: opacity 0.65s ease, transform 0.65s ease; }
+.reveal.vis { opacity: 1; transform: translateY(0); }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 960px) {
+  nav { padding: 0.8rem 1.5rem; }
+  .nav-links { display: none; }
+  .hero { grid-template-columns: 1fr; padding: 6rem 1.5rem 3.5rem; }
+  .voice-grid, .psl-grid, .layers-grid, .feas-grid { grid-template-columns: 1fr; }
+  .dash-metrics, .access-grid, .impact-grid { grid-template-columns: 1fr; }
+  .section { padding: 4rem 1.5rem; }
+  .voice-section, .psl-section, .dash-section, .layers-section, .access-section, .impact-section, .feas-section { padding: 4rem 1.5rem; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-brand">
+    <div>
+      <div class="nav-wordmark">RAHAT<em>-AI</em></div>
+      <div class="nav-ur">راحت اے آئی</div>
+    </div>
+    <div class="nav-tagline">Rufayda Hackathon 2026</div>
+  </div>
+  <ul class="nav-links">
+    <li><a href="#voice">Voice — آواز</a></li>
+    <li><a href="#psl">Sign — اشارہ</a></li>
+    <li><a href="#dashboard">Dashboard</a></li>
+    <li><a href="#layers">Platform</a></li>
+    <li><a href="#access">Access</a></li>
+  </ul>
+  <button class="nav-cta">April 11, 2026</button>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="botanical-ring" style="width:600px;height:600px;top:-200px;right:-200px;opacity:0.5"></div>
+  <div class="botanical-ring" style="width:400px;height:400px;bottom:-150px;left:30%;opacity:0.4"></div>
+
+  <div class="hero-left reveal">
+    <div class="hero-badge">Rufayda Anti-Burnout Hackathon 2026</div>
+    <h1>
+      RAHAT
+      <em>-AI</em>
+    </h1>
+    <span class="hero-ur-title">راحت اے آئی</span>
+    <p class="hero-desc">
+      Real-time Analytics for Healthcare At-risk Teams — Artificial Intelligence. Pakistan's first AI-native multimodal burnout prevention platform — accessible in every language, by voice, and by sign.
+    </p>
+    <span class="hero-desc-ur">پاکستان کا پہلا اے آئی مقامی کثیر طریقہ جلن روک تھام پلیٹ فارم — ہر زبان میں، آواز سے اور اشاری زبان سے قابل رسائی۔</span>
+
+    <div class="lang-select">
+      <button class="lang-btn active" onclick="selectLang(this,'ur')">
+        Urdu<span class="native">اردو — قومی</span>
+      </button>
+      <button class="lang-btn" onclick="selectLang(this,'pa')">
+        Punjabi<span class="native">پنجابی</span>
+      </button>
+      <button class="lang-btn" onclick="selectLang(this,'sd')">
+        Sindhi<span class="native">سنڌي</span>
+      </button>
+      <button class="lang-btn" onclick="selectLang(this,'ps')">
+        Pashto<span class="native">پښتو</span>
+      </button>
+      <button class="lang-btn" onclick="selectLang(this,'bal')">
+        Balochi<span class="native">بلوچی</span>
+      </button>
+      <button class="lang-btn" onclick="selectLang(this,'skr')">
+        Saraiki<span class="native">سرائیکی</span>
+      </button>
+      <button class="lang-btn" onclick="selectLang(this,'psl')">
+        PSL Sign<span class="native">اشاری زبان</span>
+      </button>
+      <button class="lang-btn" onclick="selectLang(this,'en')">
+        English<span class="native" style="font-family:'DM Mono',monospace;font-size:0.55rem;direction:ltr">Official</span>
+      </button>
+    </div>
+
+    <div class="hero-actions">
+      <button class="btn-primary">View Live Demo</button>
+      <button class="btn-secondary">Read Documentation</button>
+    </div>
+
+    <div class="hero-stats">
+      <div class="hstat">
+        <span class="hstat-num">32.2%</span>
+        <span class="hstat-en">Very high risk<br>burnout PK 2025</span>
+        <span class="hstat-ur">انتہائی خطرہ جلن</span>
+      </div>
+      <div class="hstat">
+        <span class="hstat-num">8</span>
+        <span class="hstat-en">Languages<br>supported</span>
+        <span class="hstat-ur">زبانیں تعاون یافتہ</span>
+      </div>
+      <div class="hstat">
+        <span class="hstat-num">0</span>
+        <span class="hstat-en">Hardware<br>required</span>
+        <span class="hstat-ur">ہارڈ ویئر درکار نہیں</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Live dashboard -->
+  <div class="hero-right reveal" style="transition-delay:0.2s">
+    <div class="dashboard-wrap">
+      <div class="dw-header">
+        <div>
+          <span class="dw-title-en">Department Risk Overview — Ward B3</span>
+          <span class="dw-title-ur">وارڈ بی تھری — خطرے کا جائزہ</span>
+        </div>
+        <div class="dw-live"><div class="dw-live-dot"></div>Live — فعال</div>
+      </div>
+      <div class="dw-body">
+        <div class="risk-bars">
+          <div class="rb"><div class="rb-labels"><span class="rb-en">Emergency</span><span class="rb-ur">ایمرجنسی</span></div><div class="rb-track"><div class="rb-fill H" style="width:78%"></div></div><span class="rb-pct H">78%</span></div>
+          <div class="rb"><div class="rb-labels"><span class="rb-en">ICU</span><span class="rb-ur">آئی سی یو</span></div><div class="rb-track"><div class="rb-fill H" style="width:64%"></div></div><span class="rb-pct H">64%</span></div>
+          <div class="rb"><div class="rb-labels"><span class="rb-en">Surgery</span><span class="rb-ur">سرجری</span></div><div class="rb-track"><div class="rb-fill M" style="width:51%"></div></div><span class="rb-pct M">51%</span></div>
+          <div class="rb"><div class="rb-labels"><span class="rb-en">Gynecology</span><span class="rb-ur">امراضِ نسواں</span></div><div class="rb-track"><div class="rb-fill M" style="width:44%"></div></div><span class="rb-pct M">44%</span></div>
+          <div class="rb"><div class="rb-labels"><span class="rb-en">Pediatrics</span><span class="rb-ur">بچوں کا وارڈ</span></div><div class="rb-track"><div class="rb-fill L" style="width:28%"></div></div><span class="rb-pct L">28%</span></div>
+          <div class="rb"><div class="rb-labels"><span class="rb-en">Admin</span><span class="rb-ur">انتظامیہ</span></div><div class="rb-track"><div class="rb-fill L" style="width:19%"></div></div><span class="rb-pct L">19%</span></div>
+        </div>
+        <div class="dw-metrics">
+          <div class="dm"><span class="dm-val" id="hero-staff">0</span><span class="dm-en">Staff Enrolled</span><span class="dm-ur">عملہ شامل</span></div>
+          <div class="dm"><span class="dm-val" id="hero-alerts">0</span><span class="dm-en">Active Alerts</span><span class="dm-ur">الرٹ فعال</span></div>
+          <div class="dm"><span class="dm-val" id="hero-equity">0%</span><span class="dm-en">Roster Equity</span><span class="dm-ur">شیڈول انصاف</span></div>
+        </div>
+        <div class="alert-gentle">
+          <div class="ag-dot"></div>
+          <div>
+            <span class="ag-en"><strong>3 Emergency staff</strong> flagged High Risk. Confidential referral sent to Occupational Health. Supervisors not notified.</span>
+            <span class="ag-ur">ایمرجنسی کے ۳ عملے کو زیادہ خطرے کے طور پر نشان زد کیا گیا — خفیہ ریفرل بھیج دی گئی۔</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- VOICE SECTION -->
+<div id="voice" class="section voice-section">
+  <div class="section-inner">
+    <div class="reveal">
+      <div class="section-label">Voice Interface — آواز انٹرفیس</div>
+      <h2 class="section-title">Speak in <em>any language.</em><br>RAHAT-AI listens.</h2>
+      <span class="section-title-ur">کسی بھی زبان میں بولیں — راحت اے آئی سنتا ہے۔</span>
+      <p class="section-body">Every feature accessible by voice — Urdu, Punjabi, Sindhi, Pashto, Balochi, Saraiki, Hindko, and English. No reading or writing required. Offline Whisper AI + Google STT. Pakistan's 39.4% functional illiteracy rate is not a barrier here.</p>
+      <span class="section-body-ur">ہر سہولت آواز سے قابل رسائی۔ پڑھنے یا لکھنے کی کوئی ضرورت نہیں۔ پاکستان کی ۳۹.۴٪ فنکشنل ناخواندگی یہاں رکاوٹ نہیں۔</span>
+    </div>
+    <div class="voice-grid reveal" style="transition-delay:0.15s">
+      <div class="voice-card">
+        <div class="vc-header">
+          <div>
+            <div class="vc-title">Voice Input — آواز ان پٹ</div>
+          </div>
+          <div class="vc-status ready" id="vcStatus">
+            <div class="vc-status-dot"></div>Ready
+          </div>
+        </div>
+        <div class="lang-grid" id="voiceLangGrid"></div>
+        <div class="waveform" id="waveform">
+          <div class="wbar"></div><div class="wbar"></div><div class="wbar"></div>
+          <div class="wbar"></div><div class="wbar"></div><div class="wbar"></div>
+          <div class="wbar"></div><div class="wbar"></div><div class="wbar"></div>
+          <div class="wbar"></div><div class="wbar"></div><div class="wbar"></div>
+          <div class="wbar"></div><div class="wbar"></div><div class="wbar"></div>
+        </div>
+        <button class="speak-btn" id="speakBtn" onclick="toggleVoice()">
+          Hold to Speak — بات کریں
+          <span class="speak-btn-ur">آواز سے اپنی بات کریں</span>
+        </button>
+        <div class="voice-output">
+          <span class="vo-label">AI Response — اے آئی جواب</span>
+          <span class="vo-en" id="voiceText">Select your language above and tap the button to speak. RAHAT-AI responds in the same language.</span>
+          <span class="vo-ur" id="voiceUrdu">اپنی زبان منتخب کریں اور بٹن دبائیں۔ راحت اے آئی اسی زبان میں جواب دے گا۔</span>
+        </div>
+      </div>
+      <div>
+        <div class="voice-card" style="margin-bottom:1rem">
+          <div class="section-label" style="margin-bottom:0.8rem">Sample Voice Commands</div>
+          <div style="display:flex;flex-direction:column;gap:0.5rem" id="sampleCmds"></div>
+        </div>
+        <div class="voice-card">
+          <div class="section-label" style="margin-bottom:0.8rem">Technology Stack</div>
+          <div style="display:flex;flex-direction:column;gap:0.4rem">
+            <div style="display:flex;justify-content:space-between;padding:0.4rem 0;border-bottom:1px solid var(--border-soft)">
+              <span style="font-family:var(--font-mono);font-size:0.6rem;color:var(--text-muted)">Speech Recognition</span>
+              <span style="font-family:var(--font-mono);font-size:0.62rem;font-weight:600;color:var(--success)">Whisper AI + Google STT</span>
+            </div>
+            <div style="display:flex;justify-content:space-between;padding:0.4rem 0;border-bottom:1px solid var(--border-soft)">
+              <span style="font-family:var(--font-mono);font-size:0.6rem;color:var(--text-muted)">NLP Engine</span>
+              <span style="font-family:var(--font-mono);font-size:0.62rem;font-weight:600;color:var(--success)">LangChain + GPT-4o</span>
+            </div>
+            <div style="display:flex;justify-content:space-between;padding:0.4rem 0;border-bottom:1px solid var(--border-soft)">
+              <span style="font-family:var(--font-mono);font-size:0.6rem;color:var(--text-muted)">Text-to-Speech</span>
+              <span style="font-family:var(--font-mono);font-size:0.62rem;font-weight:600;color:var(--success)">ElevenLabs + Google TTS</span>
+            </div>
+            <div style="display:flex;justify-content:space-between;padding:0.4rem 0">
+              <span style="font-family:var(--font-mono);font-size:0.6rem;color:var(--text-muted)">Offline Mode</span>
+              <span style="font-family:var(--font-mono);font-size:0.62rem;font-weight:600;color:var(--success)">On-device Whisper small</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PSL SECTION -->
+<div id="psl" class="section psl-section">
+  <div class="section-inner">
+    <div class="reveal">
+      <div class="section-label">Pakistan Sign Language — پاکستان اشاری زبان</div>
+      <h2 class="section-title">For the deaf and<br><em>hard-of-hearing.</em></h2>
+      <span class="section-title-ur">بہرے اور سماعت سے محروم افراد کے لیے۔</span>
+      <p class="section-body">RAHAT-AI integrates PSL through MediaPipe 21-landmark detection and JASiGML 3D avatar output. Every pulse check, intervention, and notification available in sign. Deaf healthcare workers are a design requirement, not an afterthought.</p>
+      <span class="section-body-ur">راحت اے آئی میڈیا پائپ ۲۱ نقطے اور JASiGML تھری ڈی اوتار کے ذریعے پی ایس ایل کو مربوط کرتا ہے۔</span>
+    </div>
+    <div class="psl-grid reveal" style="transition-delay:0.15s">
+      <div>
+        <div class="psl-viewport">
+          <div class="psl-avatar">
+            <svg viewBox="0 0 200 280" xmlns="http://www.w3.org/2000/svg" id="pslAvatar" style="width:120px;height:190px;filter:drop-shadow(0 4px 12px rgba(26,144,144,0.2))">
+              <ellipse cx="100" cy="75" rx="28" ry="30" fill="#5a9060" opacity="0.9"/>
+              <circle cx="91" cy="70" r="4" fill="#2d3a2e"/><circle cx="109" cy="70" r="4" fill="#2d3a2e"/>
+              <path d="M 91 84 Q 100 92 109 84" stroke="#2d3a2e" stroke-width="2" fill="none" stroke-linecap="round"/>
+              <path d="M 72 106 Q 72 135 72 158 L 128 158 Q 128 135 128 106 Q 114 102 100 102 Q 86 102 72 106Z" fill="#1a9090"/>
+              <g id="leftArm"><path d="M 72 112 Q 55 124 45 144 Q 42 154 48 159" stroke="#5a9060" stroke-width="10" fill="none" stroke-linecap="round"/>
+              <g id="leftHand"><ellipse cx="50" cy="169" rx="10" ry="8" fill="#5a9060"/><line x1="46" y1="161" x2="44" y2="151" stroke="#5a9060" stroke-width="4" stroke-linecap="round"/><line x1="50" y1="161" x2="50" y2="150" stroke="#5a9060" stroke-width="4" stroke-linecap="round"/><line x1="54" y1="161" x2="56" y2="151" stroke="#5a9060" stroke-width="4" stroke-linecap="round"/><line x1="57" y1="164" x2="60" y2="155" stroke="#5a9060" stroke-width="4" stroke-linecap="round"/></g></g>
+              <g id="rightArm"><path d="M 128 112 Q 145 124 155 144 Q 158 154 152 159" stroke="#5a9060" stroke-width="10" fill="none" stroke-linecap="round"/>
+              <g id="rightHand"><ellipse cx="150" cy="169" rx="10" ry="8" fill="#5a9060"/><line x1="146" y1="161" x2="144" y2="151" stroke="#5a9060" stroke-width="4" stroke-linecap="round"/><line x1="150" y1="161" x2="150" y2="150" stroke="#5a9060" stroke-width="4" stroke-linecap="round"/><line x1="154" y1="161" x2="156" y2="151" stroke="#5a9060" stroke-width="4" stroke-linecap="round"/><line x1="157" y1="164" x2="160" y2="155" stroke="#5a9060" stroke-width="4" stroke-linecap="round"/></g></g>
+              <rect x="76" y="158" width="18" height="48" rx="6" fill="#1a9090"/><rect x="106" y="158" width="18" height="48" rx="6" fill="#1a9090"/>
+              <rect x="72" y="202" width="24" height="12" rx="4" fill="#437548"/><rect x="104" y="202" width="24" height="12" rx="4" fill="#437548"/>
+            </svg>
+          </div>
+          <div class="psl-sign-label" id="pslLabel">Pakistan Sign Language — پاکستان اشاری زبان</div>
+        </div>
+        <div class="psl-cam-card">
+          <div style="font-size:1.6rem;margin-bottom:0.4rem">📷</div>
+          <div style="font-family:var(--font-mono);font-size:0.62rem;letter-spacing:0.08em;text-transform:uppercase;color:var(--text-muted);margin-bottom:0.2rem">Camera-based Gesture Recognition</div>
+          <div style="font-family:var(--font-urdu);font-size:0.72rem;color:var(--stone-400);direction:rtl;text-align:right;line-height:2;display:block;margin-bottom:0.7rem">کیمرے پر مبنی اشارہ تشخیص</div>
+          <p style="font-size:0.78rem;color:var(--text-secondary);line-height:1.6;margin-bottom:0.8rem">MediaPipe extracts 21 hand landmarks per frame. CNN classifies against 6,000-word PSL dictionary. Real-time recognition.</p>
+          <button class="btn-primary" style="font-size:0.78rem;padding:0.5rem 1.2rem" onclick="toast('Camera activated — MediaPipe hand tracking initializing. In production, this enables real-time PSL gesture recognition.')">Activate Camera — کیمرہ چالو کریں</button>
+        </div>
+      </div>
+      <div class="psl-controls">
+        <div style="font-family:var(--font-mono);font-size:0.6rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-muted);margin-bottom:0.3rem">Select a PSL Phrase</div>
+        <div class="psl-phrase-btn" onclick="playPSL('hello',this)"><span class="ppb-en">Hello / Good morning</span><span class="ppb-ur">السلام علیکم / صبح بخیر</span><div class="ppb-play">▶</div></div>
+        <div class="psl-phrase-btn" onclick="playPSL('tired',this)"><span class="ppb-en">I am very tired today</span><span class="ppb-ur">میں آج بہت تھکا ہوا ہوں</span><div class="ppb-play">▶</div></div>
+        <div class="psl-phrase-btn" onclick="playPSL('help',this)"><span class="ppb-en">I need help and support</span><span class="ppb-ur">مجھے مدد کی ضرورت ہے</span><div class="ppb-play">▶</div></div>
+        <div class="psl-phrase-btn" onclick="playPSL('stress',this)"><span class="ppb-en">I feel stressed at work</span><span class="ppb-ur">مجھے کام پر دباؤ محسوس ہوتا ہے</span><div class="ppb-play">▶</div></div>
+        <div class="psl-phrase-btn" onclick="playPSL('rest',this)"><span class="ppb-en">I need a rest break</span><span class="ppb-ur">مجھے آرام کی ضرورت ہے</span><div class="ppb-play">▶</div></div>
+        <div style="background:var(--surface-sage);border:1px solid var(--border-soft);border-radius:var(--radius-md);padding:1rem;margin-top:0.5rem">
+          <div style="font-family:var(--font-mono);font-size:0.58rem;letter-spacing:0.08em;text-transform:uppercase;color:var(--text-muted);margin-bottom:0.5rem">PSL Stack</div>
+          <p style="font-size:0.78rem;color:var(--text-secondary);line-height:1.7">MediaPipe Hands · TFLite CNN · JASiGML 3D Avatar · 6,000-word PSL Dictionary · Deaf Reach validated · Bahria University research 2025</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- DASHBOARD -->
+<div id="dashboard" class="section dash-section">
+  <div class="section-inner">
+    <div class="reveal">
+      <div class="section-label">Layer 01 — Risk Dashboard</div>
+      <h2 class="section-title">Real-time<br><em>burnout surveillance.</em></h2>
+      <span class="section-title-ur">ریئل ٹائم جلن نگرانی۔</span>
+    </div>
+    <div class="dash-metrics reveal" style="transition-delay:0.1s">
+      <div class="metric-card"><div class="mc-label">Staff Enrolled</div><span class="mc-label-ur">عملہ شامل</span><div class="mc-val green" id="ms">0</div><div class="mc-sub">Active on platform</div><span class="mc-sub-ur">پلیٹ فارم پر فعال</span></div>
+      <div class="metric-card"><div class="mc-label">High Risk This Week</div><span class="mc-label-ur">اس ہفتے زیادہ خطرہ</span><div class="mc-val red" id="mr">0</div><div class="mc-sub">Confidential OH referral sent</div><span class="mc-sub-ur">خفیہ ریفرل بھیج دی گئی</span></div>
+      <div class="metric-card"><div class="mc-label">Roster Equity Score</div><span class="mc-label-ur">روسٹر انصاف اسکور</span><div class="mc-val amber" id="me">0%</div><div class="mc-sub">Target above 80%</div><span class="mc-sub-ur">ہدف ۸۰٪ سے اوپر</span></div>
+    </div>
+    <div class="risk-panel reveal" style="transition-delay:0.2s">
+      <div class="rp-header">
+        <div><div class="rp-title">Department Risk — Ward Complex B</div><span class="rp-title-ur">وارڈ کمپلیکس بی — محکمہ وار خطرہ</span></div>
+        <div class="rp-live"><div class="rp-live-dot"></div>Live</div>
+      </div>
+      <div id="dashRiskBars"></div>
+      <div class="alert-gentle" style="margin-top:1.2rem">
+        <div class="ag-dot"></div>
+        <div><span class="ag-en"><strong>3 Emergency staff</strong> scored above 70 this week. Automated confidential referral sent to OH Officer. Supervisors not notified by system design.</span><span class="ag-ur">ایمرجنسی کے ۳ عملے نے ۷۰ سے اوپر اسکور کیا — پیشہ ورانہ صحت افسر کو خودکار خفیہ ریفرل بھیج دی گئی۔ نگرانوں کو مطلع نہیں کیا گیا۔</span></div>
+      </div>
+    </div>
+    <div class="pulse-panel reveal" style="transition-delay:0.3s">
+      <div class="pp-q">How are you feeling about your workload this week?</div>
+      <span class="pp-q-ur">اس ہفتے آپ اپنے کام کے بوجھ کے بارے میں کیسا محسوس کر رہے ہیں؟</span>
+      <div class="pp-opts">
+        <button class="pp-opt" onclick="pickOpt(this)">Manageable<span class="opt-ur">قابل انتظام</span></button>
+        <button class="pp-opt" onclick="pickOpt(this)">Heavy<span class="opt-ur">بھاری</span></button>
+        <button class="pp-opt" onclick="pickOpt(this)">Overwhelming<span class="opt-ur">بہت زیادہ</span></button>
+        <button class="pp-opt" onclick="pickOpt(this)">Cannot cope<span class="opt-ur">برداشت سے باہر</span></button>
+      </div>
+      <div class="pp-voice-alt" onclick="toast('Voice pulse check — speak in Urdu, Punjabi, Sindhi, Pashto, Balochi, or English. Your response is confidential and anonymized.')">
+        <span class="pva-icon">🎙</span>
+        <div><span class="pva-en">Cannot read? Answer by voice in your language</span><span class="pva-ur">پڑھ نہیں سکتے؟ اپنی زبان میں آواز سے جواب دیں</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FOUR LAYERS -->
+<div id="layers" class="section layers-section">
+  <div class="section-inner">
+    <div class="reveal">
+      <div class="section-label">Platform Architecture</div>
+      <h2 class="section-title">Four layers.<br><em>One mission.</em></h2>
+      <span class="section-title-ur">چار پرتیں — ایک مشن۔</span>
+    </div>
+    <div class="layers-grid reveal" style="transition-delay:0.1s">
+      <div class="layer-card">
+        <div class="lc-num">Layer 01 — Detection</div><span class="lc-num-ur">پرت ۰۱ — تشخیص</span>
+        <div class="lc-title">Predictive Risk Engine</div><span class="lc-title-ur">پیش گوئی خطرہ انجن</span>
+        <div class="lc-desc">5 passive behavioral signals → XGBoost gradient-boosted model → weekly risk score 1-100 → confidential OH referral at 70+. MBI + BAT calibrated for Pakistan healthcare population.</div>
+        <span class="lc-desc-ur">پانچ غیر فعال اشارے → گریڈینٹ بوسٹڈ ماڈل → ہفتہ وار اسکور → ۷۰ سے اوپر خفیہ ریفرل۔ پاکستانی صحت آبادی کے لیے تصدیق شدہ۔</span>
+        <div class="lc-tags"><span class="lc-tag">XGBoost</span><span class="lc-tag">MBI+BAT</span><span class="lc-tag">AUC 0.72–0.95</span><span class="lc-tag">Sub-theme B</span></div>
+      </div>
+      <div class="layer-card">
+        <div class="lc-num">Layer 02 — Scheduling</div><span class="lc-num-ur">پرت ۰۲ — شیڈولنگ</span>
+        <div class="lc-title">Duty Roster Equity Module</div><span class="lc-title-ur">ڈیوٹی روسٹر انصاف ماڈیول</span>
+        <div class="lc-desc">OR-Tools CP-SAT constraint solver → maximum shift hours, minimum rest intervals, equitable weekend rotation → department equity score → HIS REST API integration.</div>
+        <span class="lc-desc-ur">OR-Tools CP-SAT → زیادہ سے زیادہ شفٹ اوقات، منصفانہ گردش → انصاف اسکور → ایچ آئی ایس انضمام۔</span>
+        <div class="lc-tags"><span class="lc-tag">OR-Tools</span><span class="lc-tag">CP-SAT</span><span class="lc-tag">Equity scoring</span><span class="lc-tag">Sub-theme A</span></div>
+      </div>
+      <div class="layer-card">
+        <div class="lc-num">Layer 03 — Resilience</div><span class="lc-num-ur">پرت ۰۳ — لچک</span>
+        <div class="lc-title">Micro-Intervention Engine</div><span class="lc-title-ur">چھوٹی مداخلت انجن</span>
+        <div class="lc-desc">Personalized CBT-based interventions under 3 minutes — breathing, journaling, peer support circles, tele-counseling. Voice + PSL accessible. AES-256 encrypted. 8 languages.</div>
+        <span class="lc-desc-ur">ذاتی مداخلتیں ۳ منٹ سے کم — سانس، جرنلنگ، ہم مرتبہ حمایت، ٹیلی مشاورت۔ آواز اور PSL قابل رسائی۔</span>
+        <div class="lc-tags"><span class="lc-tag">CBT based</span><span class="lc-tag">Voice-first</span><span class="lc-tag">PSL</span><span class="lc-tag">Sub-theme C</span></div>
+      </div>
+      <div class="layer-card">
+        <div class="lc-num">Layer 04 — Humanistic Medicine</div><span class="lc-num-ur">پرت ۰۴ — انسانی طب</span>
+        <div class="lc-title">Narrative Debriefing Module</div><span class="lc-title-ur">بیانیہ ڈی بریفنگ ماڈیول</span>
+        <div class="lc-desc">CISD-validated post-adverse-event debriefing. Compassion e-modules aligned with PMC CME. Storytelling sessions in Urdu and all regional languages. Voice-recorded narrative journaling.</div>
+        <span class="lc-desc-ur">CISD سے تصدیق شدہ ڈی بریفنگ۔ PMC CME سے مربوط ہمدردی ماڈیول۔ اردو اور تمام علاقائی زبانوں میں کہانی سنانا۔</span>
+        <div class="lc-tags"><span class="lc-tag">CISD protocol</span><span class="lc-tag">Narrative medicine</span><span class="lc-tag">PMC CME</span><span class="lc-tag">Sub-theme D</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ACCESSIBILITY -->
+<div id="access" class="section access-section">
+  <div class="section-inner">
+    <div class="reveal">
+      <div class="section-label">Universal Accessibility</div>
+      <h2 class="section-title">No barrier to<br><em>seeking relief.</em></h2>
+      <span class="section-title-ur">راحت مانگنے میں کوئی رکاوٹ نہیں۔</span>
+      <p class="section-body">Pakistan literacy rate 60.6%. Female rural literacy 25%. RAHAT-AI designed for the healthcare worker who cannot read, write, hear, or speak — or who speaks only a regional mother tongue.</p>
+      <span class="section-body-ur">پاکستان خواندگی ۶۰.۶٪۔ دیہی خواتین خواندگی ۲۵٪۔ راحت اے آئی ان کے لیے ڈیزائن کیا گیا جو پڑھ، لکھ، سن یا بول نہیں سکتے۔</span>
+    </div>
+    <div class="access-grid reveal" style="transition-delay:0.1s">
+      <div class="access-card"><span class="ac-icon">🎙</span><div class="ac-title">Voice-First Interface</div><span class="ac-title-ur">آواز فرسٹ انٹرفیس</span><div class="ac-desc">Every feature navigable by voice alone. Audio responses in chosen language. No text interaction required at any point.</div><span class="ac-desc-ur">تمام سہولتیں صرف آواز سے قابل رسائی۔ منتخب زبان میں آڈیو جواب۔</span><div class="ac-chips"><span class="ac-chip">Whisper AI</span><span class="ac-chip">Google STT</span><span class="ac-chip">ElevenLabs</span></div></div>
+      <div class="access-card"><span class="ac-icon">🤟</span><div class="ac-title">Pakistan Sign Language</div><span class="ac-title-ur">پاکستان اشاری زبان</span><div class="ac-desc">PSL avatar delivers all content in sign. Camera reads PSL input. 6,000-word dictionary. Static + dynamic gesture support.</div><span class="ac-desc-ur">PSL اوتار تمام مواد اشاری زبان میں دیتا ہے۔ کیمرہ PSL ان پٹ پڑھتا ہے۔</span><div class="ac-chips"><span class="ac-chip">MediaPipe</span><span class="ac-chip">JASiGML</span><span class="ac-chip">PSL 6K signs</span></div></div>
+      <div class="access-card"><span class="ac-icon">🌐</span><div class="ac-title">8 Language Support</div><span class="ac-title-ur">۸ زبانوں کی سہولت</span><div class="ac-desc">Urdu, Punjabi, Sindhi, Pashto, Balochi, Saraiki, Hindko, English. Culturally localized — not just translated.</div><span class="ac-desc-ur">ثقافتی تخصیص — محض ترجمہ نہیں۔ ہر صارف کی اپنی زبان میں۔</span><div class="ac-chips"><span class="ac-chip">UrduBERT</span><span class="ac-chip">LangChain</span><span class="ac-chip">i18n RTL</span></div></div>
+      <div class="access-card"><span class="ac-icon">📴</span><div class="ac-title">Offline-First</div><span class="ac-title-ur">آف لائن فرسٹ</span><div class="ac-desc">Full function without internet. On-device Whisper + PSL model. WatermelonDB local cache. Sync on reconnect.</div><span class="ac-desc-ur">انٹرنیٹ کے بغیر مکمل افعال۔ آن ڈیوائس ماڈل۔ دوبارہ کنیکشن پر مطابقت۔</span><div class="ac-chips"><span class="ac-chip">Whisper small</span><span class="ac-chip">WatermelonDB</span><span class="ac-chip">SW cache</span></div></div>
+      <div class="access-card"><span class="ac-icon">🔒</span><div class="ac-title">Privacy-by-Architecture</div><span class="ac-title-ur">فن تعمیر کی سطح پر رازداری</span><div class="ac-desc">RBAC + PostgreSQL row-level security. Individual scores: OH officer only. Supervisors see aggregates only. Voice deleted after transcription.</div><span class="ac-desc-ur">انفرادی اسکور صرف پیشہ ورانہ صحت افسران کو۔ نگرانوں کو صرف مجموعی میٹرکس۔</span><div class="ac-chips"><span class="ac-chip">RBAC</span><span class="ac-chip">AES-256</span><span class="ac-chip">Zero retention</span></div></div>
+      <div class="access-card"><span class="ac-icon">📱</span><div class="ac-title">Low-Cost Device</div><span class="ac-title-ur">کم قیمت ڈیوائس</span><div class="ac-desc">Android 2GB RAM minimum. Existing hospital smartphones. No new hardware anywhere. Designed for Pakistan's public hospital infrastructure as it actually exists.</div><span class="ac-desc-ur">۲ جی بی ریم اینڈرائیڈ۔ موجودہ ہسپتال فون۔ کوئی نیا ہارڈ ویئر نہیں۔</span><div class="ac-chips"><span class="ac-chip">React Native</span><span class="ac-chip">Expo</span><span class="ac-chip">2GB RAM</span></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- IMPACT -->
+<div class="section impact-section">
+  <div class="section-inner">
+    <div class="reveal">
+      <div class="section-label">Projected Impact</div>
+      <span class="section-label-ur">متوقع اثر</span>
+      <h2 class="section-title" style="color:white">What changes when<br><em>RAHAT-AI deploys.</em></h2>
+      <span class="section-title-ur">راحت اے آئی کی تعیناتی سے کیا بدلتا ہے۔</span>
+    </div>
+    <div class="impact-grid reveal" style="transition-delay:0.15s">
+      <div class="impact-card"><div class="ic-num">3,200+</div><div class="ic-title">At-risk staff flagged annually</div><span class="ic-title-ur">سالانہ خطرے میں عملے کی نشاندہی</span><div class="ic-desc">Across 10 public hospitals in Karachi, based on 32.2% documented burnout prevalence.</div><span class="ic-desc-ur">کراچی کے ۱۰ سرکاری ہسپتالوں میں ۳۲۰۰ سے زیادہ زیادہ خطرے والے صحت کارکنوں کی نشاندہی۔</span></div>
+      <div class="impact-card"><div class="ic-num">18–22%</div><div class="ic-title">Projected turnover reduction</div><span class="ic-title-ur">متوقع اخراج میں کمی</span><div class="ic-desc">From published intervention studies in comparable LMIC healthcare settings with simultaneous detection and scheduling.</div><span class="ic-desc-ur">موازی ایل ایم آئی سی ماحول میں شائع شدہ مطالعات سے رضاکارانہ اخراج میں ۱۸ سے ۲۲ فیصد کمی۔</span></div>
+      <div class="impact-card"><div class="ic-num">45%</div><div class="ic-title">Burnout reduction benchmark</div><span class="ic-title-ur">جلن میں کمی کا معیار</span><div class="ic-desc">UCSF achieved 45% reduction through targeted workflow improvements. RAHAT-AI applies equivalent structural interventions adapted for Pakistan.</div><span class="ic-desc-ur">یو سی ایس ایف نے ہدفی بہتریوں کے ذریعے ۴۵ فیصد کمی حاصل کی۔ راحت اے آئی پاکستانی سیاق کے لیے ڈھال کر لاگو کرتا ہے۔</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- FEASIBILITY -->
+<div class="section feas-section">
+  <div class="section-inner">
+    <div class="reveal">
+      <div class="section-label">Pakistan Feasibility</div>
+      <h2 class="section-title">Designed for the<br><em>actual constraints.</em></h2>
+      <span class="section-title-ur">پاکستانی ہسپتالوں کی حقیقی رکاوٹوں کے لیے ڈیزائن۔</span>
+    </div>
+    <div class="feas-grid reveal" style="transition-delay:0.15s">
+      <div class="feas-item"><div class="feas-num">۱</div><div><div class="feas-title">Zero new hardware</div><span class="feas-title-ur">کوئی نیا ہارڈ ویئر نہیں</span><div class="feas-body">Runs on existing Android 2GB+ smartphones and hospital computers. No capital expenditure.</div><span class="feas-body-ur">موجودہ اسمارٹ فون پر چلتا ہے۔ کوئی سرمایہ خرچ نہیں۔</span></div></div>
+      <div class="feas-item"><div class="feas-num">۲</div><div><div class="feas-title">Offline-first architecture</div><span class="feas-title-ur">آف لائن فرسٹ فن تعمیر</span><div class="feas-body">Built for Pakistan's variable connectivity. All core features work without internet.</div><span class="feas-body-ur">پاکستان کے متغیر انٹرنیٹ کے لیے۔ تمام بنیادی افعال آف لائن۔</span></div></div>
+      <div class="feas-item"><div class="feas-num">۳</div><div><div class="feas-title">Free for public hospitals</div><span class="feas-title-ur">سرکاری ہسپتالوں کے لیے مفت</span><div class="feas-body">Free for under 200 beds. Subsidised for teaching hospitals. Commercial for private groups.</div><span class="feas-body-ur">۲۰۰ بستروں سے کم مفت۔ تدریسی ہسپتالوں کے لیے سبسیڈی۔</span></div></div>
+      <div class="feas-item"><div class="feas-num">۴</div><div><div class="feas-title">8 languages + PSL</div><span class="feas-title-ur">۸ زبانیں اور اشاری زبان</span><div class="feas-body">All features accessible in Urdu, Punjabi, Sindhi, Pashto, Balochi, Saraiki, Hindko, English, and PSL.</div><span class="feas-body-ur">تمام سہولتیں تمام پاکستانی زبانوں میں قابل رسائی۔</span></div></div>
+      <div class="feas-item"><div class="feas-num">۵</div><div><div class="feas-title">HIS API integration</div><span class="feas-title-ur">ایچ آئی ایس اے پی آئی انضمام</span><div class="feas-body">REST adapter to existing Hospital Information Systems. No full replacement required.</div><span class="feas-body-ur">موجودہ نظام سے جڑتا ہے۔ کوئی مکمل تبدیلی ضروری نہیں۔</span></div></div>
+      <div class="feas-item"><div class="feas-num">۶</div><div><div class="feas-title">Privacy-by-architecture</div><span class="feas-title-ur">فن تعمیر کی سطح پر رازداری</span><div class="feas-body">RBAC at database level. Individual scores visible only to OH officers. Cannot be weaponised against staff — enforced at architecture level.</div><span class="feas-body-ur">ڈیٹابیس کی سطح پر RBAC۔ انفرادی اسکور صرف OH افسران کو۔</span></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div>
+    <div class="ft-brand">RAHAT<em>-AI</em></div>
+    <span class="ft-ur">راحت اے آئی</span>
+    <div class="ft-sub">Real-time Analytics for Healthcare At-risk Teams — Artificial Intelligence</div>
+    <span class="ft-sub-ur">صحت کی دیکھ بھال کی خطرے میں ٹیموں کے لیے ریئل ٹائم تجزیات</span>
+    <div class="ft-sub" style="margin-top:0.3rem">Ruksh E Ibadat — Senior AI Engineer — INFIXIO — Karachi</div>
+    <span class="ft-sub-ur">رخشِ عبادت — سینئر اے آئی انجینئر — INFIXIO — کراچی</span>
+  </div>
+  <div>
+    <div class="ft-r">Rufayda Anti-Burnout Hackathon 2026<br>Sub-themes A + B + C + D — Integrated Platform<br>April 11, 2026 — Karachi, Pakistan</div>
+    <span class="ft-r-ur">روفیدہ اینٹی برن آؤٹ ہیکاتھون ۲۰۲۶<br>موضوعات الف + ب + ج + د — مربوط پلیٹ فارم<br>۱۱ اپریل ۲۰۲۶ — کراچی</span>
+  </div>
+</footer>
+
+<script>
+// Scroll reveal
+document.querySelectorAll('.reveal').forEach(el => {
+  new IntersectionObserver(([e]) => { if(e.isIntersecting) el.classList.add('vis'); }, {threshold:0.08}).observe(el);
+});
+
+// Toast
+function toast(msg) {
+  document.querySelector('.toast')?.remove();
+  const t = document.createElement('div');
+  t.className = 'toast'; t.textContent = msg;
+  document.body.appendChild(t);
+  setTimeout(() => t.remove(), 4500);
+}
+
+// Language selector
+function selectLang(btn, code) {
+  document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  currentLang = code;
+  renderSampleCmds(code);
+  const names = {ur:'Urdu — اردو',pa:'Punjabi — پنجابی',sd:'Sindhi — سندھی',ps:'Pashto — پشتو',bal:'Balochi — بلوچی',skr:'Saraiki — سرائیکی',psl:'PSL Sign — اشاری زبان',en:'English'};
+  toast(`Language set: ${names[code] || code}`);
+}
+
+// Voice commands
+const cmds = {
+  ur: [{q:'آج میں بہت تھکا ہوا ہوں',a:'آپ کی بات سمجھ آئی۔ آپ کا خطرے کا اسکور اپ ڈیٹ کر دیا گیا ہے۔ کیا آپ تین منٹ کی سانس لینے کی مشق کریں گے؟',l:'Urdu — اردو'},{q:'مجھے مدد کی ضرورت ہے',a:'آپ کی مدد کی درخواست ریکارڈ کر لی گئی۔ پیشہ ورانہ صحت افسر کو مطلع کر دیا گیا ہے۔',l:'Urdu — اردو'}],
+  pa: [{q:'ਮੈਂ ਅੱਜ ਬਹੁਤ ਥੱਕਾ ਹਾਂ',a:'تہاڈی گل سمجھ آ گئی۔ تہاڈا خطرے دا سکور اپڈیٹ کر دتا گیا ہے۔',l:'Punjabi — پنجابی'}],
+  sd: [{q:'اڄ مان تمام ٿڪل آهيان',a:'توهان جي ڳالهه سمجهي آئي۔ توهان جو خطري جو اسڪور اپڊيٽ ڪيو ويو آهي۔',l:'Sindhi — سندھی'}],
+  ps: [{q:'نن ما ډیره ستړی یم',a:'ستاسو خبره پوهه شوم۔ ستاسو د خطر نمره تازه شوه۔',l:'Pashto — پشتو'}],
+  bal: [{q:'امروز من خیلی خسته هستم',a:'آپ کا پیغام سمجھا گیا۔ آپ کا اسکور اپ ڈیٹ ہو گیا ہے۔',l:'Balochi — بلوچی'}],
+  skr: [{q:'اڄ میں بہوں تھکیا ہاں',a:'تہاڈی گل سمجھ آ گئی۔ خطرے دا اسکور اپڈیٹ ہو گیا۔',l:'Saraiki — سرائیکی'}],
+  psl: [{q:'[PSL gesture for "tired"]',a:'PSL gesture recognized: TIRED. Risk score updated. Intervention offered in Pakistan Sign Language.',l:'PSL Sign'}],
+  en: [{q:'I am feeling overwhelmed today',a:'Your response has been recorded. Your risk score has been updated. Would you like a 3-minute breathing exercise?',l:'English'},{q:'I need tomorrow off',a:'Your leave request has been logged and sent to the scheduling module.',l:'English'}]
+};
+let currentLang = 'ur';
+
+function renderSampleCmds(lang) {
+  const c = cmds[lang] || cmds.ur;
+  document.getElementById('sampleCmds').innerHTML = c.map(cmd => `
+    <div onclick="simVoice(${JSON.stringify(cmd).replace(/"/g,'&quot;')})" style="padding:0.7rem 0.9rem;background:var(--surface-sage);border:1px solid var(--border-soft);border-radius:var(--radius-md);cursor:pointer;transition:border-color .2s" onmouseover="this.style.borderColor='var(--teal-300)'" onmouseout="this.style.borderColor='var(--border-soft)'">
+      <div style="font-family:var(--font-urdu);font-size:0.82rem;color:var(--stone-600);direction:rtl;text-align:right;line-height:2">${cmd.q}</div>
+      <div style="font-family:var(--font-mono);font-size:0.52rem;color:var(--text-muted);margin-top:0.2rem">${cmd.l} — tap to simulate</div>
+    </div>
+  `).join('');
+}
+
+function simVoice(cmd) {
+  const status = document.getElementById('vcStatus');
+  const btn = document.getElementById('speakBtn');
+  const wf = document.getElementById('waveform');
+  status.className = 'vc-status listening'; status.innerHTML = '<div class="vc-status-dot"></div>Listening...';
+  btn.classList.add('active'); wf.querySelectorAll('.wbar').forEach(b => b.classList.add('active'));
+  setTimeout(() => {
+    wf.querySelectorAll('.wbar').forEach(b => b.classList.remove('active'));
+    btn.classList.remove('active');
+    status.className = 'vc-status'; status.innerHTML = '<div class="vc-status-dot" style="background:var(--teal-500)"></div>Responding...';
+    setTimeout(() => {
+      status.className = 'vc-status ready'; status.innerHTML = '<div class="vc-status-dot"></div>Ready';
+      document.getElementById('voiceText').textContent = `"${cmd.q}" — ${cmd.l}`;
+      document.getElementById('voiceUrdu').textContent = cmd.a;
+    }, 700);
+  }, 2000);
+}
+
+function toggleVoice() {
+  const c = (cmds[currentLang] || cmds.ur);
+  simVoice(c[Math.floor(Math.random()*c.length)]);
+}
+
+// Init lang grid
+const langs = [
+  {code:'ur',en:'Urdu',ur:'اردو',sp:'National'},
+  {code:'pa',en:'Punjabi',ur:'پنجابی',sp:'94.7M'},
+  {code:'sd',en:'Sindhi',ur:'سنڌي',sp:'33M'},
+  {code:'ps',en:'Pashto',ur:'پښتو',sp:'42M'},
+  {code:'bal',en:'Balochi',ur:'بلوچی',sp:'7M'},
+  {code:'skr',en:'Saraiki',ur:'سرائیکی',sp:'26M'},
+  {code:'hi',en:'Hindko',ur:'ہندکو',sp:'5.5M'},
+  {code:'en',en:'English',ur:'انگریزی',sp:'Official'},
+];
+document.getElementById('voiceLangGrid').innerHTML = langs.map((l,i) => `
+  <div class="lc ${i===0?'active':''}" onclick="setVoiceLang('${l.code}',this)">
+    <span class="lc-en">${l.en}</span>
+    <span class="lc-ur">${l.ur}</span>
+    <span class="lc-speakers">${l.sp}</span>
+  </div>
+`).join('');
+
+function setVoiceLang(lang, el) {
+  currentLang = lang;
+  document.querySelectorAll('.lc').forEach(c => c.classList.remove('active'));
+  el.classList.add('active');
+  renderSampleCmds(lang);
+}
+renderSampleCmds('ur');
+
+// PSL
+const pslPhrases = {
+  hello:{text:'HELLO — السلام علیکم',col:'var(--success)'},
+  tired:{text:'TIRED — تھکا ہوا',col:'var(--warning)'},
+  help:{text:'HELP — مدد',col:'var(--teal-500)'},
+  stress:{text:'STRESS — دباؤ',col:'var(--danger)'},
+  rest:{text:'REST — آرام',col:'var(--sage-500)'}
+};
+function playPSL(phrase, btn) {
+  document.querySelectorAll('.psl-phrase-btn').forEach(b => b.classList.remove('playing'));
+  btn.classList.add('playing');
+  const p = pslPhrases[phrase];
+  document.getElementById('pslLabel').textContent = p.text;
+  const av = document.getElementById('pslAvatar');
+  av.style.filter = `drop-shadow(0 4px 16px ${p.col})`;
+  // Animate hands
+  ['leftHand','rightHand'].forEach((id,i) => {
+    const el = document.getElementById(id);
+    el.style.animation = `hand${i} 0.7s ease-in-out 3`;
+  });
+  setTimeout(() => {
+    btn.classList.remove('playing');
+    av.style.filter = '';
+    ['leftHand','rightHand'].forEach(id => { document.getElementById(id).style.animation = ''; });
+    document.getElementById('pslLabel').textContent = 'Pakistan Sign Language — پاکستان اشاری زبان';
+  }, 2300);
+}
+const handCSS = `@keyframes hand0{0%,100%{transform:translate(0,0) rotate(0deg)}50%{transform:translate(-8px,-12px) rotate(-20deg)}} @keyframes hand1{0%,100%{transform:translate(0,0) rotate(0deg)}50%{transform:translate(8px,-12px) rotate(20deg)}}`;
+const st = document.createElement('style'); st.textContent = handCSS; document.head.appendChild(st);
+
+// Dashboard counters
+const depts = [
+  {en:'Emergency',ur:'ایمرجنسی',pct:78,r:'H'},{en:'ICU',ur:'آئی سی یو',pct:64,r:'H'},
+  {en:'Surgery',ur:'سرجری',pct:51,r:'M'},{en:'Gynecology',ur:'امراضِ نسواں',pct:44,r:'M'},
+  {en:'Pediatrics',ur:'بچوں کا وارڈ',pct:28,r:'L'},{en:'Admin',ur:'انتظامیہ',pct:19,r:'L'}
+];
+function renderDashBars() {
+  document.getElementById('dashRiskBars').innerHTML = depts.map(d => `
+    <div class="rb" style="margin-bottom:0.7rem">
+      <div class="rb-labels"><span class="rb-en">${d.en}</span><span class="rb-ur">${d.ur}</span></div>
+      <div class="rb-track"><div class="rb-fill ${d.r}" style="width:0%" data-w="${d.pct}%"></div></div>
+      <span class="rb-pct ${d.r}">${d.pct}%</span>
+    </div>
+  `).join('');
+  setTimeout(() => { document.querySelectorAll('#dashRiskBars .rb-fill').forEach(e => { e.style.width = e.dataset.w; }); }, 300);
+}
+renderDashBars();
+
+function animCount(el, t, s='', d=1800) {
+  let st=0;
+  const step = ts => { if(!st) st=ts; const p=Math.min((ts-st)/d,1), e=1-Math.pow(1-p,3); el.textContent=Math.floor(e*t)+s; if(p<1) requestAnimationFrame(step); };
+  requestAnimationFrame(step);
+}
+new IntersectionObserver(([e]) => {
+  if(e.isIntersecting) {
+    animCount(document.getElementById('ms'),247,'',1800);
+    animCount(document.getElementById('mr'),18,'',1500);
+    animCount(document.getElementById('hero-staff'),247,'',1800);
+    animCount(document.getElementById('hero-alerts'),18,'',1500);
+    setTimeout(()=>{ document.getElementById('me').textContent='73%'; document.getElementById('hero-equity').textContent='73%'; },1200);
+  }
+},{threshold:0.2}).observe(document.getElementById('dashboard'));
+
+// Pulse
+function pickOpt(btn) {
+  document.querySelectorAll('.pp-opt').forEach(b => b.classList.remove('selected'));
+  btn.classList.add('selected');
+  toast(`Response recorded: "${btn.textContent.trim().split('\n')[0]}" — Confidential and anonymized.`);
+}
+</script>
+</body>
+</html>
